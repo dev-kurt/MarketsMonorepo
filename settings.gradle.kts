@@ -1,5 +1,3 @@
-@file:Suppress("UnstableApiUsage")
-
 pluginManagement {
     includeBuild("build-logic")
     repositories {
@@ -20,8 +18,8 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Markets"
+rootProject.name = "MarketsMonorepo"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-// Modüller adım adım eklenecek.
+include(":markets")
