@@ -1,0 +1,22 @@
+# ─── Gradle ───
+.gradle/
+**/build/
+
+# ─── Android / IDE ───
+local.properties
+*.iml
+.idea/
+.DS_Store
+captures/
+.externalNativeBuild/
+.cxx/
+
+# ─── Kotlin ───
+.kotlin/
+
+# ─── Loglar & geçici ───
+*.log
+
+# ─── İmza / gizli (asla commit'lenmez) ───
+*.jks
+*.keystore
