@@ -9,4 +9,5 @@ android {
 
 dependencies {
     api(libs.kotlinx.coroutines.core)
+    implementation(projects.sharedFeatures.logger.api)
 }
