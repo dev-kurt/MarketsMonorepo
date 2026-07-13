@@ -25,3 +25,6 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":markets")
 
 include(":shared-features:ui:api")
+include(":shared-features:logger:api")
+include(":shared-features:logger:impl")
+include(":shared-features:logger:di")
