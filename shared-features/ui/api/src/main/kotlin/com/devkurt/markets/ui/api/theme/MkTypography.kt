@@ -6,7 +6,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-/** Tipografi ölçeği — Material'dan bağımsız (referans projedeki BMTypography deseni). */
 @Immutable
 data class MkTypography(
     val titleLarge: TextStyle = TextStyle(fontWeight = FontWeight.Bold, fontSize = 22.sp),

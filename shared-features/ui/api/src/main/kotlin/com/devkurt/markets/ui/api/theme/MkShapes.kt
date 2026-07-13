@@ -5,7 +5,6 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.dp
 
-/** Köşe/şekil token'ları — Material'dan bağımsız (referans projedeki BMShapes deseni). */
 @Immutable
 data class MkShapes(
     val small: RoundedCornerShape = RoundedCornerShape(8.dp),

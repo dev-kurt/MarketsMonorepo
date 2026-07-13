@@ -23,3 +23,5 @@ rootProject.name = "MarketsMonorepo"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(":markets")
+
+include(":shared-features:ui:api")

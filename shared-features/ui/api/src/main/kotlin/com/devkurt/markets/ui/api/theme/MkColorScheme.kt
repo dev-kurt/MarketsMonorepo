@@ -4,10 +4,6 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
-/**
- * Tam renk şeması — Material3'ten bağımsız (referans projedeki BMColorScheme deseni).
- * Material rolleri + Material'da olmayan semantikler (success/warning/info) tek yerde.
- */
 @Immutable
 data class MkColorScheme(
     val primary: Color,

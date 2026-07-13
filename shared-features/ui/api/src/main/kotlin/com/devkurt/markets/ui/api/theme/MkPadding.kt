@@ -5,7 +5,6 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-/** Tutarlı boşluk token'ları (Material'da yok). */
 @Immutable
 data class MkPadding(
     val xs: Dp = 4.dp,
