@@ -10,12 +10,6 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
-/**
- * KMP-olmayan Android kütüphane modülleri için ortak yapı.
- * Serialization compiler plugin'ini convention'ın kendisi apply eder
- * (referans projedeki gibi) — modüller ayrıca eklemez.
- * namespace modül kendi build.gradle.kts'inde verir.
- */
 class AndroidLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
         with(pluginManager) {

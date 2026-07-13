@@ -6,10 +6,6 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 
-/**
- * Saf JVM (Android'e sıfır bağımlı) kütüphane — domain modülleri için.
- * referans projedeki `reference.kmp.jvm.library` karşılığı.
- */
 class JvmLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
         pluginManager.apply("org.jetbrains.kotlin.jvm")

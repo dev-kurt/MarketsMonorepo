@@ -8,7 +8,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            // Uygulama kökü (tema + Navigation host), shared-features hazır olunca buraya gelecek.
         }
     }
 }
