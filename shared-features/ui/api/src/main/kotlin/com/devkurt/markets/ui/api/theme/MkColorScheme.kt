@@ -74,5 +74,5 @@ data class MkColorScheme(
 }
 
 val LocalMkColorScheme = staticCompositionLocalOf<MkColorScheme> {
-    error("MkColorScheme sağlanmadı — MarketsTheme içinde kullanın")
+    error("No MkColorScheme provided. Wrap your content in MarketsTheme.")
 }
