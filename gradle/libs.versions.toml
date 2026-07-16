@@ -13,7 +13,7 @@ androidx-core = "1.17.0"
 androidx-lifecycle = "2.10.0"
 
 # ─── Navigation3 (stable) ───
-nav3 = "1.1.1"
+nav3 = "1.2.0-alpha01"
 
 # ─── DI: Koin (annotations) ───
 koin = "4.2.2"

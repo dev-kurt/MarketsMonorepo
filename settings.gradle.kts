@@ -26,6 +26,8 @@ include(":markets")
 
 include(":shared-features:ui:api")
 include(":shared-features:ui:di")
+include(":shared-features:navigation:api")
+include(":shared-features:navigation:di")
 include(":shared-features:logger:api")
 include(":shared-features:logger:impl")
 include(":shared-features:logger:di")
