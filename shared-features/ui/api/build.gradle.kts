@@ -5,3 +5,7 @@ plugins {
 android {
     namespace = "com.devkurt.markets.ui.api"
 }
+
+dependencies {
+    implementation(libs.coil.compose)
+}
