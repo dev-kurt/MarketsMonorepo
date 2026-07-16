@@ -36,5 +36,9 @@ gradlePlugin {
             id = "markets.koin"
             implementationClass = "com.devkurt.markets.convention.primitive.KoinConventionPlugin"
         }
+        register("createLayer") {
+            id = "markets.create.layer"
+            implementationClass = "com.devkurt.markets.convention.primitive.CreateLayerPlugin"
+        }
     }
 }
