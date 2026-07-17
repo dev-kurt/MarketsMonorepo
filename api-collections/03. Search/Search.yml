@@ -1,0 +1,36 @@
+info:
+  name: Search
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{base_url}}/search?query=bitcoin"
+  headers:
+    - name: accept
+      value: application/json
+    - name: x-cg-demo-api-key
+      value: "{{cg_demo_api_key}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        test("Search başarılı", function () {
+            expect(res.getStatus()).to.equal(200);
+        });
+
+settings:
+  encodeUrl: true
+
+docs: |-
+  Coin/kategori/borsa araması — **search** feature'ının kaynağı.
+
+  - **Metot:** `GET`
+  - **URL:** `{{base_url}}/search`
+
+  ## Query parametreleri
+  - `query` (zorunlu): arama metni
+
+  ## Yanıttaki kilit alanlar
+  `coins[].{id, name, symbol, thumb, market_cap_rank}`

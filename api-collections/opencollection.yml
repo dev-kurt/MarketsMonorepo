@@ -1,0 +1,24 @@
+opencollection: 1.0.0
+
+info:
+  name: Markets API (CoinGecko Demo)
+
+docs:
+  content: |-
+    ### Markets — CoinGecko Demo API koleksiyonu
+
+    Markets uygulamasının kullandığı CoinGecko Demo (ücretsiz) uçları.
+
+    - Base URL: `https://api.coingecko.com/api/v3`
+    - Auth: `x-cg-demo-api-key` header'ı (environment'taki `cg_demo_api_key`)
+    - Her başarılı istek aylık kredi limitinden 1 düşer.
+
+    Klasörler feature'larla eşleşir: Coins → coins-list/coin-detail,
+    Charts → coins-chart, Search → search, Global → dashboard özeti.
+  type: text/markdown
+bundled: false
+extensions:
+  bruno:
+    ignore:
+      - node_modules
+      - .git

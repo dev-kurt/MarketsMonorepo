@@ -1,0 +1,46 @@
+info:
+  name: Coins Markets
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{base_url}}/coins/markets?vs_currency={{vs_currency}}&order=market_cap_desc&per_page=50&page=1&sparkline=true&price_change_percentage=24h"
+  headers:
+    - name: accept
+      value: application/json
+    - name: x-cg-demo-api-key
+      value: "{{cg_demo_api_key}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        test("Coins Markets başarılı", function () {
+            expect(res.getStatus()).to.equal(200);
+        });
+        test("Liste boş değil", function () {
+            expect(res.getBody().length).to.be.above(0);
+        });
+
+settings:
+  encodeUrl: true
+
+docs: |-
+  Piyasa verisiyle coin listesi — **coins-list** feature'ının kaynağı.
+
+  - **Metot:** `GET`
+  - **URL:** `{{base_url}}/coins/markets`
+
+  ## Query parametreleri
+  - `vs_currency` (zorunlu): fiyat para birimi (ör. `usd`, `try`)
+  - `order`: sıralama (`market_cap_desc`)
+  - `per_page`: sayfa başı adet (1–250)
+  - `page`: sayfa no
+  - `sparkline`: 7 günlük mini grafik dizisi (`true`/`false`)
+  - `price_change_percentage`: değişim pencereleri (`1h,24h,7d`)
+
+  ## Yanıttaki kilit alanlar
+  `id`, `symbol`, `name`, `image`, `current_price`,
+  `price_change_percentage_24h`, `market_cap`, `total_volume`,
+  `sparkline_in_7d.price[]`

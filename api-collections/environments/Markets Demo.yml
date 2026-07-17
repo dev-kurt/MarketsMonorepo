@@ -1,0 +1,11 @@
+name: Markets Demo
+color: "#8bc34a"
+variables:
+  - name: base_url
+    value: https://api.coingecko.com/api/v3
+  - secret: true
+    name: cg_demo_api_key
+  - name: vs_currency
+    value: usd
+  - name: coin_id
+    value: bitcoin

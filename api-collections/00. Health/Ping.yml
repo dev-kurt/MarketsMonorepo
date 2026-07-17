@@ -1,0 +1,32 @@
+info:
+  name: Ping
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{base_url}}/ping"
+  headers:
+    - name: accept
+      value: application/json
+    - name: x-cg-demo-api-key
+      value: "{{cg_demo_api_key}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        test("Ping başarılı", function () {
+            expect(res.getStatus()).to.equal(200);
+        });
+
+settings:
+  encodeUrl: true
+
+docs: |-
+  API'nin ayakta olduğunu ve key'in geçerli olduğunu doğrular.
+
+  - **Metot:** `GET`
+  - **URL:** `{{base_url}}/ping`
+
+  Örnek yanıt: `{ "gecko_says": "(V3) To the Moon!" }`

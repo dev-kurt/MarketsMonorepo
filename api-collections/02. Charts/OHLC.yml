@@ -1,0 +1,37 @@
+info:
+  name: OHLC
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{base_url}}/coins/{{coin_id}}/ohlc?vs_currency={{vs_currency}}&days=7"
+  headers:
+    - name: accept
+      value: application/json
+    - name: x-cg-demo-api-key
+      value: "{{cg_demo_api_key}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        test("OHLC başarılı", function () {
+            expect(res.getStatus()).to.equal(200);
+        });
+
+settings:
+  encodeUrl: true
+
+docs: |-
+  Open-High-Low-Close (mum grafiği) verisi.
+
+  - **Metot:** `GET`
+  - **URL:** `{{base_url}}/coins/{{coin_id}}/ohlc`
+
+  ## Query parametreleri
+  - `vs_currency` (zorunlu)
+  - `days` (zorunlu): `1`, `7`, `14`, `30`, `90`, `180`, `365`
+
+  ## Yanıt
+  `[[ts, open, high, low, close], ...]`

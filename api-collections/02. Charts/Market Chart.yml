@@ -1,0 +1,38 @@
+info:
+  name: Market Chart
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{base_url}}/coins/{{coin_id}}/market_chart?vs_currency={{vs_currency}}&days=7"
+  headers:
+    - name: accept
+      value: application/json
+    - name: x-cg-demo-api-key
+      value: "{{cg_demo_api_key}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        test("Market Chart başarılı", function () {
+            expect(res.getStatus()).to.equal(200);
+        });
+
+settings:
+  encodeUrl: true
+
+docs: |-
+  Zaman-fiyat serisi (çizgi grafik) — **coins-chart** feature'ının kaynağı.
+
+  - **Metot:** `GET`
+  - **URL:** `{{base_url}}/coins/{{coin_id}}/market_chart`
+
+  ## Query parametreleri
+  - `vs_currency` (zorunlu)
+  - `days` (zorunlu): kaç günlük (`1`, `7`, `30`, `365`, `max`)
+  - `interval`: granülerlik (`daily`); boş bırakılırsa otomatik
+
+  ## Yanıt
+  `prices[][ts, value]`, `market_caps[][]`, `total_volumes[][]`

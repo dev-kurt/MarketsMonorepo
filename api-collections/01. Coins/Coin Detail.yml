@@ -1,0 +1,42 @@
+info:
+  name: Coin Detail
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{base_url}}/coins/{{coin_id}}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false"
+  headers:
+    - name: accept
+      value: application/json
+    - name: x-cg-demo-api-key
+      value: "{{cg_demo_api_key}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        test("Coin Detail başarılı", function () {
+            expect(res.getStatus()).to.equal(200);
+        });
+
+settings:
+  encodeUrl: true
+
+docs: |-
+  Tek bir coin'in detayı — **coin-detail** feature'ının kaynağı.
+
+  - **Metot:** `GET`
+  - **URL:** `{{base_url}}/coins/{{coin_id}}`
+
+  ## Query parametreleri
+  - `localization`: yerelleştirilmiş açıklamalar (`false` → yük azaltır)
+  - `tickers`: borsa ticker listesi
+  - `market_data`: fiyat/cap/hacim (`true`)
+  - `community_data`, `developer_data`: ek metrikler
+  - `sparkline`: 7g mini grafik
+
+  ## Yanıttaki kilit alanlar
+  `id`, `symbol`, `name`, `image.large`, `description.en`,
+  `market_data.current_price.usd`, `market_data.ath.usd`,
+  `market_data.price_change_percentage_24h`
