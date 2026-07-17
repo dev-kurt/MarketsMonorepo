@@ -15,3 +15,16 @@ fun <T : NavKey> NavBackStack<T>.setAsRoot(vararg elements: T) {
     clear()
     elements.forEach { add(it) }
 }
+
+fun <T : NavKey> NavBackStack<T>.switchTo(element: T) {
+    if (lastOrNull() == element) return
+    remove(element)
+    add(element)
+}
+
+fun <T : NavKey> NavBackStack<T>.clearExceptRoot() {
+    if (size <= 1) return
+    val root = first()
+    clear()
+    add(root)
+}

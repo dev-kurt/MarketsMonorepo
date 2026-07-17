@@ -23,4 +23,14 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.ktx)
     debugImplementation(libs.androidx.compose.ui.tooling)
+
+    implementation(projects.marketsFeatures.graphMain.ui.impl)
+    implementation(projects.marketsFeatures.graphMain.di)
+    implementation(projects.marketsFeatures.graphBottom.di)
+    implementation(projects.marketsFeatures.graphDashboard.di)
+    implementation(projects.sharedFeatures.ui.di)
+    implementation(projects.sharedFeatures.navigation.di)
+    implementation(projects.sharedFeatures.logger.di)
+    implementation(projects.sharedFeatures.network.di)
+    implementation(projects.sharedFeatures.coroutines.di)
 }
