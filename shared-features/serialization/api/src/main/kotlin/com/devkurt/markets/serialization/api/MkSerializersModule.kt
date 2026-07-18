@@ -1,7 +1,7 @@
-package com.devkurt.markets.navigation.api
+package com.devkurt.markets.serialization.api
 
 import kotlinx.serialization.modules.SerializersModuleBuilder
 
-fun interface RouteSerializers {
+fun interface MkSerializersModule {
     fun SerializersModuleBuilder.register()
 }

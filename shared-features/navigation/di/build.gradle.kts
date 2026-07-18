@@ -9,5 +9,4 @@ android {
 
 dependencies {
     implementation(projects.sharedFeatures.navigation.api)
-    implementation(libs.kotlinx.serialization.core)
 }

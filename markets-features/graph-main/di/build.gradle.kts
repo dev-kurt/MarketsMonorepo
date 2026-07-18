@@ -16,6 +16,7 @@ dependencies {
     implementation(projects.sharedFeatures.network.di)
     implementation(projects.sharedFeatures.coroutines.di)
     implementation(projects.sharedFeatures.navigation.di)
+    implementation(projects.sharedFeatures.serialization.di)
     implementation(projects.marketsFeatures.graphBottom.di)
     implementation(projects.marketsFeatures.graphDashboard.di)
 

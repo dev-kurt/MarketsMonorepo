@@ -10,9 +10,8 @@ import com.devkurt.markets.graph_dashboard.ui.impl.DashboardPlaceholderScreen
 import com.devkurt.markets.graph_dashboard.ui.impl.GraphDashboardScreen
 import com.devkurt.markets.graph_dashboard.ui.impl.GraphDashboardViewModel
 import com.devkurt.markets.navigation.api.GraphEntryProvider
-import com.devkurt.markets.navigation.api.RouteSerializers
+import com.devkurt.markets.serialization.api.MkSerializersModule
 import kotlinx.serialization.modules.polymorphic
-import kotlinx.serialization.modules.subclass
 import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.KoinViewModel
 import org.koin.core.annotation.Module
@@ -40,7 +39,7 @@ class GraphDashboardModule {
 
     @Single
     @Named("graphDashboardRouteSerializers")
-    fun graphDashboardRouteSerializers(): RouteSerializers = RouteSerializers {
+    fun graphDashboardRouteSerializers(): MkSerializersModule = MkSerializersModule {
         polymorphic(GraphBottom::class) {
             subclass(GraphDashboardRoute::class, GraphDashboardRoute.serializer())
         }
