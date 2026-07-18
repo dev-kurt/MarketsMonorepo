@@ -1,7 +1,9 @@
 package com.devkurt.markets.template_feature.di
 
 import com.devkurt.markets.navigation.api.GraphEntryProvider
+import com.devkurt.markets.navigation.api.GraphMain
 import com.devkurt.markets.navigation.api.GraphMainRoutes
+import com.devkurt.markets.serialization.api.MkSerializersModule
 import com.devkurt.markets.template_feature.data.remote.api.TemplateFeatureRemoteApi
 import com.devkurt.markets.template_feature.data.repository.TemplateFeatureRepositoryImpl
 import com.devkurt.markets.template_feature.domain.api.repository.TemplateFeatureRepository
@@ -11,6 +13,7 @@ import com.devkurt.markets.template_feature.ui.api.TemplateFeatureRoute
 import com.devkurt.markets.template_feature.ui.impl.TemplateFeatureViewModel
 import com.devkurt.markets.template_feature.ui.impl.TemplateFeatureWrapper
 import io.ktor.client.HttpClient
+import kotlinx.serialization.modules.polymorphic
 import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.Factory
 import org.koin.core.annotation.KoinViewModel
@@ -26,6 +29,14 @@ class TemplateFeatureModule {
     fun templateFeatureRoutes(): GraphMainRoutes = GraphMainRoutes { scope ->
         scope.entry<TemplateFeatureRoute> {
             TemplateFeatureWrapper()
+        }
+    }
+
+    @Single
+    @Named("templateFeatureRouteSerializers")
+    fun templateFeatureRouteSerializers(): MkSerializersModule = MkSerializersModule {
+        polymorphic(GraphMain::class) {
+            subclass(TemplateFeatureRoute::class, TemplateFeatureRoute.serializer())
         }
     }
 
