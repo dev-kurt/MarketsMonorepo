@@ -20,6 +20,7 @@ import com.devkurt.markets.navigation.api.SignalBus
 import com.devkurt.markets.navigation.api.rememberNavBackStack
 import com.devkurt.markets.navigation.api.safePop
 import com.devkurt.markets.ui.api.theme.MarketsTheme
+import kotlinx.serialization.modules.SerializersModule
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 
@@ -27,9 +28,10 @@ import org.koin.compose.koinInject
 fun MainScreen(
     viewModel: GraphMainViewModel = koinViewModel(),
 ) {
-    val graphMain = rememberNavBackStack<GraphMain>(GraphBottomRoute)
-    val graphBottom = rememberNavBackStack<GraphBottom>(GraphDashboardRoute)
-    val graphDashboard = rememberNavBackStack<GraphDashboard>(DashboardPlaceholderRoute)
+    val serializersModule = koinInject<SerializersModule>()
+    val graphMain = rememberNavBackStack<GraphMain>(serializersModule, GraphBottomRoute)
+    val graphBottom = rememberNavBackStack<GraphBottom>(serializersModule, GraphDashboardRoute)
+    val graphDashboard = rememberNavBackStack<GraphDashboard>(serializersModule, DashboardPlaceholderRoute)
     val signalBus = koinInject<SignalBus>()
 
     CompositionLocalProvider(

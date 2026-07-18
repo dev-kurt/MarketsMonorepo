@@ -8,4 +8,5 @@ android {
 
 dependencies {
     api(libs.androidx.navigation3.runtime)
+    api(libs.kotlinx.serialization.core)
 }

@@ -5,7 +5,11 @@ import com.devkurt.markets.graph_bottom.ui.api.GraphBottomRoute
 import com.devkurt.markets.graph_bottom.ui.impl.GraphBottomScreen
 import com.devkurt.markets.graph_bottom.ui.impl.GraphBottomViewModel
 import com.devkurt.markets.navigation.api.GraphEntryProvider
+import com.devkurt.markets.navigation.api.GraphMain
 import com.devkurt.markets.navigation.api.GraphMainRoutes
+import com.devkurt.markets.navigation.api.RouteSerializers
+import kotlinx.serialization.modules.polymorphic
+import kotlinx.serialization.modules.subclass
 import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.KoinViewModel
 import org.koin.core.annotation.Module
@@ -20,6 +24,14 @@ class GraphBottomModule {
     fun graphBottomRoutes(): GraphMainRoutes = GraphMainRoutes { scope ->
         scope.entry<GraphBottomRoute> {
             GraphBottomScreen()
+        }
+    }
+
+    @Single
+    @Named("graphBottomRouteSerializers")
+    fun graphBottomRouteSerializers(): RouteSerializers = RouteSerializers {
+        polymorphic(GraphMain::class) {
+            subclass(GraphBottomRoute::class, GraphBottomRoute.serializer())
         }
     }
 
