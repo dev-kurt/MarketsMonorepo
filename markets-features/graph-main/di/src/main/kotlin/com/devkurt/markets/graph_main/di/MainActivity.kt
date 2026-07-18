@@ -1,4 +1,4 @@
-package com.devkurt.markets
+package com.devkurt.markets.graph_main.di
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
