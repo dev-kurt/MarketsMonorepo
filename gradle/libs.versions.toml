@@ -1,30 +1,30 @@
 [versions]
 # ─── Build & Tooling ───
 agp = "9.2.1"
-kotlin = "2.4.0"
-koinCompilerPlugin = "1.0.1"
+kotlin = "2.4.10"
+koinCompilerPlugin = "1.0.2"
 
 # ─── Compose (BOM tüm compose sürümlerini hizalar) ───
 composeBom = "2026.06.01"
 
 # ─── AndroidX ───
-androidx-activity = "1.12.0"
-androidx-core = "1.17.0"
-androidx-lifecycle = "2.10.0"
+androidx-activity = "1.13.0"
+androidx-core = "1.19.0"
+androidx-lifecycle = "2.11.0"
 
 # ─── Navigation3 (stable) ───
-nav3 = "1.2.0-alpha01"
+nav3 = "1.2.0-alpha06"
 
 # ─── DI: Koin (annotations) ───
 koin = "4.2.2"
 
 # ─── Networking ───
-ktor = "3.5.0"
+ktor = "3.5.1"
 
 # ─── Kotlinx ───
 kotlinxSerialization = "1.11.0"
 kotlinxCoroutines = "1.11.0"
-kotlinxCollectionsImmutable = "0.5.0"
+kotlinxCollectionsImmutable = "0.5.1"
 
 # ─── UI ───
 coil = "3.5.0"
