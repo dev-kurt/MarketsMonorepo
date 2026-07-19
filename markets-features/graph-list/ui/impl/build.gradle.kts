@@ -3,14 +3,14 @@ plugins {
 }
 
 android {
-    namespace = "com.devkurt.markets.coins_list.ui.impl"
+    namespace = "com.devkurt.markets.graph_list.ui.impl"
 }
 
 dependencies {
-    api(projects.marketsFeatures.coinsList.domain.api)
+    api(projects.marketsFeatures.graphList.ui.api)
     api(projects.sharedFeatures.ui.api)
-    implementation(projects.sharedFeatures.paging.api)
     implementation(projects.sharedFeatures.navigation.api)
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
     implementation(libs.koin.androidx.compose)
-    implementation(libs.androidx.compose.material.icons.core)
 }

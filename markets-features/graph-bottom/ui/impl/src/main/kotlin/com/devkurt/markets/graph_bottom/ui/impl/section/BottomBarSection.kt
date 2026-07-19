@@ -2,12 +2,15 @@ package com.devkurt.markets.graph_bottom.ui.impl.section
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.devkurt.markets.graph_bottom.ui.api.GraphBottom
 import com.devkurt.markets.graph_bottom.ui.api.LocalGraphBottom
 import com.devkurt.markets.graph_dashboard.ui.api.GraphDashboardRoute
 import com.devkurt.markets.graph_dashboard.ui.api.LocalGraphDashboard
+import com.devkurt.markets.graph_list.ui.api.GraphListRoute
+import com.devkurt.markets.graph_list.ui.api.LocalGraphList
 import com.devkurt.markets.navigation.api.clearExceptRoot
 import com.devkurt.markets.navigation.api.switchTo
 import com.devkurt.markets.ui.api.bars.MkShortNavigationBarItem
@@ -23,8 +26,13 @@ private data class BottomBarItem(
 private val bottomBarItems = listOf(
     BottomBarItem(
         icon = Icons.Default.Home,
-        label = "Markets",
+        label = "Dashboard",
         route = GraphDashboardRoute,
+    ),
+    BottomBarItem(
+        icon = Icons.AutoMirrored.Filled.List,
+        label = "Coins",
+        route = GraphListRoute,
     ),
 )
 
@@ -32,10 +40,13 @@ private val bottomBarItems = listOf(
 fun BottomBarSection() {
     val bottomNavGraph = LocalGraphBottom.current
     val dashboardNavGraph = LocalGraphDashboard.current
+    val listNavGraph = LocalGraphList.current
 
     val selectedBottomTab = bottomNavGraph.lastOrNull()
     val selectedDashboardTab = dashboardNavGraph.lastOrNull()
     val dashboardRoot = dashboardNavGraph.firstOrNull()
+    val selectedListTab = listNavGraph.lastOrNull()
+    val listRoot = listNavGraph.firstOrNull()
 
     bottomBarItems.forEach { tab ->
         val isSelected = selectedBottomTab == tab.route

@@ -1,10 +1,14 @@
 package com.devkurt.markets.coins_list.data.mapper
 
-import com.devkurt.markets.coins_list.data.remote.dto.CoinsListResponse
-import com.devkurt.markets.coins_list.domain.api.model.CoinsList
+import com.devkurt.markets.coins_list.data.remote.dto.CoinMarketDto
+import com.devkurt.markets.coins_list.domain.api.model.Coin
 
-fun CoinsListResponse.toCoinsList(): CoinsList {
-    return CoinsList(
-        name = data,
-    )
-}
+fun CoinMarketDto.toCoin(): Coin = Coin(
+    id = id,
+    symbol = symbol.uppercase(),
+    name = name,
+    imageUrl = image,
+    price = currentPrice,
+    changePercent24h = priceChangePercentage24h ?: 0.0,
+    marketCapRank = marketCapRank ?: 0,
+)

@@ -11,6 +11,8 @@ dependencies {
     api(projects.sharedFeatures.navigation.api)
     implementation(projects.marketsFeatures.graphBottom.ui.api)
     implementation(projects.marketsFeatures.graphDashboard.ui.api)
+    implementation(projects.marketsFeatures.graphList.ui.api)
+    implementation(projects.marketsFeatures.coinsList.ui.api)
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
     implementation(libs.koin.androidx.compose)

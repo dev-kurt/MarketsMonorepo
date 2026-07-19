@@ -13,6 +13,9 @@ import com.devkurt.markets.graph_dashboard.ui.api.DashboardPlaceholderRoute
 import com.devkurt.markets.graph_dashboard.ui.api.GraphDashboard
 import com.devkurt.markets.graph_dashboard.ui.api.GraphDashboardRoute
 import com.devkurt.markets.graph_dashboard.ui.api.LocalGraphDashboard
+import com.devkurt.markets.coins_list.ui.api.CoinsListRoute
+import com.devkurt.markets.graph_list.ui.api.GraphList
+import com.devkurt.markets.graph_list.ui.api.LocalGraphList
 import com.devkurt.markets.navigation.api.GraphMain
 import com.devkurt.markets.navigation.api.LocalGraphMain
 import com.devkurt.markets.navigation.api.LocalSignalBus
@@ -33,12 +36,14 @@ fun MainScreen(
     val graphBottom = rememberNavBackStack<GraphBottom>(serializersModule, GraphDashboardRoute)
     val graphDashboard =
         rememberNavBackStack<GraphDashboard>(serializersModule, DashboardPlaceholderRoute)
+    val graphList = rememberNavBackStack<GraphList>(serializersModule, CoinsListRoute)
     val signalBus = koinInject<SignalBus>()
 
     CompositionLocalProvider(
         LocalGraphMain provides graphMain,
         LocalGraphBottom provides graphBottom,
         LocalGraphDashboard provides graphDashboard,
+        LocalGraphList provides graphList,
         LocalSignalBus provides signalBus,
     ) {
         MarketsTheme {

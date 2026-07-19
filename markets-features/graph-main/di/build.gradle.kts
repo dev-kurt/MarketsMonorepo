@@ -20,6 +20,8 @@ dependencies {
     implementation(projects.sharedFeatures.serialization.di)
     implementation(projects.marketsFeatures.graphBottom.di)
     implementation(projects.marketsFeatures.graphDashboard.di)
+    implementation(projects.marketsFeatures.graphList.di)
+    implementation(projects.marketsFeatures.coinsList.di)
 
     implementation(libs.koin.android)
     implementation(libs.koin.core.viewmodel)

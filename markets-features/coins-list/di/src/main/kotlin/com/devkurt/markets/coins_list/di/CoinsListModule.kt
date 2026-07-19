@@ -1,9 +1,5 @@
 package com.devkurt.markets.coins_list.di
 
-import com.devkurt.markets.navigation.api.GraphEntryProvider
-import com.devkurt.markets.navigation.api.GraphMain
-import com.devkurt.markets.navigation.api.GraphMainRoutes
-import com.devkurt.markets.serialization.api.MkSerializersModule
 import com.devkurt.markets.coins_list.data.remote.api.CoinsListRemoteApi
 import com.devkurt.markets.coins_list.data.repository.CoinsListRepositoryImpl
 import com.devkurt.markets.coins_list.domain.api.repository.CoinsListRepository
@@ -12,8 +8,13 @@ import com.devkurt.markets.coins_list.domain.impl.usecase.CoinsListUseCaseImpl
 import com.devkurt.markets.coins_list.ui.api.CoinsListRoute
 import com.devkurt.markets.coins_list.ui.impl.CoinsListViewModel
 import com.devkurt.markets.coins_list.ui.impl.CoinsListWrapper
+import com.devkurt.markets.graph_list.ui.api.GraphList
+import com.devkurt.markets.graph_list.ui.api.GraphListRoutes
+import com.devkurt.markets.navigation.api.GraphEntryProvider
+import com.devkurt.markets.serialization.api.MkSerializersModule
 import io.ktor.client.HttpClient
 import kotlinx.serialization.modules.polymorphic
+import kotlinx.serialization.modules.subclass
 import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.Factory
 import org.koin.core.annotation.KoinViewModel
@@ -26,7 +27,7 @@ import org.koin.core.annotation.Single
 class CoinsListModule {
     @Single(binds = [GraphEntryProvider::class])
     @Named("coinsListRoutes")
-    fun coinsListRoutes(): GraphMainRoutes = GraphMainRoutes { scope ->
+    fun coinsListRoutes(): GraphListRoutes = GraphListRoutes { scope ->
         scope.entry<CoinsListRoute> {
             CoinsListWrapper()
         }
@@ -35,7 +36,7 @@ class CoinsListModule {
     @Single
     @Named("coinsListRouteSerializers")
     fun coinsListRouteSerializers(): MkSerializersModule = MkSerializersModule {
-        polymorphic(GraphMain::class) {
+        polymorphic(GraphList::class) {
             subclass(CoinsListRoute::class, CoinsListRoute.serializer())
         }
     }
