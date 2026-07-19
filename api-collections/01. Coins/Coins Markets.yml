@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: "{{base_url}}/coins/markets?vs_currency={{vs_currency}}&order=market_cap_desc&per_page=50&page=1&sparkline=true&price_change_percentage=24h"
+  url: "{{base_url}}/coins/markets?vs_currency={{vs_currency}}&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=24h"
   headers:
     - name: accept
       value: application/json
@@ -22,6 +22,12 @@ runtime:
         test("Liste boş değil", function () {
             expect(res.getBody().length).to.be.above(0);
         });
+        test("DTO alanları mevcut", function () {
+            var c = res.getBody()[0];
+            ["id","symbol","name","image","current_price",
+             "price_change_percentage_24h","market_cap_rank","market_cap","total_volume"]
+              .forEach(function (f) { expect(c).to.have.property(f); });
+        });
 
 settings:
   encodeUrl: true
@@ -33,14 +39,31 @@ docs: |-
   - **URL:** `{{base_url}}/coins/markets`
 
   ## Query parametreleri
-  - `vs_currency` (zorunlu): fiyat para birimi (ör. `usd`, `try`)
-  - `order`: sıralama (`market_cap_desc`)
-  - `per_page`: sayfa başı adet (1–250)
-  - `page`: sayfa no
-  - `sparkline`: 7 günlük mini grafik dizisi (`true`/`false`)
-  - `price_change_percentage`: değişim pencereleri (`1h,24h,7d`)
+  - `vs_currency` (zorunlu): fiyat para birimi — biz `usd`
+  - `order`: `market_cap_desc` (piyasa değerine göre azalan)
+  - `per_page`: 50, `page`: 1
+  - `sparkline`: `false` (mini grafik almıyoruz — MVP'de chart yok)
+  - `price_change_percentage`: `24h`
 
-  ## Yanıttaki kilit alanlar
-  `id`, `symbol`, `name`, `image`, `current_price`,
-  `price_change_percentage_24h`, `market_cap`, `total_volume`,
-  `sparkline_in_7d.price[]`
+  ## KULLANILACAK alanlar (DTO sözleşmesi)
+
+  Yanıt **düz bir dizi**, her eleman düz obje (nested yok).
+
+  | Alan | Tip | Kullanım |
+  |------|-----|----------|
+  | `id` | String | Detay navigasyonu (`/coins/{id}`) |
+  | `symbol` | String | Satırda sembol (btc) |
+  | `name` | String | Satırda isim (Bitcoin) |
+  | `image` | String (URL) | MkAsyncImage ikonu |
+  | `current_price` | **Double** | Fiyat |
+  | `price_change_percentage_24h` | **Double** | 24s değişim → yeşil/kırmızı |
+  | `market_cap_rank` | Int | Sıra no |
+  | `market_cap` | Long | Piyasa değeri |
+  | `total_volume` | Long | 24s hacim |
+
+  ## ⚠️ DTO tuzakları
+  - `current_price` büyük coin'lerde tam sayı görünür (`64490`) ama küçük
+    coin'lerde ondalıklıdır (`0.00034`) → **`Double` kullan**, `Int` değil.
+  - `roi` alanı `null` gelebilir → almıyoruz.
+  - Kullanmadığımız ~18 alan var (`ath`, `atl`, `fully_diluted_valuation`…);
+    `ignoreUnknownKeys = true` sayesinde DTO'da tanımlamaya gerek yok.
