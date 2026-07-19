@@ -9,9 +9,9 @@ import com.devkurt.markets.graph_dashboard.ui.api.GraphDashboard
 import com.devkurt.markets.graph_dashboard.ui.api.GraphDashboardRoute
 import com.devkurt.markets.navigation.api.GraphMain
 import com.devkurt.markets.serialization.di.SerializationModule
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlin.test.Test
 import kotlin.test.assertNotNull
-import kotlinx.serialization.ExperimentalSerializationApi
 
 @OptIn(ExperimentalSerializationApi::class)
 class RouteSerializersTest {

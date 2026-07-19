@@ -7,5 +7,6 @@ import com.devkurt.markets.template_feature.domain.api.usecase.TemplateFeatureUs
 class TemplateFeatureUseCaseImpl(
     private val repository: TemplateFeatureRepository,
 ) : TemplateFeatureUseCase {
-    override suspend operator fun invoke(): Result<TemplateFeature> = repository.getTemplateFeature()
+    override suspend operator fun invoke(): Result<TemplateFeature> =
+        repository.getTemplateFeature()
 }

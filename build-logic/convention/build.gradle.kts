@@ -18,11 +18,13 @@ gradlePlugin {
     plugins {
         register("androidApplication") {
             id = "markets.android.application"
-            implementationClass = "com.devkurt.markets.convention.role.AndroidApplicationConventionPlugin"
+            implementationClass =
+                "com.devkurt.markets.convention.role.AndroidApplicationConventionPlugin"
         }
         register("androidLibrary") {
             id = "markets.android.library"
-            implementationClass = "com.devkurt.markets.convention.role.AndroidLibraryConventionPlugin"
+            implementationClass =
+                "com.devkurt.markets.convention.role.AndroidLibraryConventionPlugin"
         }
         register("jvmLibrary") {
             id = "markets.jvm.library"
@@ -30,7 +32,8 @@ gradlePlugin {
         }
         register("androidFeatureUi") {
             id = "markets.android.feature.ui"
-            implementationClass = "com.devkurt.markets.convention.role.AndroidFeatureUiConventionPlugin"
+            implementationClass =
+                "com.devkurt.markets.convention.role.AndroidFeatureUiConventionPlugin"
         }
         register("koin") {
             id = "markets.koin"

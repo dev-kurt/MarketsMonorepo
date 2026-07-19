@@ -31,7 +31,8 @@ fun MainScreen(
     val serializersModule = koinInject<SerializersModule>()
     val graphMain = rememberNavBackStack<GraphMain>(serializersModule, GraphBottomRoute)
     val graphBottom = rememberNavBackStack<GraphBottom>(serializersModule, GraphDashboardRoute)
-    val graphDashboard = rememberNavBackStack<GraphDashboard>(serializersModule, DashboardPlaceholderRoute)
+    val graphDashboard =
+        rememberNavBackStack<GraphDashboard>(serializersModule, DashboardPlaceholderRoute)
     val signalBus = koinInject<SignalBus>()
 
     CompositionLocalProvider(

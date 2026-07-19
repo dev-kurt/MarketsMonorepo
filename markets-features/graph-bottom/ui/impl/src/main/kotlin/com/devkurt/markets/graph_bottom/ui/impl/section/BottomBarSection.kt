@@ -44,8 +44,8 @@ fun BottomBarSection() {
             onClick = {
                 when {
                     tab.route == GraphDashboardRoute &&
-                        isSelected &&
-                        selectedDashboardTab != dashboardRoot -> {
+                            isSelected &&
+                            selectedDashboardTab != dashboardRoot -> {
                         dashboardNavGraph.clearExceptRoot()
                     }
 

@@ -1,7 +1,7 @@
 package com.devkurt.markets.logger.impl
 
-import co.touchlab.kermit.Logger as Kermit
 import com.devkurt.markets.logger.api.Logger
+import co.touchlab.kermit.Logger as Kermit
 
 class KermitLogger(private val kermit: Kermit) : Logger {
     override fun d(tag: String, message: () -> String) =

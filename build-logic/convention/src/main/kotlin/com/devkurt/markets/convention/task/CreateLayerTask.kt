@@ -30,7 +30,10 @@ abstract class CreateLayerTask @Inject constructor(
     }
 
     @get:Input
-    @get:Option(option = "layer", description = "The layer name (e.g. data, domain:api, domain:impl, ui:api, ui:impl)")
+    @get:Option(
+        option = "layer",
+        description = "The layer name (e.g. data, domain:api, domain:impl, ui:api, ui:impl)"
+    )
     abstract val layerName: Property<String>
 
     @get:Input
@@ -69,9 +72,11 @@ abstract class CreateLayerTask @Inject constructor(
         val rootDir = rootDirectory.asFile.get()
         val layerNameValue = layerName.get()
         val locationValue = featureLocation.get()
-        val sourceValue = sourceFeature.getOrElse(":template-feature").takeIf { it.isNotBlank() } ?: ":template-feature"
+        val sourceValue = sourceFeature.getOrElse(":template-feature").takeIf { it.isNotBlank() }
+            ?: ":template-feature"
         val rawSourceLayer = sourceLayerName.getOrNull()
-        val sourceLayerValue = if (rawSourceLayer.isNullOrBlank()) layerNameValue else rawSourceLayer
+        val sourceLayerValue =
+            if (rawSourceLayer.isNullOrBlank()) layerNameValue else rawSourceLayer
 
         require(basePackage.isPresent) {
             """
@@ -114,8 +119,14 @@ abstract class CreateLayerTask @Inject constructor(
 
         val sourceLocationSnake = sourceLocationType.replace("-", "_")
         val targetLocationSnake = locationType.replace("-", "_")
-        val sourceLocationCamel = if (sourceLocationType.isEmpty()) "" else kebabToPascal(sourceLocationType).replaceFirstChar { it.lowercase(Locale.ROOT) }
-        val targetLocationCamel = if (locationType.isEmpty()) "" else kebabToPascal(locationType).replaceFirstChar { it.lowercase(Locale.ROOT) }
+        val sourceLocationCamel =
+            if (sourceLocationType.isEmpty()) "" else kebabToPascal(sourceLocationType).replaceFirstChar {
+                it.lowercase(Locale.ROOT)
+            }
+        val targetLocationCamel =
+            if (locationType.isEmpty()) "" else kebabToPascal(locationType).replaceFirstChar {
+                it.lowercase(Locale.ROOT)
+            }
 
         val sourceFeatureSnake = sourceFeatureKebab.replace("-", "_")
         val targetFeatureSnake = featureKebab.replace("-", "_")
@@ -202,11 +213,23 @@ abstract class CreateLayerTask @Inject constructor(
 
         logger.lifecycle("--------------------------------------------------")
         logger.lifecycle("✅ Layer created successfully!")
-        logger.lifecycle("Run: ./gradlew $locationValue:${layerNameValue.replace("/", ":")}:assemble")
+        logger.lifecycle(
+            "Run: ./gradlew $locationValue:${
+                layerNameValue.replace(
+                    "/",
+                    ":"
+                )
+            }:assemble"
+        )
         logger.lifecycle("--------------------------------------------------")
     }
 
-    private fun updateSettingsGradle(settingsFile: File, location: String, locationType: String, layerName: String) {
+    private fun updateSettingsGradle(
+        settingsFile: File,
+        location: String,
+        locationType: String,
+        layerName: String
+    ) {
         val lines = settingsFile.readLines().toMutableList()
         val formattedLayer = layerName.replace("/", ":")
         val newInclude = "include(\"$location:$formattedLayer\")"
@@ -253,7 +276,12 @@ abstract class CreateLayerTask @Inject constructor(
         logger.lifecycle("Updated settings.gradle.kts with: $newInclude")
     }
 
-    private fun updateDiModule(diDir: File, locationCamel: String, featureCamel: String, layerPath: String) {
+    private fun updateDiModule(
+        diDir: File,
+        locationCamel: String,
+        featureCamel: String,
+        layerPath: String
+    ) {
         val buildFile = File(diDir, "build.gradle.kts")
         if (!buildFile.exists()) {
             logger.warn("DI build.gradle.kts not found: $buildFile")
@@ -341,8 +369,10 @@ abstract class CreateLayerTask @Inject constructor(
         // \b alt çizgiyi kelime karakteri saydığı için snake_case/camelCase'de yanlış eşleşir;
         // bu yüzden özel sınırlar kullanılıyor.
         val snakeRegex = { word: String -> Regex("(?<=^|[^a-zA-Z0-9])$word(?=[^a-zA-Z0-9]|\\$)") }
-        val camelRegex = { word: String -> Regex("(?<=^|[^a-zA-Z0-9])$word(?=[A-Z]|[^a-zA-Z0-9]|\\$)") }
-        val pascalRegex = { word: String -> Regex("(?<=^|[^a-zA-Z0-9]|[a-z])$word(?=[A-Z]|[^a-zA-Z0-9]|\\$)") }
+        val camelRegex =
+            { word: String -> Regex("(?<=^|[^a-zA-Z0-9])$word(?=[A-Z]|[^a-zA-Z0-9]|\\$)") }
+        val pascalRegex =
+            { word: String -> Regex("(?<=^|[^a-zA-Z0-9]|[a-z])$word(?=[A-Z]|[^a-zA-Z0-9]|\\$)") }
 
         if (sourceLayerPascal != targetLayerPascal) {
             content = content.replace(pascalRegex(sourceLayerPascal), targetLayerPascal)
@@ -366,7 +396,11 @@ abstract class CreateLayerTask @Inject constructor(
         }
 
         if (newFileName != file.name) {
-            Files.move(file.toPath(), file.toPath().resolveSibling(newFileName), StandardCopyOption.REPLACE_EXISTING)
+            Files.move(
+                file.toPath(),
+                file.toPath().resolveSibling(newFileName),
+                StandardCopyOption.REPLACE_EXISTING
+            )
         }
     }
 
@@ -395,21 +429,34 @@ abstract class CreateLayerTask @Inject constructor(
                 }
 
                 if (foundBase) {
-                    val oldLocationDir = if (sourceLocationSnake.isNotEmpty()) File(currentDir, sourceLocationSnake) else currentDir
+                    val oldLocationDir = if (sourceLocationSnake.isNotEmpty()) File(
+                        currentDir,
+                        sourceLocationSnake
+                    ) else currentDir
                     val oldFeatureDir = File(oldLocationDir, sourceFeatureSnake)
                     val oldLayerDir = File(oldFeatureDir, sourceLayerFolder)
 
                     if (oldLayerDir.exists()) {
-                        val newLocationDir = if (targetLocationSnake.isNotEmpty()) File(currentDir, targetLocationSnake).also { it.mkdirs() } else currentDir
-                        val newFeatureDir = File(newLocationDir, targetFeatureSnake).also { it.mkdirs() }
+                        val newLocationDir = if (targetLocationSnake.isNotEmpty()) File(
+                            currentDir,
+                            targetLocationSnake
+                        ).also { it.mkdirs() } else currentDir
+                        val newFeatureDir =
+                            File(newLocationDir, targetFeatureSnake).also { it.mkdirs() }
                         val newLayerDir = File(newFeatureDir, targetLayerFolder)
 
                         if (oldLayerDir.absolutePath != newLayerDir.absolutePath) {
                             newLayerDir.parentFile?.mkdirs()
-                            Files.move(oldLayerDir.toPath(), newLayerDir.toPath(), StandardCopyOption.REPLACE_EXISTING)
+                            Files.move(
+                                oldLayerDir.toPath(),
+                                newLayerDir.toPath(),
+                                StandardCopyOption.REPLACE_EXISTING
+                            )
 
                             cleanEmptyDirectoriesRecursively(oldFeatureDir)
-                            if (sourceLocationSnake.isNotEmpty()) cleanEmptyDirectoriesRecursively(oldLocationDir)
+                            if (sourceLocationSnake.isNotEmpty()) cleanEmptyDirectoriesRecursively(
+                                oldLocationDir
+                            )
                         }
                     }
                 }

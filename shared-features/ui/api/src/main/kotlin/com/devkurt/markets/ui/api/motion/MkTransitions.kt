@@ -58,6 +58,6 @@ object MkContentTransform {
     ): ContentTransform {
         val slideSpec = tween<IntOffset>(durationMillis = durationMillis, easing = easing)
         return slideInVertically(slideSpec) { fullHeight -> -fullHeight } togetherWith
-            slideOutVertically(slideSpec) { fullHeight -> fullHeight }
+                slideOutVertically(slideSpec) { fullHeight -> fullHeight }
     }
 }

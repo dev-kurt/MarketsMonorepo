@@ -2,6 +2,7 @@ package com.devkurt.markets.ui.di
 
 import android.content.Context
 import coil3.ImageLoader
+import coil3.annotation.ExperimentalCoilApi
 import coil3.network.ktor3.KtorNetworkFetcherFactory
 import io.ktor.client.HttpClient
 import org.koin.core.annotation.Configuration
@@ -11,6 +12,7 @@ import org.koin.core.annotation.Single
 @Module
 @Configuration
 class CoilModule {
+    @OptIn(ExperimentalCoilApi::class)
     @Single
     fun imageLoader(context: Context, httpClient: HttpClient): ImageLoader =
         ImageLoader.Builder(context)

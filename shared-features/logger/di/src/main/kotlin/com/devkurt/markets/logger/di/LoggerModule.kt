@@ -1,6 +1,5 @@
 package com.devkurt.markets.logger.di
 
-import co.touchlab.kermit.Logger as Kermit
 import co.touchlab.kermit.Severity
 import co.touchlab.kermit.StaticConfig
 import co.touchlab.kermit.platformLogWriter
@@ -9,6 +8,7 @@ import com.devkurt.markets.logger.impl.KermitLogger
 import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
+import co.touchlab.kermit.Logger as Kermit
 
 @Module
 @Configuration

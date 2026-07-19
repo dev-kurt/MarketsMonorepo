@@ -17,15 +17,15 @@ versiyonlanabilir; API sözleşmeleri kodla aynı repoda yaşar.
 
 ## Klasör → feature eşlemesi
 
-| Klasör | Endpoint | Feature |
-|--------|----------|---------|
-| 00. Health | `/ping` | — (sağlık) |
-| 01. Coins | `/coins/markets` | `coins-list` |
-| 01. Coins | `/coins/{id}` | `coin-detail` |
-| 01. Coins | `/simple/price` | `favorites` (fiyat tazeleme) |
-| 02. Charts | `/coins/{id}/market_chart`, `/ohlc` | `coins-chart` |
-| 03. Search | `/search`, `/search/trending` | `search` |
-| 04. Global | `/global` | dashboard özeti |
+| Klasör     | Endpoint                            | Feature                      |
+|------------|-------------------------------------|------------------------------|
+| 00. Health | `/ping`                             | — (sağlık)                   |
+| 01. Coins  | `/coins/markets`                    | `coins-list`                 |
+| 01. Coins  | `/coins/{id}`                       | `coin-detail`                |
+| 01. Coins  | `/simple/price`                     | `favorites` (fiyat tazeleme) |
+| 02. Charts | `/coins/{id}/market_chart`, `/ohlc` | `coins-chart`                |
+| 03. Search | `/search`, `/search/trending`       | `search`                     |
+| 04. Global | `/global`                           | dashboard özeti              |
 
 ## Konvansiyon: API değişikliği iş akışı (ZORUNLU)
 
