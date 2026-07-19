@@ -19,24 +19,52 @@ runtime:
         test("Coin Detail başarılı", function () {
             expect(res.getStatus()).to.equal(200);
         });
+        test("DTO alanları mevcut", function () {
+            var d = res.getBody();
+            ["id","symbol","name","description","image","market_cap_rank","market_data"]
+              .forEach(function (f) { expect(d).to.have.property(f); });
+            expect(d.market_data.current_price).to.have.property("usd");
+        });
 
 settings:
   encodeUrl: true
 
 docs: |-
-  Tek bir coin'in detayı — **coin-detail** feature'ının kaynağı.
+  Tek coin detayı — **coin-detail** feature'ının kaynağı.
 
   - **Metot:** `GET`
   - **URL:** `{{base_url}}/coins/{{coin_id}}`
 
   ## Query parametreleri
-  - `localization`: yerelleştirilmiş açıklamalar (`false` → yük azaltır)
-  - `tickers`: borsa ticker listesi
-  - `market_data`: fiyat/cap/hacim (`true`)
-  - `community_data`, `developer_data`: ek metrikler
-  - `sparkline`: 7g mini grafik
+  Yükü küçültmek için gereksizleri kapatıyoruz:
+  - `localization=false` — 50+ dilde açıklama gelmesin
+  - `tickers=false` — borsa listesi gelmesin (çok büyük)
+  - `market_data=true` — **gerekli**, fiyat/cap buradan
+  - `community_data=false`, `developer_data=false`, `sparkline=false`
 
-  ## Yanıttaki kilit alanlar
-  `id`, `symbol`, `name`, `image.large`, `description.en`,
-  `market_data.current_price.usd`, `market_data.ath.usd`,
-  `market_data.price_change_percentage_24h`
+  ## KULLANILACAK alanlar (DTO sözleşmesi)
+
+  Liste ucundan farklı olarak yanıt **iç içe (nested)**.
+
+  | Yol | Tip | Kullanım |
+  |-----|-----|----------|
+  | `id` · `symbol` · `name` | String | Başlık |
+  | `description.en` | String | Açıklama metni |
+  | `image.large` | String (URL) | Büyük ikon |
+  | `market_cap_rank` | Int | Sıra no |
+  | `market_data.current_price.usd` | Double | Fiyat |
+  | `market_data.price_change_percentage_24h` | Double | 24s değişim |
+  | `market_data.market_cap.usd` | Long | Piyasa değeri |
+  | `market_data.total_volume.usd` | Long | 24s hacim |
+  | `market_data.high_24h.usd` · `low_24h.usd` | Double | Gün içi aralık |
+  | `market_data.ath.usd` · `atl.usd` | Double | Tüm zaman zirve/dip |
+  | `market_data.circulating_supply` · `max_supply` | Double | Arz |
+
+  ## ⚠️ DTO tuzakları (kritik)
+  - **Tutarsız şema:** `current_price`, `market_cap`, `ath` … para birimine göre
+    **map**'tir (`{"usd": 64495, "eur": ...}`) → `Map<String, Double>`.
+    Ama `price_change_percentage_24h` **düz Double**'dır, map değil.
+    Naif bir DTO burada patlar; ikisini farklı modelle.
+  - `circulating_supply` / `max_supply` de düz Double (map değil).
+  - `description.en` çok uzun ve HTML `<a>` etiketi içerebilir.
+  - `max_supply` bazı coin'lerde `null` → nullable yap.

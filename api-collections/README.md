@@ -17,15 +17,21 @@ versiyonlanabilir; API sözleşmeleri kodla aynı repoda yaşar.
 
 ## Klasör → feature eşlemesi
 
-| Klasör     | Endpoint                            | Feature                      |
-|------------|-------------------------------------|------------------------------|
-| 00. Health | `/ping`                             | — (sağlık)                   |
-| 01. Coins  | `/coins/markets`                    | `coins-list`                 |
-| 01. Coins  | `/coins/{id}`                       | `coin-detail`                |
-| 01. Coins  | `/simple/price`                     | `favorites` (fiyat tazeleme) |
-| 02. Charts | `/coins/{id}/market_chart`, `/ohlc` | `coins-chart`                |
-| 03. Search | `/search`, `/search/trending`       | `search`                     |
-| 04. Global | `/global`                           | dashboard özeti              |
+Koleksiyon **yalnızca uygulamanın gerçekten kullandığı** uçları içerir.
+Her request'in `docs` bölümünde, DTO'ya map'lenecek alanlar ve şema tuzakları yazılıdır.
+
+| Klasör     | Endpoint         | Feature       |
+|------------|------------------|---------------|
+| 00. Health | `/ping`          | — (key doğrulama) |
+| 01. Coins  | `/coins/markets` | `coins-list`  |
+| 01. Coins  | `/coins/{id}`    | `coin-detail` |
+
+### Kapsam dışı (roadmap)
+
+Şu uçlar bilinçli olarak koleksiyondan çıkarıldı; ilgili feature'lar
+yapıldığında geri eklenir: `/simple/price` (favoriler),
+`/coins/{id}/market_chart` · `/ohlc` (grafik), `/search` · `/search/trending`
+(arama), `/global` (dashboard özeti).
 
 ## Konvansiyon: API değişikliği iş akışı (ZORUNLU)
 
