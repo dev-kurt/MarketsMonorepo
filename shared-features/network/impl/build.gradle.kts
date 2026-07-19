@@ -11,6 +11,7 @@ android {
 }
 
 dependencies {
+    api(projects.sharedFeatures.network.api)
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.okhttp)
     implementation(libs.ktor.client.content.negotiation)

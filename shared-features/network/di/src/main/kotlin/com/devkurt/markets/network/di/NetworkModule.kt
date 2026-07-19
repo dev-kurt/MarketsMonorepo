@@ -1,5 +1,6 @@
 package com.devkurt.markets.network.di
 
+import com.devkurt.markets.network.api.NetworkConfig
 import com.devkurt.markets.network.impl.NetworkClientFactory
 import io.ktor.client.HttpClient
 import kotlinx.serialization.json.Json
@@ -17,5 +18,6 @@ class NetworkModule {
     }
 
     @Single
-    fun httpClient(json: Json): HttpClient = NetworkClientFactory.create(json)
+    fun httpClient(json: Json, config: NetworkConfig): HttpClient =
+        NetworkClientFactory.create(json = json, config = config)
 }

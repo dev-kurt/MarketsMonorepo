@@ -14,6 +14,7 @@ dependencies {
     implementation(projects.sharedFeatures.ui.di)
     implementation(projects.sharedFeatures.logger.di)
     implementation(projects.sharedFeatures.network.di)
+    api(projects.sharedFeatures.network.api)
     implementation(projects.sharedFeatures.coroutines.di)
     implementation(projects.sharedFeatures.navigation.di)
     implementation(projects.sharedFeatures.serialization.di)
