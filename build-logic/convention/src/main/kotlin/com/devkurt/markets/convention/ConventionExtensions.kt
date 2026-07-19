@@ -8,7 +8,7 @@ import org.gradle.kotlin.dsl.getByType
 val Project.libs: VersionCatalog
     get() = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
-internal const val COMPILE_SDK = 36
+internal const val COMPILE_SDK = 37
 internal const val MIN_SDK = 24
 internal const val TARGET_SDK = 36
 
