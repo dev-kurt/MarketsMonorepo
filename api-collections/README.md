@@ -1,51 +1,50 @@
 # Markets API Collections (CoinGecko Demo)
 
-Markets uygulamasının kullandığı CoinGecko Demo (ücretsiz) uçlarının
-[Bruno](https://www.usebruno.com/) koleksiyonu. Düz YAML → git ile diff'lenebilir,
-versiyonlanabilir; API sözleşmeleri kodla aynı repoda yaşar.
+[Bruno](https://www.usebruno.com/) collection for the CoinGecko Demo (free) endpoints
+used by the Markets app. Plain YAML → git-diffable and versioned; API contracts live
+in the same repo as the code.
 
-## Kurulum
+## Setup
 
-1. Bruno'da **Open Collection** → bu klasörü (`api-collections/`) aç.
-2. Sağ üstten **Markets Demo** environment'ını seç.
-3. `cg_demo_api_key` secret'ına CoinGecko Demo key'ini gir (Bruno lokalde saklar,
-   dosyaya yazılmaz — repoya sır sızmaz).
-4. **00. Health → Ping** çalıştır → `(V3) To the Moon!` görürsen key geçerli.
+1. In Bruno, **Open Collection** → select this folder (`api-collections/`).
+2. Pick the **Markets Demo** environment (top right).
+3. Set the `cg_demo_api_key` secret to your CoinGecko Demo key (Bruno stores secrets
+   locally — they are never written to these files, so nothing leaks into the repo).
+4. Run **00. Health → Ping** → seeing `(V3) To the Moon!` means the key works.
 
 - **Base URL:** `https://api.coingecko.com/api/v3`
-- **Auth:** `x-cg-demo-api-key` header'ı (değer environment'ta)
+- **Auth:** `x-cg-demo-api-key` header (value comes from the environment)
 
-## Klasör → feature eşlemesi
+## Folder → feature mapping
 
-Koleksiyon **yalnızca uygulamanın gerçekten kullandığı** uçları içerir.
-Her request'in `docs` bölümünde, DTO'ya map'lenecek alanlar ve şema tuzakları yazılıdır.
+The collection contains **only the endpoints the app actually uses**. Each request's
+`docs` section lists the fields mapped into DTOs plus the schema pitfalls.
 
-| Klasör     | Endpoint         | Feature       |
+| Folder     | Endpoint         | Feature       |
 |------------|------------------|---------------|
-| 00. Health | `/ping`          | — (key doğrulama) |
+| 00. Health | `/ping`          | — (key check) |
 | 01. Coins  | `/coins/markets` | `coins-list`  |
 | 01. Coins  | `/coins/{id}`    | `coin-detail` |
 
-### Kapsam dışı (roadmap)
+### Out of scope (roadmap)
 
-Şu uçlar bilinçli olarak koleksiyondan çıkarıldı; ilgili feature'lar
-yapıldığında geri eklenir: `/simple/price` (favoriler),
-`/coins/{id}/market_chart` · `/ohlc` (grafik), `/search` · `/search/trending`
-(arama), `/global` (dashboard özeti).
+These endpoints were deliberately removed and will be added back when their features
+are built: `/simple/price` (favorites), `/coins/{id}/market_chart` and `/ohlc`
+(charts), `/search` and `/search/trending` (search), `/global` (dashboard summary).
 
-## Konvansiyon: API değişikliği iş akışı (ZORUNLU)
+## Convention: API change workflow (REQUIRED)
 
-Bir endpoint'in davranışı/şeması değiştiğinde, data katmanına dokunmadan **önce**:
+When an endpoint's behaviour or schema changes, **before** touching the data layer:
 
-1. **Bruno'da güncelle** — request'i çalıştır, yeni yanıt şeklini gözlemle.
-2. **Doğrula** — `after-response` test'i yeşil mi, kritik alanlar yerinde mi?
-3. **Sonra** DTO / mapper / repository'yi bu doğrulanmış şekle göre güncelle.
+1. **Update it in Bruno** — run the request, observe the new response shape.
+2. **Verify** — is the `after-response` test green, are the critical fields present?
+3. **Then** update the DTO / mapper / repository against that verified shape.
 
-Yani koleksiyon her API değişikliğinin **0. adımıdır**; data katmanı değişikliğinin
-kaynağı gözlemlenen gerçektir, tahmin değil. Bu disiplin koleksiyonu güncel
-(çürümemiş) tutar.
+In other words, the collection is **step 0** of every API change; the data layer is
+derived from observed reality, not from guesswork. This discipline keeps the
+collection current.
 
-> **Not (bilinen boşluk):** Bu akış *insan* zorlamasıdır — atlanırsa drift sessizce
-> oluşur. Makine-zorlaması için CI'a `bruno run` smoke-test'i eklenebilir; o zaman
-> koleksiyon ile gerçek API uyuşmazlığı pipeline'ı kırmızıya çevirir. Şu an bilinçli
-> olarak (1) disiplin katmanıyla yetiniyoruz.
+> **Note (known gap):** this workflow is *human*-enforced — if it is skipped, drift
+> happens silently. For machine enforcement, a `bruno run` smoke test can be added to
+> CI so that a mismatch between the collection and the live API turns the pipeline
+> red. For now we deliberately rely on the discipline layer alone.

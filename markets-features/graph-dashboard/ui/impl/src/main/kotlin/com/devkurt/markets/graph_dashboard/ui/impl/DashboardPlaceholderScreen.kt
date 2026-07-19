@@ -17,7 +17,7 @@ fun DashboardPlaceholderScreen() {
     MkScreenScaffold(
         topBar = {
             MkCenterAlignedTopAppBar(
-                title = { MkText("Piyasa") },
+                title = { MkText("Markets") },
             )
         },
     ) { paddingValues ->
@@ -27,7 +27,7 @@ fun DashboardPlaceholderScreen() {
                 .fillMaxSize(),
             contentAlignment = Alignment.Center,
         ) {
-            MkText("Coins yakında burada")
+            MkText("Coins coming soon")
         }
     }
 }

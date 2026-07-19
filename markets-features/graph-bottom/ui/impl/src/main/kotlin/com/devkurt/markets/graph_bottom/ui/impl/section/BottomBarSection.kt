@@ -23,7 +23,7 @@ private data class BottomBarItem(
 private val bottomBarItems = listOf(
     BottomBarItem(
         icon = Icons.Default.Home,
-        label = "Piyasa",
+        label = "Markets",
         route = GraphDashboardRoute,
     ),
 )

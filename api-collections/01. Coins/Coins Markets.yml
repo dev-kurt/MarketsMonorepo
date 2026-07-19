@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: "{{base_url}}/coins/markets?vs_currency={{vs_currency}}&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=24h"
+  url: "{{base_url}}/coins/markets?vs_currency={{vs_currency}}&order=market_cap_desc&per_page=20&page=1&sparkline=false&price_change_percentage=24h"
   headers:
     - name: accept
       value: application/json
@@ -16,13 +16,13 @@ runtime:
   scripts:
     - type: after-response
       code: |-
-        test("Coins Markets başarılı", function () {
+        test("Coins Markets succeeds", function () {
             expect(res.getStatus()).to.equal(200);
         });
-        test("Liste boş değil", function () {
+        test("List is not empty", function () {
             expect(res.getBody().length).to.be.above(0);
         });
-        test("DTO alanları mevcut", function () {
+        test("DTO fields are present", function () {
             var c = res.getBody()[0];
             ["id","symbol","name","image","current_price",
              "price_change_percentage_24h","market_cap_rank","market_cap","total_volume"]
@@ -33,37 +33,44 @@ settings:
   encodeUrl: true
 
 docs: |-
-  Piyasa verisiyle coin listesi — **coins-list** feature'ının kaynağı.
+  Paginated coin list with market data — the source for the **coins-list** feature.
 
-  - **Metot:** `GET`
+  - **Method:** `GET`
   - **URL:** `{{base_url}}/coins/markets`
 
-  ## Query parametreleri
-  - `vs_currency` (zorunlu): fiyat para birimi — biz `usd`
-  - `order`: `market_cap_desc` (piyasa değerine göre azalan)
-  - `per_page`: 50, `page`: 1
-  - `sparkline`: `false` (mini grafik almıyoruz — MVP'de chart yok)
+  ## Query parameters
+  - `vs_currency` (required): price currency — we use `usd`
+  - `order`: `market_cap_desc` (descending by market cap)
+  - `per_page`: 20, `page`: 1-based (paging uses this)
+  - `sparkline`: `false` (no mini chart — charts are out of MVP scope)
   - `price_change_percentage`: `24h`
 
-  ## KULLANILACAK alanlar (DTO sözleşmesi)
+  ## Fields we map (DTO contract)
 
-  Yanıt **düz bir dizi**, her eleman düz obje (nested yok).
+  The response is a **flat array**; every element is a flat object (no nesting).
 
-  | Alan | Tip | Kullanım |
-  |------|-----|----------|
-  | `id` | String | Detay navigasyonu (`/coins/{id}`) |
-  | `symbol` | String | Satırda sembol (btc) |
-  | `name` | String | Satırda isim (Bitcoin) |
-  | `image` | String (URL) | MkAsyncImage ikonu |
-  | `current_price` | **Double** | Fiyat |
-  | `price_change_percentage_24h` | **Double** | 24s değişim → yeşil/kırmızı |
-  | `market_cap_rank` | Int | Sıra no |
-  | `market_cap` | Long | Piyasa değeri |
-  | `total_volume` | Long | 24s hacim |
+  | Field | Type | Usage |
+  |-------|------|-------|
+  | `id` | String | Detail navigation (`/coins/{id}`) |
+  | `symbol` | String | Row symbol (btc) |
+  | `name` | String | Row name (Bitcoin) |
+  | `image` | String (URL) | MkAsyncImage icon |
+  | `current_price` | **Double** | Price |
+  | `price_change_percentage_24h` | **Double** | 24h change → green/red |
+  | `market_cap_rank` | Int | Rank |
+  | `market_cap` | Long | Market cap |
+  | `total_volume` | Long | 24h volume |
 
-  ## ⚠️ DTO tuzakları
-  - `current_price` büyük coin'lerde tam sayı görünür (`64490`) ama küçük
-    coin'lerde ondalıklıdır (`0.00034`) → **`Double` kullan**, `Int` değil.
-  - `roi` alanı `null` gelebilir → almıyoruz.
-  - Kullanmadığımız ~18 alan var (`ath`, `atl`, `fully_diluted_valuation`…);
-    `ignoreUnknownKeys = true` sayesinde DTO'da tanımlamaya gerek yok.
+  ## ⚠️ DTO pitfalls
+  - `current_price` looks like an integer for large coins (`64490`) but is fractional
+    for small ones (`0.00034`) → use **`Double`**, never `Int`.
+  - `price_change_percentage_24h` and `market_cap_rank` can be `null` for some coins
+    → make them nullable and fall back in the mapper.
+  - `roi` can be `null` → not mapped.
+  - ~18 fields we ignore (`ath`, `atl`, `fully_diluted_valuation`, …); thanks to
+    `ignoreUnknownKeys = true` they need no DTO declaration.
+
+  ## Paging
+  CoinGecko returns **no total count** and no envelope, so paging is keyed:
+  the next page exists only while a full page is returned
+  (`nextKey = data.size < loadSize ? null : page + 1`), and placeholders are disabled.

@@ -16,7 +16,7 @@ runtime:
   scripts:
     - type: after-response
       code: |-
-        test("Ping başarılı", function () {
+        test("Ping succeeds", function () {
             expect(res.getStatus()).to.equal(200);
         });
 
@@ -24,9 +24,9 @@ settings:
   encodeUrl: true
 
 docs: |-
-  API'nin ayakta olduğunu ve key'in geçerli olduğunu doğrular.
+  Verifies that the API is reachable and the key is valid.
 
-  - **Metot:** `GET`
+  - **Method:** `GET`
   - **URL:** `{{base_url}}/ping`
 
-  Örnek yanıt: `{ "gecko_says": "(V3) To the Moon!" }`
+  Sample response: `{ "gecko_says": "(V3) To the Moon!" }`

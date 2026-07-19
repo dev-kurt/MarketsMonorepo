@@ -5,16 +5,15 @@ info:
 
 docs:
   content: |-
-    ### Markets — CoinGecko Demo API koleksiyonu
+    ### Markets — CoinGecko Demo API collection
 
-    Markets uygulamasının kullandığı CoinGecko Demo (ücretsiz) uçları.
+    The CoinGecko Demo (free) endpoints used by the Markets app.
 
     - Base URL: `https://api.coingecko.com/api/v3`
-    - Auth: `x-cg-demo-api-key` header'ı (environment'taki `cg_demo_api_key`)
-    - Her başarılı istek aylık kredi limitinden 1 düşer.
+    - Auth: `x-cg-demo-api-key` header (`cg_demo_api_key` from the environment)
+    - Every successful request consumes 1 credit from the monthly quota.
 
-    Klasörler feature'larla eşleşir: Coins → coins-list/coin-detail,
-    Charts → coins-chart, Search → search, Global → dashboard özeti.
+    Folders map to features: Coins → coins-list / coin-detail.
   type: text/markdown
 bundled: false
 extensions:

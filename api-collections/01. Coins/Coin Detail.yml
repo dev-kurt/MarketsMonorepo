@@ -16,10 +16,10 @@ runtime:
   scripts:
     - type: after-response
       code: |-
-        test("Coin Detail başarılı", function () {
+        test("Coin Detail succeeds", function () {
             expect(res.getStatus()).to.equal(200);
         });
-        test("DTO alanları mevcut", function () {
+        test("DTO fields are present", function () {
             var d = res.getBody();
             ["id","symbol","name","description","image","market_cap_rank","market_data"]
               .forEach(function (f) { expect(d).to.have.property(f); });
@@ -30,41 +30,41 @@ settings:
   encodeUrl: true
 
 docs: |-
-  Tek coin detayı — **coin-detail** feature'ının kaynağı.
+  Single coin detail — the source for the **coin-detail** feature.
 
-  - **Metot:** `GET`
+  - **Method:** `GET`
   - **URL:** `{{base_url}}/coins/{{coin_id}}`
 
-  ## Query parametreleri
-  Yükü küçültmek için gereksizleri kapatıyoruz:
-  - `localization=false` — 50+ dilde açıklama gelmesin
-  - `tickers=false` — borsa listesi gelmesin (çok büyük)
-  - `market_data=true` — **gerekli**, fiyat/cap buradan
+  ## Query parameters
+  We switch off everything unnecessary to keep the payload small:
+  - `localization=false` — skip descriptions in 50+ languages
+  - `tickers=false` — skip the exchange list (very large)
+  - `market_data=true` — **required**, price/cap come from here
   - `community_data=false`, `developer_data=false`, `sparkline=false`
 
-  ## KULLANILACAK alanlar (DTO sözleşmesi)
+  ## Fields we map (DTO contract)
 
-  Liste ucundan farklı olarak yanıt **iç içe (nested)**.
+  Unlike the list endpoint, this response is **nested**.
 
-  | Yol | Tip | Kullanım |
-  |-----|-----|----------|
-  | `id` · `symbol` · `name` | String | Başlık |
-  | `description.en` | String | Açıklama metni |
-  | `image.large` | String (URL) | Büyük ikon |
-  | `market_cap_rank` | Int | Sıra no |
-  | `market_data.current_price.usd` | Double | Fiyat |
-  | `market_data.price_change_percentage_24h` | Double | 24s değişim |
-  | `market_data.market_cap.usd` | Long | Piyasa değeri |
-  | `market_data.total_volume.usd` | Long | 24s hacim |
-  | `market_data.high_24h.usd` · `low_24h.usd` | Double | Gün içi aralık |
-  | `market_data.ath.usd` · `atl.usd` | Double | Tüm zaman zirve/dip |
-  | `market_data.circulating_supply` · `max_supply` | Double | Arz |
+  | Path | Type | Usage |
+  |------|------|-------|
+  | `id` · `symbol` · `name` | String | Header |
+  | `description.en` | String | Description text |
+  | `image.large` | String (URL) | Large icon |
+  | `market_cap_rank` | Int | Rank |
+  | `market_data.current_price.usd` | Double | Price |
+  | `market_data.price_change_percentage_24h` | Double | 24h change |
+  | `market_data.market_cap.usd` | Long | Market cap |
+  | `market_data.total_volume.usd` | Long | 24h volume |
+  | `market_data.high_24h.usd` · `low_24h.usd` | Double | Intraday range |
+  | `market_data.ath.usd` · `atl.usd` | Double | All-time high/low |
+  | `market_data.circulating_supply` · `max_supply` | Double | Supply |
 
-  ## ⚠️ DTO tuzakları (kritik)
-  - **Tutarsız şema:** `current_price`, `market_cap`, `ath` … para birimine göre
-    **map**'tir (`{"usd": 64495, "eur": ...}`) → `Map<String, Double>`.
-    Ama `price_change_percentage_24h` **düz Double**'dır, map değil.
-    Naif bir DTO burada patlar; ikisini farklı modelle.
-  - `circulating_supply` / `max_supply` de düz Double (map değil).
-  - `description.en` çok uzun ve HTML `<a>` etiketi içerebilir.
-  - `max_supply` bazı coin'lerde `null` → nullable yap.
+  ## ⚠️ DTO pitfalls (critical)
+  - **Inconsistent schema:** `current_price`, `market_cap`, `ath` … are **maps keyed
+    by currency** (`{"usd": 64495, "eur": ...}`) → `Map<String, Double>`.
+    But `price_change_percentage_24h` is a **plain Double**, not a map.
+    A naive DTO breaks here; model the two differently.
+  - `circulating_supply` / `max_supply` are also plain Doubles (not maps).
+  - `description.en` is long and may contain HTML `<a>` tags.
+  - `max_supply` is `null` for some coins → make it nullable.
