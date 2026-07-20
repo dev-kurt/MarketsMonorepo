@@ -1,13 +1,12 @@
 package com.devkurt.markets.graph_bottom.di
 
-import com.devkurt.markets.graph_bottom.ui.api.GraphBottom
 import com.devkurt.markets.graph_bottom.ui.api.GraphBottomRoute
+import com.devkurt.markets.graph_bottom.ui.api.GraphBottomRoutes
 import com.devkurt.markets.graph_bottom.ui.impl.GraphBottomScreen
 import com.devkurt.markets.graph_bottom.ui.impl.GraphBottomViewModel
 import com.devkurt.markets.navigation.api.GraphMain
 import com.devkurt.markets.navigation.api.GraphMainRoutes
 import com.devkurt.markets.serialization.api.MkSerializersModule
-import com.devkurt.markets.graph_bottom.ui.api.GraphBottomRoutes
 import kotlinx.serialization.modules.polymorphic
 import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.KoinViewModel

@@ -1,9 +1,8 @@
 package com.devkurt.markets.graph_main.di
 
 import com.devkurt.markets.graph_main.ui.impl.GraphMainViewModel
-import com.devkurt.markets.network.api.NetworkConfig
-import com.devkurt.markets.navigation.api.GraphMain
 import com.devkurt.markets.navigation.api.GraphMainRoutes
+import com.devkurt.markets.network.api.NetworkConfig
 import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.KoinViewModel
 import org.koin.core.annotation.Module

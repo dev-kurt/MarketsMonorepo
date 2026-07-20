@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDe
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import com.devkurt.markets.coins_list.ui.api.CoinsListRoute
 import com.devkurt.markets.graph_bottom.ui.api.GraphBottom
 import com.devkurt.markets.graph_bottom.ui.api.GraphBottomRoute
 import com.devkurt.markets.graph_bottom.ui.api.LocalGraphBottom
@@ -13,7 +14,6 @@ import com.devkurt.markets.graph_dashboard.ui.api.DashboardPlaceholderRoute
 import com.devkurt.markets.graph_dashboard.ui.api.GraphDashboard
 import com.devkurt.markets.graph_dashboard.ui.api.GraphDashboardRoute
 import com.devkurt.markets.graph_dashboard.ui.api.LocalGraphDashboard
-import com.devkurt.markets.coins_list.ui.api.CoinsListRoute
 import com.devkurt.markets.graph_list.ui.api.GraphList
 import com.devkurt.markets.graph_list.ui.api.LocalGraphList
 import com.devkurt.markets.navigation.api.GraphMain

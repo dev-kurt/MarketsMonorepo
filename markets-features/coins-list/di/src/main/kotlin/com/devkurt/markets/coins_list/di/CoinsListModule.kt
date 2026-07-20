@@ -13,7 +13,6 @@ import com.devkurt.markets.graph_list.ui.api.GraphListRoutes
 import com.devkurt.markets.serialization.api.MkSerializersModule
 import io.ktor.client.HttpClient
 import kotlinx.serialization.modules.polymorphic
-import kotlinx.serialization.modules.subclass
 import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.Factory
 import org.koin.core.annotation.KoinViewModel
