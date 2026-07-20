@@ -36,6 +36,9 @@ include(":shared-features:ui:di")
 
 include(":shared-features:navigation:api")
 include(":shared-features:navigation:di")
+include(":shared-features:dev-tools:ui:api")
+include(":shared-features:dev-tools:ui:impl")
+include(":shared-features:dev-tools:di")
 
 include(":shared-features:paging:api")
 

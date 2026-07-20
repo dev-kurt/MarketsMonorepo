@@ -64,6 +64,7 @@ fun GraphMainScreen(
                     }
                 },
             )
+            viewModel.graphContents.forEach { content -> content.Content() }
         }
     }
 }

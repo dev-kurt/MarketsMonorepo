@@ -9,5 +9,7 @@ interface WatchlistRepository {
 
     suspend fun toggle(coinId: String)
 
+    suspend fun clear()
+
     suspend fun getWatchlistCoins(ids: Set<String>): Result<List<WatchlistCoin>>
 }

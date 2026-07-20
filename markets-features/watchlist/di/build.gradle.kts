@@ -16,6 +16,7 @@ dependencies {
     api(projects.sharedFeatures.navigation.api)
     api(projects.sharedFeatures.serialization.api)
     implementation(projects.sharedFeatures.ui.api)
+    implementation(projects.sharedFeatures.devTools.ui.api)
     api(libs.ktor.client.core)
     implementation(libs.koin.core.viewmodel)
     implementation(libs.kotlinx.serialization.core)

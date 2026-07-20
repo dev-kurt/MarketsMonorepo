@@ -22,6 +22,7 @@ dependencies {
     implementation(projects.sharedFeatures.coroutines.di)
     implementation(projects.sharedFeatures.navigation.di)
     implementation(projects.sharedFeatures.serialization.di)
+    implementation(projects.sharedFeatures.devTools.di)
     implementation(projects.marketsFeatures.graphBottom.di)
     implementation(projects.marketsFeatures.graphDashboard.di)
     implementation(projects.marketsFeatures.graphList.di)

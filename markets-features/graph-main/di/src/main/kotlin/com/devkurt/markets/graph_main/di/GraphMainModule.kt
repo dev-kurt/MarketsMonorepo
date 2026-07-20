@@ -1,6 +1,7 @@
 package com.devkurt.markets.graph_main.di
 
 import com.devkurt.markets.graph_main.ui.impl.GraphMainViewModel
+import com.devkurt.markets.navigation.api.GraphMainContent
 import com.devkurt.markets.navigation.api.GraphMainRoutes
 import com.devkurt.markets.network.api.NetworkConfig
 import org.koin.core.annotation.Configuration
@@ -26,7 +27,9 @@ class GraphMainModule {
     @KoinViewModel
     fun graphMainViewModel(
         entryProviders: List<GraphMainRoutes>,
+        graphContents: List<GraphMainContent>,
     ): GraphMainViewModel = GraphMainViewModel(
         entryProviders = entryProviders,
+        graphContents = graphContents,
     )
 }

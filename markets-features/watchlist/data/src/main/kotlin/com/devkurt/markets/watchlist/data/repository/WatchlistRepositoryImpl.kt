@@ -29,6 +29,10 @@ class WatchlistRepositoryImpl(
         }
     }
 
+    override suspend fun clear() {
+        dataStore.updateData { data -> data.copy(coinIds = emptySet()) }
+    }
+
     override suspend fun getWatchlistCoins(ids: Set<String>): Result<List<WatchlistCoin>> {
         if (ids.isEmpty()) return Result.success(emptyList())
         return watchlistRemoteApi.getCoins(ids)

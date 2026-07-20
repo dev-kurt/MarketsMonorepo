@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.dataStoreFile
+import com.devkurt.markets.dev_tools.ui.api.DevToolsAction
 import com.devkurt.markets.navigation.api.GraphMain
 import com.devkurt.markets.navigation.api.GraphMainRoutes
 import com.devkurt.markets.serialization.api.MkSerializersModule
@@ -53,6 +54,11 @@ class WatchlistModule {
             subclass(WatchlistRoute::class, WatchlistRoute.serializer())
         }
     }
+
+    @Single
+    @Named("clearWatchlistAction")
+    fun clearWatchlistAction(repository: WatchlistRepository): DevToolsAction =
+        ClearWatchlistAction(repository = repository)
 
     @KoinViewModel
     fun watchlistViewModel(
