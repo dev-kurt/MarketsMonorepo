@@ -1,9 +1,8 @@
 package com.devkurt.markets.graph_list.ui.impl
 
 import androidx.lifecycle.ViewModel
-import com.devkurt.markets.graph_list.ui.api.GraphList
-import com.devkurt.markets.navigation.api.GraphEntryProvider
+import com.devkurt.markets.graph_list.ui.api.GraphListRoutes
 
 class GraphListViewModel(
-    val entryProviders: List<GraphEntryProvider<GraphList>>,
+    val entryProviders: List<GraphListRoutes>,
 ) : ViewModel()

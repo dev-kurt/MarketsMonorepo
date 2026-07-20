@@ -9,7 +9,6 @@ import com.devkurt.markets.graph_dashboard.ui.api.GraphDashboardRoutes
 import com.devkurt.markets.graph_dashboard.ui.impl.DashboardPlaceholderScreen
 import com.devkurt.markets.graph_dashboard.ui.impl.GraphDashboardScreen
 import com.devkurt.markets.graph_dashboard.ui.impl.GraphDashboardViewModel
-import com.devkurt.markets.navigation.api.GraphEntryProvider
 import com.devkurt.markets.serialization.api.MkSerializersModule
 import kotlinx.serialization.modules.polymorphic
 import org.koin.core.annotation.Configuration
@@ -21,7 +20,7 @@ import org.koin.core.annotation.Single
 @Module
 @Configuration
 class GraphDashboardModule {
-    @Single(binds = [GraphEntryProvider::class])
+    @Single
     @Named("graphDashboardRoutes")
     fun graphDashboardRoutes(): GraphBottomRoutes = GraphBottomRoutes { scope ->
         scope.entry<GraphDashboardRoute> {
@@ -29,7 +28,7 @@ class GraphDashboardModule {
         }
     }
 
-    @Single(binds = [GraphEntryProvider::class])
+    @Single
     @Named("dashboardPlaceholderRoutes")
     fun dashboardPlaceholderRoutes(): GraphDashboardRoutes = GraphDashboardRoutes { scope ->
         scope.entry<DashboardPlaceholderRoute> {
@@ -50,7 +49,7 @@ class GraphDashboardModule {
 
     @KoinViewModel
     fun graphDashboardViewModel(
-        entryProviders: List<GraphEntryProvider<GraphDashboard>>,
+        entryProviders: List<GraphDashboardRoutes>,
     ): GraphDashboardViewModel = GraphDashboardViewModel(
         entryProviders = entryProviders,
     )

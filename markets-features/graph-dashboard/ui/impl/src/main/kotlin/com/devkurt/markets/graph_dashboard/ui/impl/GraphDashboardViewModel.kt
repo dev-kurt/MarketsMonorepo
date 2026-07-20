@@ -1,9 +1,8 @@
 package com.devkurt.markets.graph_dashboard.ui.impl
 
 import androidx.lifecycle.ViewModel
-import com.devkurt.markets.graph_dashboard.ui.api.GraphDashboard
-import com.devkurt.markets.navigation.api.GraphEntryProvider
+import com.devkurt.markets.graph_dashboard.ui.api.GraphDashboardRoutes
 
 class GraphDashboardViewModel(
-    val entryProviders: List<GraphEntryProvider<GraphDashboard>>,
+    val entryProviders: List<GraphDashboardRoutes>,
 ) : ViewModel()

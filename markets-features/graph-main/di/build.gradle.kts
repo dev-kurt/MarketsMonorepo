@@ -26,6 +26,7 @@ dependencies {
     implementation(projects.marketsFeatures.graphDashboard.di)
     implementation(projects.marketsFeatures.graphList.di)
     implementation(projects.marketsFeatures.coinsList.di)
+    implementation(projects.marketsFeatures.coinDetail.di)
 
     implementation(libs.koin.android)
     implementation(libs.koin.core.viewmodel)

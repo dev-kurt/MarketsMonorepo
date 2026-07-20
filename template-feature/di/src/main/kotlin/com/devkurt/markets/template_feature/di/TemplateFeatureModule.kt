@@ -1,6 +1,5 @@
 package com.devkurt.markets.template_feature.di
 
-import com.devkurt.markets.navigation.api.GraphEntryProvider
 import com.devkurt.markets.navigation.api.GraphMain
 import com.devkurt.markets.navigation.api.GraphMainRoutes
 import com.devkurt.markets.serialization.api.MkSerializersModule
@@ -24,7 +23,7 @@ import org.koin.core.annotation.Single
 @Module
 @Configuration
 class TemplateFeatureModule {
-    @Single(binds = [GraphEntryProvider::class])
+    @Single
     @Named("templateFeatureRoutes")
     fun templateFeatureRoutes(): GraphMainRoutes = GraphMainRoutes { scope ->
         scope.entry<TemplateFeatureRoute> {

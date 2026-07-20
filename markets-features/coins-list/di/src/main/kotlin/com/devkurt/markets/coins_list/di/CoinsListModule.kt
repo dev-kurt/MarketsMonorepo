@@ -10,7 +10,6 @@ import com.devkurt.markets.coins_list.ui.impl.CoinsListViewModel
 import com.devkurt.markets.coins_list.ui.impl.CoinsListWrapper
 import com.devkurt.markets.graph_list.ui.api.GraphList
 import com.devkurt.markets.graph_list.ui.api.GraphListRoutes
-import com.devkurt.markets.navigation.api.GraphEntryProvider
 import com.devkurt.markets.serialization.api.MkSerializersModule
 import io.ktor.client.HttpClient
 import kotlinx.serialization.modules.polymorphic
@@ -25,7 +24,7 @@ import org.koin.core.annotation.Single
 @Module
 @Configuration
 class CoinsListModule {
-    @Single(binds = [GraphEntryProvider::class])
+    @Single
     @Named("coinsListRoutes")
     fun coinsListRoutes(): GraphListRoutes = GraphListRoutes { scope ->
         scope.entry<CoinsListRoute> {
