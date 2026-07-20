@@ -70,17 +70,6 @@ fun CoinsListCoinRow(
                 )
             }
 
-            MkIconButton(onClick = onWatchToggle) {
-                MkIcon(
-                    imageVector = Icons.Default.Star,
-                    tint = if (isWatched) {
-                        MkTheme.colorScheme.warning
-                    } else {
-                        MkTheme.colorScheme.outline
-                    },
-                )
-            }
-
             Column(horizontalAlignment = Alignment.End) {
                 MkText(text = coin.formattedPrice(), maxLines = 1)
                 MkText(
@@ -92,6 +81,17 @@ fun CoinsListCoinRow(
                     },
                     style = MkTheme.typography.label,
                     maxLines = 1,
+                )
+            }
+
+            MkIconButton(onClick = onWatchToggle) {
+                MkIcon(
+                    imageVector = Icons.Default.Star,
+                    tint = if (isWatched) {
+                        MkTheme.colorScheme.warning
+                    } else {
+                        MkTheme.colorScheme.outline
+                    },
                 )
             }
         }

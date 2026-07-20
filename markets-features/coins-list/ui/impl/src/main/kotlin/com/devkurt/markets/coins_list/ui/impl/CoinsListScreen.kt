@@ -2,6 +2,7 @@ package com.devkurt.markets.coins_list.ui.impl
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,10 +24,14 @@ import com.devkurt.markets.paging.api.refreshError
 import com.devkurt.markets.ui.api.buttons.MkTextButton
 import com.devkurt.markets.ui.api.display.MkText
 import com.devkurt.markets.ui.api.feedback.MkCircularProgressIndicator
-import com.devkurt.markets.ui.api.feedback.MkError
+import com.devkurt.markets.ui.api.feedback.MkSkeletonRow
+import com.devkurt.markets.ui.api.feedback.MkFeedbackPlaceholder
+import com.devkurt.markets.ui.api.feedback.MkFeedbackType
 import com.devkurt.markets.ui.api.frame.MkScreenScaffold
 import com.devkurt.markets.ui.api.theme.MkTheme
 import com.devkurt.markets.ui.api.R as UiR
+
+private const val SKELETON_ROW_COUNT = 8
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,22 +52,24 @@ fun CoinsListScreen(
 
         when {
             refreshError != null && coins.itemCount == 0 -> {
-                MkError(
+                MkFeedbackPlaceholder(
                     message = refreshError.message ?: stringResource(UiR.string.mk_error_generic),
-                    action = {
-                        MkTextButton(onClick = { coins.retry() }) {
-                            MkText(stringResource(UiR.string.mk_retry))
-                        }
-                    },
+                    type = MkFeedbackType.Error,
+                    onRetry = { coins.retry() },
+                    modifier = Modifier
+                        .padding(paddingValues)
+                        .padding(MkTheme.padding.md),
                 )
             }
 
             loadState.isRefreshing && coins.itemCount == 0 -> {
-                Box(
-                    modifier = Modifier.padding(paddingValues),
-                    contentAlignment = Alignment.Center,
+                Column(
+                    modifier = Modifier
+                        .padding(paddingValues)
+                        .padding(MkTheme.padding.md),
+                    verticalArrangement = Arrangement.spacedBy(MkTheme.padding.sm),
                 ) {
-                    MkCircularProgressIndicator()
+                    repeat(SKELETON_ROW_COUNT) { MkSkeletonRow() }
                 }
             }
 

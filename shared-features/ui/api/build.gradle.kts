@@ -8,6 +8,7 @@ android {
 
 dependencies {
     implementation(libs.coil.compose)
+    implementation(libs.androidx.compose.material.icons.core)
     implementation(libs.androidx.navigation3.ui)
 
     testImplementation(libs.kotlin.test.junit)

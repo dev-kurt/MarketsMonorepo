@@ -20,6 +20,8 @@ class MkBottomSheetSceneStrategy<T : Any>(
         val lastEntry = entries.lastOrNull() ?: return null
         val properties = lastEntry.metadata[BOTTOM_SHEET_KEY] as? ModalBottomSheetProperties
             ?: return null
+        val skipPartiallyExpanded =
+            lastEntry.metadata[SKIP_PARTIALLY_EXPANDED_KEY] as? Boolean == true
 
         val backstack = entries.dropLast(1)
         if (backstack.isEmpty()) return null
@@ -29,16 +31,20 @@ class MkBottomSheetSceneStrategy<T : Any>(
             entry = lastEntry,
             backstack = backstack,
             properties = properties,
+            skipPartiallyExpanded = skipPartiallyExpanded,
             onDismiss = { backStack.remove(sheetKey) },
         )
     }
 
     companion object {
         const val BOTTOM_SHEET_KEY = "bottomsheet"
+        const val SKIP_PARTIALLY_EXPANDED_KEY = "bottomsheet_skip_partially_expanded"
 
         @OptIn(ExperimentalMaterial3Api::class)
-        fun bottomSheet(): Map<String, Any> =
-            mapOf(BOTTOM_SHEET_KEY to ModalBottomSheetProperties())
+        fun bottomSheet(skipPartiallyExpanded: Boolean = false): Map<String, Any> = mapOf(
+            BOTTOM_SHEET_KEY to ModalBottomSheetProperties(),
+            SKIP_PARTIALLY_EXPANDED_KEY to skipPartiallyExpanded,
+        )
     }
 }
 
@@ -47,6 +53,7 @@ private class BottomSheetOverlayScene<T : Any>(
     private val entry: NavEntry<T>,
     private val backstack: List<NavEntry<T>>,
     private val properties: ModalBottomSheetProperties,
+    private val skipPartiallyExpanded: Boolean,
     private val onDismiss: () -> Unit,
 ) : OverlayScene<T> {
 
@@ -58,7 +65,7 @@ private class BottomSheetOverlayScene<T : Any>(
     override val content: @Composable () -> Unit = {
         MkModalBottomSheet(
             onDismissRequest = onDismiss,
-            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = skipPartiallyExpanded),
             properties = properties,
         ) {
             entry.Content()

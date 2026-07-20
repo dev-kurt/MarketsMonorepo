@@ -2,4 +2,8 @@
 <resources>
     <string name="mk_retry">Retry</string>
     <string name="mk_error_generic">Something went wrong</string>
+    <string name="mk_feedback_error">Error</string>
+    <string name="mk_feedback_warning">Warning</string>
+    <string name="mk_feedback_information">Information</string>
+    <string name="mk_feedback_success">Success</string>
 </resources>

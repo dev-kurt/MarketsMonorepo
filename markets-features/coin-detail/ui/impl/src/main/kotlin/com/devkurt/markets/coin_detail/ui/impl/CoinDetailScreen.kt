@@ -4,15 +4,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import com.devkurt.markets.coin_detail.ui.impl.section.CoinDetailSection
 import com.devkurt.markets.coin_detail.ui.impl.section.CoinDetailTopBar
-import com.devkurt.markets.ui.api.buttons.MkTextButton
-import com.devkurt.markets.ui.api.display.MkText
-import com.devkurt.markets.ui.api.feedback.MkError
+import com.devkurt.markets.ui.api.feedback.MkFeedbackPlaceholder
+import com.devkurt.markets.ui.api.feedback.MkFeedbackType
 import com.devkurt.markets.ui.api.feedback.MkLoading
 import com.devkurt.markets.ui.api.frame.MkScreenScaffold
-import com.devkurt.markets.ui.api.R as UiR
+import com.devkurt.markets.ui.api.theme.MkTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -27,13 +25,13 @@ fun CoinDetailScreen(
 
         when {
             state.error != null && coin == null -> {
-                MkError(
+                MkFeedbackPlaceholder(
                     message = state.error,
-                    action = {
-                        MkTextButton(onClick = { onEvent(CoinDetailEvent.Retry) }) {
-                            MkText(stringResource(UiR.string.mk_retry))
-                        }
-                    },
+                    type = MkFeedbackType.Error,
+                    onRetry = { onEvent(CoinDetailEvent.Retry) },
+                    modifier = Modifier
+                        .padding(paddingValues)
+                        .padding(MkTheme.padding.md),
                 )
             }
 
