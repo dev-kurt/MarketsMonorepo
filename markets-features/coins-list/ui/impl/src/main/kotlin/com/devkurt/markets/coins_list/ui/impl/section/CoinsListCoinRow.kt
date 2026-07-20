@@ -25,7 +25,7 @@ import com.devkurt.markets.ui.api.layout.MkCard
 import com.devkurt.markets.ui.api.theme.MkTheme
 
 @Composable
-fun CoinRow(
+fun CoinsListCoinRow(
     coin: Coin,
     isWatched: Boolean,
     onClick: () -> Unit,

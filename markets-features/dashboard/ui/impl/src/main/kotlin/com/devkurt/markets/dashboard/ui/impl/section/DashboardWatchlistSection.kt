@@ -17,7 +17,7 @@ import com.devkurt.markets.watchlist.domain.api.model.WatchlistCoin
 import com.devkurt.markets.watchlist.ui.impl.section.WatchlistCoinRow
 
 @Composable
-fun WatchlistSection(
+fun DashboardWatchlistSection(
     coins: List<WatchlistCoin>,
     onCoinClick: (String) -> Unit,
     onSeeAllClick: () -> Unit,

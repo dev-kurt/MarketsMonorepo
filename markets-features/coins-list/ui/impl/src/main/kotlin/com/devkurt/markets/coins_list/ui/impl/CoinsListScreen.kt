@@ -13,13 +13,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.paging.compose.LazyPagingItems
 import com.devkurt.markets.coin_detail.ui.api.CoinDetailRoute
 import com.devkurt.markets.coins_list.domain.api.model.Coin
-import com.devkurt.markets.coins_list.ui.impl.section.CoinRow
+import com.devkurt.markets.coins_list.ui.impl.section.CoinsListCoinRow
+import com.devkurt.markets.coins_list.ui.impl.section.CoinsListTopBar
 import com.devkurt.markets.navigation.api.LocalGraphMain
 import com.devkurt.markets.paging.api.appendError
 import com.devkurt.markets.paging.api.isAppending
 import com.devkurt.markets.paging.api.isRefreshing
 import com.devkurt.markets.paging.api.refreshError
-import com.devkurt.markets.ui.api.bars.MkCenterAlignedTopAppBar
 import com.devkurt.markets.ui.api.buttons.MkTextButton
 import com.devkurt.markets.ui.api.display.MkText
 import com.devkurt.markets.ui.api.feedback.MkCircularProgressIndicator
@@ -27,24 +27,19 @@ import com.devkurt.markets.ui.api.feedback.MkError
 import com.devkurt.markets.ui.api.frame.MkScreenScaffold
 import com.devkurt.markets.ui.api.theme.MkTheme
 import com.devkurt.markets.ui.api.R as UiR
-import kotlinx.collections.immutable.PersistentSet
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CoinsListScreen(
+    state: CoinsListState,
     coins: LazyPagingItems<Coin>,
-    watchlistIds: PersistentSet<String>,
     onEvent: (CoinsListEvent) -> Unit,
 ) {
     val loadState = coins.loadState
     val mainGraph = LocalGraphMain.currentOrNull
 
     MkScreenScaffold(
-        topBar = {
-            MkCenterAlignedTopAppBar(
-                title = { MkText(stringResource(R.string.coins_list_title)) },
-            )
-        },
+        topBar = { CoinsListTopBar() },
         isLoading = loadState.isRefreshing && coins.itemCount > 0,
         onRefresh = { coins.refresh() },
     ) { paddingValues ->
@@ -84,9 +79,9 @@ fun CoinsListScreen(
                         key = { index -> coins.peek(index)?.id ?: index },
                     ) { index ->
                         coins[index]?.let { coin ->
-                            CoinRow(
+                            CoinsListCoinRow(
                                 coin = coin,
-                                isWatched = coin.id in watchlistIds,
+                                isWatched = coin.id in state.watchlistIds,
                                 onClick = { mainGraph?.add(CoinDetailRoute(coin.id)) },
                                 onWatchToggle = {
                                     onEvent(CoinsListEvent.WatchlistToggled(coin.id))

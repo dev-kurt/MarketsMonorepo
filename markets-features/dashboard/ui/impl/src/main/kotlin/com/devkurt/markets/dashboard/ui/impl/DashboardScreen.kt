@@ -10,9 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.devkurt.markets.coin_detail.ui.api.CoinDetailRoute
-import com.devkurt.markets.dashboard.ui.impl.section.WatchlistSection
+import com.devkurt.markets.dashboard.ui.impl.section.DashboardTopBar
+import com.devkurt.markets.dashboard.ui.impl.section.DashboardWatchlistSection
 import com.devkurt.markets.navigation.api.LocalGraphMain
-import com.devkurt.markets.ui.api.bars.MkCenterAlignedTopAppBar
 import com.devkurt.markets.ui.api.buttons.MkTextButton
 import com.devkurt.markets.ui.api.display.MkText
 import com.devkurt.markets.ui.api.feedback.MkError
@@ -30,11 +30,7 @@ fun DashboardScreen(
     val mainGraph = LocalGraphMain.currentOrNull
 
     MkScreenScaffold(
-        topBar = {
-            MkCenterAlignedTopAppBar(
-                title = { MkText(stringResource(R.string.dashboard_title)) },
-            )
-        },
+        topBar = { DashboardTopBar() },
         isLoading = state.isLoading,
     ) { paddingValues ->
         if (state.error != null && state.watchlistCoins.isEmpty()) {
@@ -56,7 +52,7 @@ fun DashboardScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(MkTheme.padding.md),
         ) {
-            WatchlistSection(
+            DashboardWatchlistSection(
                 coins = state.watchlistCoins,
                 onCoinClick = { coinId -> mainGraph?.add(CoinDetailRoute(coinId)) },
                 onSeeAllClick = { mainGraph?.add(WatchlistRoute) },

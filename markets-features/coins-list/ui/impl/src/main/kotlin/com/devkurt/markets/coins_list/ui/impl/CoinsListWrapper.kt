@@ -10,12 +10,12 @@ import org.koin.androidx.compose.koinViewModel
 fun CoinsListWrapper(
     viewModel: CoinsListViewModel = koinViewModel(),
 ) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
     val coins = viewModel.coins.collectAsLazyPagingItems()
-    val watchlistIds by viewModel.watchlistIds.collectAsStateWithLifecycle()
 
     CoinsListScreen(
+        state = state,
         coins = coins,
-        watchlistIds = watchlistIds,
         onEvent = viewModel::onEvent,
     )
 }

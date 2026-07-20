@@ -7,7 +7,6 @@ android {
 }
 
 dependencies {
-    api(libs.kotlinx.collections.immutable)
     api(projects.marketsFeatures.coinsList.domain.api)
     api(projects.marketsFeatures.watchlist.domain.api)
     api(projects.sharedFeatures.ui.api)

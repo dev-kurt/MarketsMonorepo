@@ -7,7 +7,6 @@ android {
 }
 
 dependencies {
-    api(libs.kotlinx.collections.immutable)
     implementation(libs.coil.compose)
     implementation(libs.androidx.navigation3.ui)
 

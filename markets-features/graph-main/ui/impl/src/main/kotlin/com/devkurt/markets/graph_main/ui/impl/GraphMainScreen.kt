@@ -30,7 +30,7 @@ import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 
 @Composable
-fun MainScreen(
+fun GraphMainScreen(
     viewModel: GraphMainViewModel = koinViewModel(),
 ) {
     val serializersModule = koinInject<SerializersModule>()
