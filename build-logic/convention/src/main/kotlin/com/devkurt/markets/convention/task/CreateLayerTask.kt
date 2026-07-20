@@ -117,8 +117,8 @@ abstract class CreateLayerTask @Inject constructor(
             File(rootDir, "$locationType/$featureKebab/$layerPath")
         }
 
-        val sourceLocationSnake = sourceLocationType.replace("-", "_")
-        val targetLocationSnake = locationType.replace("-", "_")
+        val sourceLocationSnake = ""
+        val targetLocationSnake = ""
         val sourceLocationCamel =
             if (sourceLocationType.isEmpty()) "" else kebabToPascal(sourceLocationType).replaceFirstChar {
                 it.lowercase(Locale.ROOT)
