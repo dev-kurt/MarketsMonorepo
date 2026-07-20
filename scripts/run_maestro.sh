@@ -61,41 +61,15 @@ fi
 
 [ ${#FLOWS[@]} -gt 0 ] || { echo -e "${RED}No maestro flows found${RESET}"; exit 1; }
 
-STUCK_PID=$(lsof -ti :7001 2>/dev/null || true)
-if [ -n "$STUCK_PID" ]; then
-    echo -e "${YELLOW}Clearing stuck Maestro daemon on port 7001 (PID: $STUCK_PID)...${RESET}"
-    kill -9 $STUCK_PID 2>/dev/null || true
-    sleep 3
-fi
-
 # COMPAT: wireless adb device ids may contain spaces; split on tab, not whitespace.
 DEVICE_ID=$(adb devices 2>/dev/null | grep -w 'device$' | head -1 | awk -F'\t' '{print $1}' || true)
 [ -n "$DEVICE_ID" ] || { echo -e "${RED}No connected Android device${RESET}"; exit 1; }
 
+# Maestro (dadb) manages its own driver and port forwarding; stale manual
+# forwards from earlier runs conflict with it, so clear them and stay out.
 adb forward --remove-all 2>/dev/null || true
-
-# PERF: Maestro 2.x uninstalls its driver after every run. Installing the bundled
-# driver APKs manually and passing --reinstall-driver=false keeps it on the device.
-# https://github.com/mobile-dev-inc/maestro/issues/1096
-DRIVER_INSTALLED=$(adb -s "$DEVICE_ID" shell pm list packages 2>/dev/null | grep -c "dev.mobile.maestro" || true)
-if [ "$DRIVER_INSTALLED" -lt 2 ]; then
-    echo -e "${YELLOW}Maestro driver missing; installing bundled APKs...${RESET}"
-    MAESTRO_JAR=$(ls ~/.maestro/lib/maestro-client*.jar 2>/dev/null | head -1)
-    [ -n "$MAESTRO_JAR" ] && [ -f "$MAESTRO_JAR" ] || { echo -e "${RED}maestro-client.jar not found in ~/.maestro/lib${RESET}"; exit 1; }
-    TMP_APK_DIR=$(mktemp -d)
-    unzip -oq "$MAESTRO_JAR" maestro-app.apk maestro-server.apk -d "$TMP_APK_DIR"
-    adb -s "$DEVICE_ID" install -r -t "$TMP_APK_DIR/maestro-app.apk" >/dev/null
-    adb -s "$DEVICE_ID" install -r -t "$TMP_APK_DIR/maestro-server.apk" >/dev/null
-    rm -rf "$TMP_APK_DIR"
-    echo -e "${GREEN}Driver APKs installed${RESET}"
-else
-    echo -e "${GREEN}Maestro driver present on device${RESET}"
-fi
-
-# COMPAT: on Maestro 2.4.0 + Android 16 the driver does not always start on its own.
-adb -s "$DEVICE_ID" shell am instrument -w dev.mobile.maestro.test/androidx.test.runner.AndroidJUnitRunner &>/dev/null &
-sleep 3
-adb -s "$DEVICE_ID" forward tcp:7001 tcp:7001 >/dev/null 2>&1 || true
+adb -s "$DEVICE_ID" shell am force-stop dev.mobile.maestro 2>/dev/null || true
+adb -s "$DEVICE_ID" shell am force-stop dev.mobile.maestro.test 2>/dev/null || true
 
 echo ""
 echo -e "${BOLD}═══════════════════════════════════════════════${RESET}"
@@ -113,7 +87,7 @@ for ((i=1; i<=${#FLOWS[@]}; i++)); do
     SHORT_FLOW="${FLOW#$PROJECT_ROOT/}"
     echo ""
     echo -e "  [${i}/${#FLOWS[@]}] ${CYAN}$SHORT_FLOW${RESET}"
-    if maestro --device "$DEVICE_ID" test --reinstall-driver=false -e APP_ID="$APP_ID" "$FLOW"; then
+    if maestro --device "$DEVICE_ID" test -e APP_ID="$APP_ID" "$FLOW"; then
         PASSED+=("$SHORT_FLOW")
     else
         FAILED+=("$SHORT_FLOW")
