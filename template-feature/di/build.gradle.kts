@@ -18,7 +18,4 @@ dependencies {
     api(libs.ktor.client.core)
     implementation(libs.koin.core.viewmodel)
     implementation(libs.kotlinx.serialization.core)
-
-    testImplementation(libs.kotlin.test.junit)
-    testImplementation(libs.junit)
 }

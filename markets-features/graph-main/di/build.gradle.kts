@@ -34,7 +34,4 @@ dependencies {
     implementation(libs.koin.core.viewmodel)
     implementation(libs.coil.core)
     implementation(libs.androidx.activity.compose)
-
-    testImplementation(libs.kotlin.test.junit)
-    testImplementation(libs.junit)
 }
