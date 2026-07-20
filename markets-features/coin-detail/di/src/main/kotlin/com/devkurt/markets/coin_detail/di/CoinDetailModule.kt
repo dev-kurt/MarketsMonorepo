@@ -3,8 +3,6 @@ package com.devkurt.markets.coin_detail.di
 import com.devkurt.markets.coin_detail.data.remote.api.CoinDetailRemoteApi
 import com.devkurt.markets.coin_detail.data.repository.CoinDetailRepositoryImpl
 import com.devkurt.markets.coin_detail.domain.api.repository.CoinDetailRepository
-import com.devkurt.markets.coin_detail.domain.api.usecase.CoinDetailUseCase
-import com.devkurt.markets.coin_detail.domain.impl.usecase.CoinDetailUseCaseImpl
 import com.devkurt.markets.coin_detail.ui.api.CoinDetailRoute
 import com.devkurt.markets.coin_detail.ui.impl.CoinDetailViewModel
 import com.devkurt.markets.coin_detail.ui.impl.CoinDetailWrapper
@@ -14,7 +12,6 @@ import com.devkurt.markets.serialization.api.MkSerializersModule
 import io.ktor.client.HttpClient
 import kotlinx.serialization.modules.polymorphic
 import org.koin.core.annotation.Configuration
-import org.koin.core.annotation.Factory
 import org.koin.core.annotation.KoinViewModel
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Named
@@ -42,10 +39,10 @@ class CoinDetailModule {
     @KoinViewModel
     fun coinDetailViewModel(
         route: CoinDetailRoute,
-        coinDetailUseCase: CoinDetailUseCase,
+        coinDetailRepository: CoinDetailRepository,
     ): CoinDetailViewModel = CoinDetailViewModel(
         route = route,
-        coinDetailUseCase = coinDetailUseCase,
+        coinDetailRepository = coinDetailRepository,
     )
 
     @Single
@@ -55,8 +52,4 @@ class CoinDetailModule {
     @Single
     fun coinDetailRepository(remoteApi: CoinDetailRemoteApi): CoinDetailRepository =
         CoinDetailRepositoryImpl(coinDetailRemoteApi = remoteApi)
-
-    @Factory
-    fun coinDetailUseCase(repository: CoinDetailRepository): CoinDetailUseCase =
-        CoinDetailUseCaseImpl(repository = repository)
 }

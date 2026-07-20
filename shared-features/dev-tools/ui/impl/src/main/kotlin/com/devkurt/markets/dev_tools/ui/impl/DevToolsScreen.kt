@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import com.devkurt.markets.dev_tools.ui.impl.section.DevToolsActionRow
 import com.devkurt.markets.ui.api.display.MkText
 import com.devkurt.markets.ui.api.theme.MkTheme
@@ -21,16 +22,16 @@ fun DevToolsScreen(
             .padding(MkTheme.padding.lg),
         verticalArrangement = Arrangement.spacedBy(MkTheme.padding.sm),
     ) {
-        MkText(text = "Developer Tools", style = MkTheme.typography.titleMedium)
+        MkText(text = stringResource(R.string.dev_tools_title), style = MkTheme.typography.titleMedium)
         MkText(
-            text = "Debug builds only",
+            text = stringResource(R.string.dev_tools_subtitle),
             color = MkTheme.colorScheme.onSurfaceVariant,
             style = MkTheme.typography.label,
         )
 
-        state.actionTitles.forEachIndexed { index, title ->
+        state.actionTitleResIds.forEachIndexed { index, titleRes ->
             DevToolsActionRow(
-                title = title,
+                titleRes = titleRes,
                 enabled = !state.isLoading,
                 onClick = { onEvent(DevToolsEvent.ExecuteAction(index)) },
             )

@@ -5,9 +5,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.devkurt.markets.coins_list.domain.api.model.Coin
-import com.devkurt.markets.coins_list.domain.api.usecase.CoinsListUseCase
-import com.devkurt.markets.watchlist.domain.api.usecase.FlowWatchlistIdsUseCase
-import com.devkurt.markets.watchlist.domain.api.usecase.ToggleWatchlistUseCase
+import com.devkurt.markets.coins_list.domain.api.repository.CoinsListRepository
+import com.devkurt.markets.watchlist.domain.api.repository.WatchlistRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -16,14 +15,13 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class CoinsListViewModel(
-    coinsListUseCase: CoinsListUseCase,
-    flowWatchlistIdsUseCase: FlowWatchlistIdsUseCase,
-    private val toggleWatchlistUseCase: ToggleWatchlistUseCase,
+    coinsListRepository: CoinsListRepository,
+    private val watchlistRepository: WatchlistRepository,
 ) : ViewModel() {
 
-    val coins: Flow<PagingData<Coin>> = coinsListUseCase().cachedIn(viewModelScope)
+    val coins: Flow<PagingData<Coin>> = coinsListRepository.getCoins().cachedIn(viewModelScope)
 
-    val state: StateFlow<CoinsListState> = flowWatchlistIdsUseCase()
+    val state: StateFlow<CoinsListState> = watchlistRepository.flowWatchlistIds()
         .map { ids -> CoinsListState(watchlistIds = ids) }
         .stateIn(
             viewModelScope,
@@ -34,7 +32,7 @@ class CoinsListViewModel(
     fun onEvent(event: CoinsListEvent) {
         when (event) {
             is CoinsListEvent.WatchlistToggled -> viewModelScope.launch {
-                toggleWatchlistUseCase(event.coinId)
+                watchlistRepository.toggle(event.coinId)
             }
         }
     }

@@ -6,8 +6,7 @@ import com.devkurt.markets.dashboard.ui.impl.DashboardWrapper
 import com.devkurt.markets.graph_dashboard.ui.api.GraphDashboard
 import com.devkurt.markets.graph_dashboard.ui.api.GraphDashboardRoutes
 import com.devkurt.markets.serialization.api.MkSerializersModule
-import com.devkurt.markets.watchlist.domain.api.usecase.FlowWatchlistIdsUseCase
-import com.devkurt.markets.watchlist.domain.api.usecase.GetWatchlistCoinsUseCase
+import com.devkurt.markets.watchlist.domain.api.repository.WatchlistRepository
 import kotlinx.serialization.modules.polymorphic
 import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.KoinViewModel
@@ -36,10 +35,8 @@ class DashboardModule {
 
     @KoinViewModel
     fun dashboardViewModel(
-        flowWatchlistIdsUseCase: FlowWatchlistIdsUseCase,
-        getWatchlistCoinsUseCase: GetWatchlistCoinsUseCase,
+        watchlistRepository: WatchlistRepository,
     ): DashboardViewModel = DashboardViewModel(
-        flowWatchlistIdsUseCase = flowWatchlistIdsUseCase,
-        getWatchlistCoinsUseCase = getWatchlistCoinsUseCase,
+        watchlistRepository = watchlistRepository,
     )
 }

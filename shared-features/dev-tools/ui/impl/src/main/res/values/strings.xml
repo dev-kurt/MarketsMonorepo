@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dev_tools_title">Developer Tools</string>
+    <string name="dev_tools_subtitle">Debug builds only</string>
+    <string name="dev_tools_action_failed">Action failed</string>
+</resources>

@@ -2,7 +2,7 @@ package com.devkurt.markets.coin_detail.ui.impl
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devkurt.markets.coin_detail.domain.api.usecase.CoinDetailUseCase
+import com.devkurt.markets.coin_detail.domain.api.repository.CoinDetailRepository
 import com.devkurt.markets.coin_detail.ui.api.CoinDetailRoute
 import com.devkurt.markets.ui.api.state.LoadingCounter
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class CoinDetailViewModel(
     private val route: CoinDetailRoute,
-    private val coinDetailUseCase: CoinDetailUseCase,
+    private val coinDetailRepository: CoinDetailRepository,
 ) : ViewModel() {
 
     private val loading = LoadingCounter()
@@ -44,7 +44,7 @@ class CoinDetailViewModel(
     private fun load() {
         viewModelScope.launch {
             loading.withLoading {
-                coinDetailUseCase(route.coinId)
+                coinDetailRepository.getCoinDetail(route.coinId)
                     .onSuccess { coin ->
                         _state.update { it.copy(coin = coin, error = null) }
                     }

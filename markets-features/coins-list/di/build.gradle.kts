@@ -11,7 +11,6 @@ dependencies {
     api(projects.marketsFeatures.coinsList.data)
     api(projects.marketsFeatures.coinsList.domain.api)
     api(projects.marketsFeatures.watchlist.domain.api)
-    implementation(projects.marketsFeatures.coinsList.domain.impl)
     api(projects.marketsFeatures.coinsList.ui.api)
     api(projects.marketsFeatures.coinsList.ui.impl)
     api(projects.marketsFeatures.graphList.ui.api)

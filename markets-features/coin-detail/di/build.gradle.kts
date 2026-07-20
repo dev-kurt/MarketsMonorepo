@@ -10,7 +10,6 @@ android {
 dependencies {
     api(projects.marketsFeatures.coinDetail.data)
     api(projects.marketsFeatures.coinDetail.domain.api)
-    implementation(projects.marketsFeatures.coinDetail.domain.impl)
     api(projects.marketsFeatures.coinDetail.ui.api)
     api(projects.marketsFeatures.coinDetail.ui.impl)
     api(projects.sharedFeatures.navigation.api)

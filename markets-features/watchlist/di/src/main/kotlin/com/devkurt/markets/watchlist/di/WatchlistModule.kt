@@ -14,19 +14,12 @@ import com.devkurt.markets.watchlist.data.local.WatchlistSerializer
 import com.devkurt.markets.watchlist.data.remote.api.WatchlistRemoteApi
 import com.devkurt.markets.watchlist.data.repository.WatchlistRepositoryImpl
 import com.devkurt.markets.watchlist.domain.api.repository.WatchlistRepository
-import com.devkurt.markets.watchlist.domain.api.usecase.FlowWatchlistIdsUseCase
-import com.devkurt.markets.watchlist.domain.api.usecase.GetWatchlistCoinsUseCase
-import com.devkurt.markets.watchlist.domain.api.usecase.ToggleWatchlistUseCase
-import com.devkurt.markets.watchlist.domain.impl.usecase.FlowWatchlistIdsUseCaseImpl
-import com.devkurt.markets.watchlist.domain.impl.usecase.GetWatchlistCoinsUseCaseImpl
-import com.devkurt.markets.watchlist.domain.impl.usecase.ToggleWatchlistUseCaseImpl
 import com.devkurt.markets.watchlist.ui.api.WatchlistRoute
 import com.devkurt.markets.watchlist.ui.impl.WatchlistViewModel
 import com.devkurt.markets.watchlist.ui.impl.WatchlistWrapper
 import io.ktor.client.HttpClient
 import kotlinx.serialization.modules.polymorphic
 import org.koin.core.annotation.Configuration
-import org.koin.core.annotation.Factory
 import org.koin.core.annotation.KoinViewModel
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Named
@@ -62,13 +55,9 @@ class WatchlistModule {
 
     @KoinViewModel
     fun watchlistViewModel(
-        flowWatchlistIdsUseCase: FlowWatchlistIdsUseCase,
-        getWatchlistCoinsUseCase: GetWatchlistCoinsUseCase,
-        toggleWatchlistUseCase: ToggleWatchlistUseCase,
+        watchlistRepository: WatchlistRepository,
     ): WatchlistViewModel = WatchlistViewModel(
-        flowWatchlistIdsUseCase = flowWatchlistIdsUseCase,
-        getWatchlistCoinsUseCase = getWatchlistCoinsUseCase,
-        toggleWatchlistUseCase = toggleWatchlistUseCase,
+        watchlistRepository = watchlistRepository,
     )
 
     @Single
@@ -90,16 +79,4 @@ class WatchlistModule {
         dataStore = dataStore,
         watchlistRemoteApi = remoteApi,
     )
-
-    @Factory
-    fun flowWatchlistIdsUseCase(repository: WatchlistRepository): FlowWatchlistIdsUseCase =
-        FlowWatchlistIdsUseCaseImpl(repository = repository)
-
-    @Factory
-    fun toggleWatchlistUseCase(repository: WatchlistRepository): ToggleWatchlistUseCase =
-        ToggleWatchlistUseCaseImpl(repository = repository)
-
-    @Factory
-    fun getWatchlistCoinsUseCase(repository: WatchlistRepository): GetWatchlistCoinsUseCase =
-        GetWatchlistCoinsUseCaseImpl(repository = repository)
 }

@@ -10,7 +10,6 @@ android {
 dependencies {
     api(projects.marketsFeatures.watchlist.data)
     api(projects.marketsFeatures.watchlist.domain.api)
-    implementation(projects.marketsFeatures.watchlist.domain.impl)
     api(projects.marketsFeatures.watchlist.ui.api)
     api(projects.marketsFeatures.watchlist.ui.impl)
     api(projects.sharedFeatures.navigation.api)

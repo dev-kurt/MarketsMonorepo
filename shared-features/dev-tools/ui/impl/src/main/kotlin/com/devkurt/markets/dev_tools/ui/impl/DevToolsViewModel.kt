@@ -20,7 +20,7 @@ class DevToolsViewModel(
     private val loading = LoadingCounter()
 
     private val _state = MutableStateFlow(
-        DevToolsState(actionTitles = actions.map { action -> action.title }),
+        DevToolsState(actionTitleResIds = actions.map { action -> action.titleRes }),
     )
     val state: StateFlow<DevToolsState> = combine(
         _state,
@@ -47,10 +47,8 @@ class DevToolsViewModel(
         viewModelScope.launch {
             loading.withLoading {
                 action.execute()
-                    .onSuccess { message -> _effect.send(DevToolsEffect.ShowMessage(message)) }
-                    .onFailure { throwable ->
-                        _effect.send(DevToolsEffect.ShowMessage(throwable.message ?: "Action failed"))
-                    }
+                    .onSuccess { _effect.send(DevToolsEffect.ShowMessage(action.successMessageRes)) }
+                    .onFailure { _effect.send(DevToolsEffect.ShowMessage(R.string.dev_tools_action_failed)) }
             }
         }
     }

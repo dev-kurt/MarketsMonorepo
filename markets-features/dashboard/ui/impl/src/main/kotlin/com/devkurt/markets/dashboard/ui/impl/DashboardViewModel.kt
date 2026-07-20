@@ -3,8 +3,7 @@ package com.devkurt.markets.dashboard.ui.impl
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devkurt.markets.ui.api.state.LoadingCounter
-import com.devkurt.markets.watchlist.domain.api.usecase.FlowWatchlistIdsUseCase
-import com.devkurt.markets.watchlist.domain.api.usecase.GetWatchlistCoinsUseCase
+import com.devkurt.markets.watchlist.domain.api.repository.WatchlistRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -19,8 +18,7 @@ import kotlinx.coroutines.launch
 private const val TOP_COUNT = 10
 
 class DashboardViewModel(
-    private val flowWatchlistIdsUseCase: FlowWatchlistIdsUseCase,
-    private val getWatchlistCoinsUseCase: GetWatchlistCoinsUseCase,
+    private val watchlistRepository: WatchlistRepository,
 ) : ViewModel() {
 
     private val loading = LoadingCounter()
@@ -48,7 +46,7 @@ class DashboardViewModel(
     }
 
     private fun observeWatchlist() {
-        flowWatchlistIdsUseCase()
+        watchlistRepository.flowWatchlistIds()
             .onEach { ids ->
                 lastIds = ids
                 load(ids)
@@ -59,7 +57,7 @@ class DashboardViewModel(
     private fun load(ids: Set<String>) {
         viewModelScope.launch {
             loading.withLoading {
-                getWatchlistCoinsUseCase(ids)
+                watchlistRepository.getWatchlistCoins(ids)
                     .onSuccess { coins ->
                         _state.update {
                             it.copy(watchlistCoins = coins.take(TOP_COUNT), error = null)

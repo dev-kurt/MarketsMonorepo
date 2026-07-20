@@ -1,7 +1,13 @@
 package com.devkurt.markets.dev_tools.ui.api
 
-interface DevToolsAction {
-    val title: String
+import androidx.annotation.StringRes
 
-    suspend fun execute(): Result<String>
+interface DevToolsAction {
+    @get:StringRes
+    val titleRes: Int
+
+    @get:StringRes
+    val successMessageRes: Int
+
+    suspend fun execute(): Result<Unit>
 }

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dev_tools_clear_watchlist">Clear watchlist</string>
+    <string name="dev_tools_watchlist_cleared">Watchlist cleared</string>
+</resources>

@@ -3,9 +3,7 @@ package com.devkurt.markets.watchlist.ui.impl
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devkurt.markets.ui.api.state.LoadingCounter
-import com.devkurt.markets.watchlist.domain.api.usecase.FlowWatchlistIdsUseCase
-import com.devkurt.markets.watchlist.domain.api.usecase.GetWatchlistCoinsUseCase
-import com.devkurt.markets.watchlist.domain.api.usecase.ToggleWatchlistUseCase
+import com.devkurt.markets.watchlist.domain.api.repository.WatchlistRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -18,9 +16,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class WatchlistViewModel(
-    private val flowWatchlistIdsUseCase: FlowWatchlistIdsUseCase,
-    private val getWatchlistCoinsUseCase: GetWatchlistCoinsUseCase,
-    private val toggleWatchlistUseCase: ToggleWatchlistUseCase,
+    private val watchlistRepository: WatchlistRepository,
 ) : ViewModel() {
 
     private val loading = LoadingCounter()
@@ -49,7 +45,7 @@ class WatchlistViewModel(
     }
 
     private fun observeWatchlist() {
-        flowWatchlistIdsUseCase()
+        watchlistRepository.flowWatchlistIds()
             .onEach { ids ->
                 lastIds = ids
                 load(ids)
@@ -60,7 +56,7 @@ class WatchlistViewModel(
     private fun load(ids: Set<String>) {
         viewModelScope.launch {
             loading.withLoading {
-                getWatchlistCoinsUseCase(ids)
+                watchlistRepository.getWatchlistCoins(ids)
                     .onSuccess { coins ->
                         _state.update { it.copy(coins = coins, error = null) }
                     }
@@ -73,7 +69,7 @@ class WatchlistViewModel(
 
     private fun toggle(coinId: String) {
         viewModelScope.launch {
-            toggleWatchlistUseCase(coinId)
+            watchlistRepository.toggle(coinId)
         }
     }
 }
