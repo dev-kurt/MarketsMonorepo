@@ -6,11 +6,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import com.devkurt.markets.template_feature.ui.impl.section.TemplateFeatureTopBar
 import com.devkurt.markets.ui.api.buttons.MkTextButton
 import com.devkurt.markets.ui.api.display.MkText
 import com.devkurt.markets.ui.api.feedback.MkError
 import com.devkurt.markets.ui.api.frame.MkScreenScaffold
+import com.devkurt.markets.ui.api.R as UiR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,7 +31,7 @@ fun TemplateFeatureScreen(
                 message = error,
                 action = {
                     MkTextButton(onClick = { onEvent(TemplateFeatureEvent.Refresh) }) {
-                        MkText("Retry")
+                        MkText(stringResource(UiR.string.mk_retry))
                     }
                 },
             )

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dashboard_title">Dashboard</string>
+    <string name="dashboard_watchlist_title">Watchlist</string>
+    <string name="dashboard_watchlist_see_all">See all</string>
+    <string name="dashboard_watchlist_empty">Tap the star on any coin to track it here</string>
+</resources>

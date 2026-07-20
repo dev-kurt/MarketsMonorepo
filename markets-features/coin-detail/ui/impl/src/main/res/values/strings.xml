@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="coin_detail_rank">Rank #%1$d</string>
+    <string name="coin_detail_market_cap">Market cap</string>
+    <string name="coin_detail_volume_24h">24h volume</string>
+    <string name="coin_detail_high_24h">24h high</string>
+    <string name="coin_detail_low_24h">24h low</string>
+    <string name="coin_detail_all_time_high">All-time high</string>
+    <string name="coin_detail_all_time_low">All-time low</string>
+    <string name="coin_detail_circulating_supply">Circulating supply</string>
+    <string name="coin_detail_max_supply">Max supply</string>
+    <string name="coin_detail_max_supply_unlimited">Unlimited</string>
+</resources>

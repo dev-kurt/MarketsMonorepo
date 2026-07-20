@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.devkurt.markets.coin_detail.domain.api.model.CoinDetail
 import com.devkurt.markets.coin_detail.ui.impl.section.CoinDetailStatRow
@@ -36,6 +37,7 @@ import com.devkurt.markets.ui.api.feedback.MkLoading
 import com.devkurt.markets.ui.api.frame.MkScreenScaffold
 import com.devkurt.markets.ui.api.layout.MkCard
 import com.devkurt.markets.ui.api.theme.MkTheme
+import com.devkurt.markets.ui.api.R as UiR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -64,7 +66,7 @@ fun CoinDetailScreen(
                     message = state.error,
                     action = {
                         MkTextButton(onClick = { onEvent(CoinDetailEvent.Retry) }) {
-                            MkText("Retry")
+                            MkText(stringResource(UiR.string.mk_retry))
                         }
                     },
                 )
@@ -108,7 +110,7 @@ private fun CoinDetailContent(
             Column(modifier = Modifier.weight(1f)) {
                 MkText(text = coin.symbol, style = MkTheme.typography.titleMedium)
                 MkText(
-                    text = "Rank #${coin.marketCapRank}",
+                    text = stringResource(R.string.coin_detail_rank, coin.marketCapRank),
                     color = MkTheme.colorScheme.onSurfaceVariant,
                     style = MkTheme.typography.label,
                 )
@@ -132,16 +134,38 @@ private fun CoinDetailContent(
                 modifier = Modifier.padding(MkTheme.padding.md),
                 verticalArrangement = Arrangement.spacedBy(MkTheme.padding.sm),
             ) {
-                CoinDetailStatRow("Market cap", coin.marketCap.asCompactAmount())
-                CoinDetailStatRow("24h volume", coin.totalVolume.asCompactAmount())
-                CoinDetailStatRow("24h high", coin.high24h.asPrice())
-                CoinDetailStatRow("24h low", coin.low24h.asPrice())
-                CoinDetailStatRow("All-time high", coin.allTimeHigh.asPrice())
-                CoinDetailStatRow("All-time low", coin.allTimeLow.asPrice())
-                CoinDetailStatRow("Circulating supply", coin.circulatingSupply.asSupply())
                 CoinDetailStatRow(
-                    label = "Max supply",
-                    value = coin.maxSupply?.asSupply() ?: "Unlimited",
+                    stringResource(R.string.coin_detail_market_cap),
+                    coin.marketCap.asCompactAmount()
+                )
+                CoinDetailStatRow(
+                    stringResource(R.string.coin_detail_volume_24h),
+                    coin.totalVolume.asCompactAmount()
+                )
+                CoinDetailStatRow(
+                    stringResource(R.string.coin_detail_high_24h),
+                    coin.high24h.asPrice()
+                )
+                CoinDetailStatRow(
+                    stringResource(R.string.coin_detail_low_24h),
+                    coin.low24h.asPrice()
+                )
+                CoinDetailStatRow(
+                    stringResource(R.string.coin_detail_all_time_high),
+                    coin.allTimeHigh.asPrice()
+                )
+                CoinDetailStatRow(
+                    stringResource(R.string.coin_detail_all_time_low),
+                    coin.allTimeLow.asPrice()
+                )
+                CoinDetailStatRow(
+                    stringResource(R.string.coin_detail_circulating_supply),
+                    coin.circulatingSupply.asSupply()
+                )
+                CoinDetailStatRow(
+                    label = stringResource(R.string.coin_detail_max_supply),
+                    value = coin.maxSupply?.asSupply()
+                        ?: stringResource(R.string.coin_detail_max_supply_unlimited),
                 )
             }
         }

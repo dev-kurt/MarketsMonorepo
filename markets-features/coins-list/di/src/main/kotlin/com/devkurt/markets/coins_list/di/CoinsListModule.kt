@@ -11,6 +11,8 @@ import com.devkurt.markets.coins_list.ui.impl.CoinsListWrapper
 import com.devkurt.markets.graph_list.ui.api.GraphList
 import com.devkurt.markets.graph_list.ui.api.GraphListRoutes
 import com.devkurt.markets.serialization.api.MkSerializersModule
+import com.devkurt.markets.watchlist.domain.api.usecase.FlowWatchlistIdsUseCase
+import com.devkurt.markets.watchlist.domain.api.usecase.ToggleWatchlistUseCase
 import io.ktor.client.HttpClient
 import kotlinx.serialization.modules.polymorphic
 import org.koin.core.annotation.Configuration
@@ -42,8 +44,12 @@ class CoinsListModule {
     @KoinViewModel
     fun coinsListViewModel(
         coinsListUseCase: CoinsListUseCase,
+        flowWatchlistIdsUseCase: FlowWatchlistIdsUseCase,
+        toggleWatchlistUseCase: ToggleWatchlistUseCase,
     ): CoinsListViewModel = CoinsListViewModel(
         coinsListUseCase = coinsListUseCase,
+        flowWatchlistIdsUseCase = flowWatchlistIdsUseCase,
+        toggleWatchlistUseCase = toggleWatchlistUseCase,
     )
 
     @Single

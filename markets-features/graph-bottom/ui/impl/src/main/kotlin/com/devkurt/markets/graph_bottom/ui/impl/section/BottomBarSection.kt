@@ -1,12 +1,15 @@
 package com.devkurt.markets.graph_bottom.ui.impl.section
 
+import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import com.devkurt.markets.graph_bottom.ui.api.GraphBottom
 import com.devkurt.markets.graph_bottom.ui.api.LocalGraphBottom
+import com.devkurt.markets.graph_bottom.ui.impl.R
 import com.devkurt.markets.graph_dashboard.ui.api.GraphDashboardRoute
 import com.devkurt.markets.graph_dashboard.ui.api.LocalGraphDashboard
 import com.devkurt.markets.graph_list.ui.api.GraphListRoute
@@ -19,19 +22,19 @@ import com.devkurt.markets.ui.api.display.MkText
 
 private data class BottomBarItem(
     val icon: ImageVector,
-    val label: String,
+    @StringRes val labelRes: Int,
     val route: GraphBottom,
 )
 
 private val bottomBarItems = listOf(
     BottomBarItem(
         icon = Icons.Default.Home,
-        label = "Dashboard",
+        labelRes = R.string.bottom_bar_dashboard,
         route = GraphDashboardRoute,
     ),
     BottomBarItem(
         icon = Icons.AutoMirrored.Filled.List,
-        label = "Coins",
+        labelRes = R.string.bottom_bar_coins,
         route = GraphListRoute,
     ),
 )
@@ -64,7 +67,7 @@ fun BottomBarSection() {
                 }
             },
             icon = { MkIcon(imageVector = tab.icon) },
-            label = { MkText(text = tab.label, maxLines = 1) },
+            label = { MkText(text = stringResource(tab.labelRes), maxLines = 1) },
         )
     }
 }

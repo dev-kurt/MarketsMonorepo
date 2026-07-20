@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,7 +17,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.devkurt.markets.coins_list.domain.api.model.Coin
+import com.devkurt.markets.ui.api.buttons.MkIconButton
 import com.devkurt.markets.ui.api.display.MkAsyncImage
+import com.devkurt.markets.ui.api.display.MkIcon
 import com.devkurt.markets.ui.api.display.MkText
 import com.devkurt.markets.ui.api.layout.MkCard
 import com.devkurt.markets.ui.api.theme.MkTheme
@@ -23,7 +27,9 @@ import com.devkurt.markets.ui.api.theme.MkTheme
 @Composable
 fun CoinRow(
     coin: Coin,
+    isWatched: Boolean,
     onClick: () -> Unit,
+    onWatchToggle: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     MkCard(
@@ -61,6 +67,17 @@ fun CoinRow(
                     color = MkTheme.colorScheme.onSurfaceVariant,
                     style = MkTheme.typography.label,
                     maxLines = 1,
+                )
+            }
+
+            MkIconButton(onClick = onWatchToggle) {
+                MkIcon(
+                    imageVector = Icons.Default.Star,
+                    tint = if (isWatched) {
+                        MkTheme.colorScheme.warning
+                    } else {
+                        MkTheme.colorScheme.outline
+                    },
                 )
             }
 

@@ -17,6 +17,7 @@ nav3 = "1.2.0-alpha06"
 
 # ─── Paging ───
 androidxPaging = "3.5.0"
+androidxDatastore = "1.1.7"
 
 # ─── DI: Koin (annotations) ───
 koin = "4.2.2"
@@ -64,6 +65,7 @@ androidx-navigation3-runtime = { group = "androidx.navigation3", name = "navigat
 androidx-navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "nav3" }
 
 # ─── Paging ───
+androidx-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "androidxDatastore" }
 androidx-paging-common = { group = "androidx.paging", name = "paging-common", version.ref = "androidxPaging" }
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "androidxPaging" }
 

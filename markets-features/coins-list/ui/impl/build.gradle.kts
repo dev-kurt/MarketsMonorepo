@@ -8,6 +8,7 @@ android {
 
 dependencies {
     api(projects.marketsFeatures.coinsList.domain.api)
+    api(projects.marketsFeatures.watchlist.domain.api)
     api(projects.sharedFeatures.ui.api)
     implementation(projects.sharedFeatures.paging.api)
     implementation(projects.sharedFeatures.navigation.api)
