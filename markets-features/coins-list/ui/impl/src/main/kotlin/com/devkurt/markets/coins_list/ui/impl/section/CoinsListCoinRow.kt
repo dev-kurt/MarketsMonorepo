@@ -87,7 +87,10 @@ fun CoinsListCoinRow(
                 )
             }
 
-            MkIconButton(onClick = onWatchToggle) {
+            MkIconButton(
+                onClick = onWatchToggle,
+                modifier = Modifier.mkTestTag("coin_watch_toggle"),
+            ) {
                 MkIcon(
                     imageVector = Icons.Default.Star,
                     tint = if (isWatched) {

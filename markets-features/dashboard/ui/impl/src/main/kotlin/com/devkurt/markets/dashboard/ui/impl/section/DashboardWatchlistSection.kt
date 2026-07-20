@@ -13,6 +13,7 @@ import com.devkurt.markets.dashboard.ui.impl.R
 import com.devkurt.markets.ui.api.buttons.MkTextButton
 import com.devkurt.markets.ui.api.display.MkText
 import com.devkurt.markets.ui.api.theme.MkTheme
+import com.devkurt.markets.ui.api.testing.mkTestTag
 import com.devkurt.markets.watchlist.domain.api.model.WatchlistCoin
 import com.devkurt.markets.watchlist.ui.impl.section.WatchlistCoinRow
 
@@ -36,7 +37,10 @@ fun DashboardWatchlistSection(
                 style = MkTheme.typography.titleMedium,
                 modifier = Modifier.weight(1f),
             )
-            MkTextButton(onClick = onSeeAllClick) {
+            MkTextButton(
+                onClick = onSeeAllClick,
+                modifier = Modifier.mkTestTag("watchlist_see_all"),
+            ) {
                 MkText(stringResource(R.string.dashboard_watchlist_see_all))
             }
         }

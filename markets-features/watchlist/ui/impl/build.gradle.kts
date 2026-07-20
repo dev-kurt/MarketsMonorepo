@@ -13,4 +13,9 @@ dependencies {
     api(projects.sharedFeatures.ui.api)
     implementation(libs.koin.androidx.compose)
     implementation(libs.androidx.compose.material.icons.core)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlin.test.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
 }

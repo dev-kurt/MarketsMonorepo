@@ -1,0 +1,35 @@
+appId: ${APP_ID}
+---
+- clearState
+- launchApp
+
+- tapOn:
+    id: "tab_coins"
+
+- extendedWaitUntil:
+    visible:
+      id: "coins_list"
+    timeout: 20000
+
+- tapOn:
+    id: "coin_watch_toggle"
+    index: 0
+
+- tapOn:
+    id: "tab_dashboard"
+
+- extendedWaitUntil:
+    visible:
+      id: "watchlist_coin_row"
+    timeout: 15000
+
+- tapOn:
+    id: "watchlist_see_all"
+
+- extendedWaitUntil:
+    visible:
+      id: "watchlist_sheet"
+    timeout: 10000
+
+- assertVisible:
+    id: "watchlist_coin_row"

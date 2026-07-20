@@ -18,6 +18,7 @@ import com.devkurt.markets.ui.api.feedback.MkCircularProgressIndicator
 import com.devkurt.markets.ui.api.feedback.MkFeedbackPlaceholder
 import com.devkurt.markets.ui.api.feedback.MkFeedbackType
 import com.devkurt.markets.ui.api.theme.MkTheme
+import com.devkurt.markets.ui.api.testing.mkTestTag
 import com.devkurt.markets.watchlist.ui.impl.section.WatchlistCoinRow
 
 @Composable
@@ -58,7 +59,9 @@ fun WatchlistScreen(
 
         else -> {
             LazyColumn(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .mkTestTag("watchlist_sheet"),
                 contentPadding = PaddingValues(MkTheme.padding.md),
                 verticalArrangement = Arrangement.spacedBy(MkTheme.padding.sm),
             ) {
