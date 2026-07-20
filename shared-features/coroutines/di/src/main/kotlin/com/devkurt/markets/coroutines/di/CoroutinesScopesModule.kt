@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.Module
+import org.koin.core.annotation.Named
 import org.koin.core.annotation.Single
 
 @Module
@@ -15,10 +16,11 @@ class CoroutinesScopesModule {
     @Single
     fun exceptionHandler(logger: Logger): CoroutineExceptionHandler =
         CoroutineExceptionHandler { _, throwable ->
-            logger.e("AppScope", throwable) { "Uncaught coroutine error" }
+            logger.e("IOScope", throwable) { "Uncaught coroutine error" }
         }
 
     @Single
-    fun provideAppScope(handler: CoroutineExceptionHandler): CoroutineScope =
+    @Named("IOScope")
+    fun provideIoScope(handler: CoroutineExceptionHandler): CoroutineScope =
         CoroutineScope(SupervisorJob() + Dispatchers.IO + handler)
 }
