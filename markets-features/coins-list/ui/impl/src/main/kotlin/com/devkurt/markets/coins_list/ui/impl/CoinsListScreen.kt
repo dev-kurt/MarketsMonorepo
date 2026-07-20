@@ -29,6 +29,7 @@ import com.devkurt.markets.ui.api.feedback.MkFeedbackPlaceholder
 import com.devkurt.markets.ui.api.feedback.MkFeedbackType
 import com.devkurt.markets.ui.api.frame.MkScreenScaffold
 import com.devkurt.markets.ui.api.theme.MkTheme
+import com.devkurt.markets.ui.api.testing.mkTestTag
 import com.devkurt.markets.ui.api.R as UiR
 
 private const val SKELETON_ROW_COUNT = 8
@@ -75,7 +76,9 @@ fun CoinsListScreen(
 
             else -> {
                 LazyColumn(
-                    modifier = Modifier.padding(paddingValues),
+                    modifier = Modifier
+                        .padding(paddingValues)
+                        .mkTestTag("coins_list"),
                     contentPadding = androidx.compose.foundation.layout.PaddingValues(
                         MkTheme.padding.md,
                     ),

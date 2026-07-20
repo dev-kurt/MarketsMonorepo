@@ -22,6 +22,7 @@ import com.devkurt.markets.ui.api.display.MkAsyncImage
 import com.devkurt.markets.ui.api.display.MkIcon
 import com.devkurt.markets.ui.api.display.MkText
 import com.devkurt.markets.ui.api.layout.MkCard
+import com.devkurt.markets.ui.api.testing.mkTestTag
 import com.devkurt.markets.ui.api.theme.MkTheme
 
 @Composable
@@ -34,7 +35,9 @@ fun CoinsListCoinRow(
 ) {
     MkCard(
         onClick = onClick,
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .mkTestTag("coin_row"),
     ) {
         Row(
             modifier = Modifier
