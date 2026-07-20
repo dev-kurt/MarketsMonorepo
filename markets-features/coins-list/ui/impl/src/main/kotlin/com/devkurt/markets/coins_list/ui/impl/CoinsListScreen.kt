@@ -14,7 +14,7 @@ import androidx.paging.compose.LazyPagingItems
 import com.devkurt.markets.coin_detail.ui.api.CoinDetailRoute
 import com.devkurt.markets.coins_list.domain.api.model.Coin
 import com.devkurt.markets.coins_list.ui.impl.section.CoinRow
-import com.devkurt.markets.graph_list.ui.api.LocalGraphList
+import com.devkurt.markets.navigation.api.LocalGraphMain
 import com.devkurt.markets.paging.api.appendError
 import com.devkurt.markets.paging.api.isAppending
 import com.devkurt.markets.paging.api.isRefreshing
@@ -27,16 +27,17 @@ import com.devkurt.markets.ui.api.feedback.MkError
 import com.devkurt.markets.ui.api.frame.MkScreenScaffold
 import com.devkurt.markets.ui.api.theme.MkTheme
 import com.devkurt.markets.ui.api.R as UiR
+import kotlinx.collections.immutable.PersistentSet
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CoinsListScreen(
     coins: LazyPagingItems<Coin>,
-    watchlistIds: Set<String>,
+    watchlistIds: PersistentSet<String>,
     onEvent: (CoinsListEvent) -> Unit,
 ) {
     val loadState = coins.loadState
-    val listGraph = LocalGraphList.currentOrNull
+    val mainGraph = LocalGraphMain.currentOrNull
 
     MkScreenScaffold(
         topBar = {
@@ -86,7 +87,7 @@ fun CoinsListScreen(
                             CoinRow(
                                 coin = coin,
                                 isWatched = coin.id in watchlistIds,
-                                onClick = { listGraph?.add(CoinDetailRoute(coin.id)) },
+                                onClick = { mainGraph?.add(CoinDetailRoute(coin.id)) },
                                 onWatchToggle = {
                                     onEvent(CoinsListEvent.WatchlistToggled(coin.id))
                                 },

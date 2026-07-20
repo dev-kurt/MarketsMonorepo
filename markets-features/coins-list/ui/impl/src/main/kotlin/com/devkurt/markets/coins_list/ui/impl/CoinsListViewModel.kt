@@ -8,9 +8,13 @@ import com.devkurt.markets.coins_list.domain.api.model.Coin
 import com.devkurt.markets.coins_list.domain.api.usecase.CoinsListUseCase
 import com.devkurt.markets.watchlist.domain.api.usecase.FlowWatchlistIdsUseCase
 import com.devkurt.markets.watchlist.domain.api.usecase.ToggleWatchlistUseCase
+import kotlinx.collections.immutable.PersistentSet
+import kotlinx.collections.immutable.persistentSetOf
+import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -22,11 +26,13 @@ class CoinsListViewModel(
 
     val coins: Flow<PagingData<Coin>> = coinsListUseCase().cachedIn(viewModelScope)
 
-    val watchlistIds: StateFlow<Set<String>> = flowWatchlistIdsUseCase().stateIn(
-        viewModelScope,
-        started = SharingStarted.WhileSubscribed(),
-        initialValue = emptySet(),
-    )
+    val watchlistIds: StateFlow<PersistentSet<String>> = flowWatchlistIdsUseCase()
+        .map { ids -> ids.toPersistentSet() }
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = persistentSetOf(),
+        )
 
     fun onEvent(event: CoinsListEvent) {
         when (event) {

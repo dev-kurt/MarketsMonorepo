@@ -7,7 +7,6 @@ android {
 }
 
 dependencies {
-    api(projects.marketsFeatures.graphList.ui.api)
     api(projects.sharedFeatures.navigation.api)
     api(libs.kotlinx.serialization.core)
 }

@@ -13,7 +13,6 @@ dependencies {
     implementation(projects.marketsFeatures.coinDetail.domain.impl)
     api(projects.marketsFeatures.coinDetail.ui.api)
     api(projects.marketsFeatures.coinDetail.ui.impl)
-    api(projects.marketsFeatures.graphList.ui.api)
     api(projects.sharedFeatures.navigation.api)
     api(projects.sharedFeatures.serialization.api)
     api(libs.ktor.client.core)

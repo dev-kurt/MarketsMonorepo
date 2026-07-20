@@ -8,6 +8,7 @@ android {
 
 dependencies {
     api(projects.marketsFeatures.coinDetail.domain.api)
+    api(projects.marketsFeatures.coinDetail.ui.api)
     api(projects.sharedFeatures.ui.api)
     implementation(projects.sharedFeatures.navigation.api)
     implementation(libs.koin.androidx.compose)
