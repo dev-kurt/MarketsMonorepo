@@ -1,3 +1,5 @@
+import com.devkurt.markets.convention.buildConfigFieldFromLocalProperty
+
 plugins {
     alias(libs.plugins.marketsAndroidFeatureUi)
     alias(libs.plugins.marketsKoin)
@@ -5,6 +7,8 @@ plugins {
 
 android {
     namespace = "com.devkurt.markets.graph_main.di"
+
+    buildConfigFieldFromLocalProperty(project, "CG_DEMO_API_KEY", "cgDemoApiKey")
 }
 
 dependencies {
