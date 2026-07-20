@@ -8,6 +8,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.navigation3.ui)
     api(projects.marketsFeatures.coinDetail.data)
     api(projects.marketsFeatures.coinDetail.domain.api)
     api(projects.marketsFeatures.coinDetail.ui.api)

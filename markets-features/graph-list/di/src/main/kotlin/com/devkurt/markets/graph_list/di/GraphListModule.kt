@@ -1,5 +1,7 @@
 package com.devkurt.markets.graph_list.di
 
+import androidx.compose.animation.togetherWith
+import androidx.navigation3.ui.NavDisplay
 import com.devkurt.markets.graph_bottom.ui.api.GraphBottom
 import com.devkurt.markets.graph_bottom.ui.api.GraphBottomRoutes
 import com.devkurt.markets.graph_list.ui.api.GraphListRoute
@@ -7,6 +9,8 @@ import com.devkurt.markets.graph_list.ui.api.GraphListRoutes
 import com.devkurt.markets.graph_list.ui.impl.GraphListScreen
 import com.devkurt.markets.graph_list.ui.impl.GraphListViewModel
 import com.devkurt.markets.serialization.api.MkSerializersModule
+import com.devkurt.markets.ui.api.motion.MkEnterTransition
+import com.devkurt.markets.ui.api.motion.MkExitTransition
 import kotlinx.serialization.modules.polymorphic
 import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.KoinViewModel
@@ -20,7 +24,13 @@ class GraphListModule {
     @Single
     @Named("graphListRoutes")
     fun graphListRoutes(): GraphBottomRoutes = GraphBottomRoutes { scope ->
-        scope.entry<GraphListRoute> {
+        scope.entry<GraphListRoute>(
+            metadata = NavDisplay.transitionSpec {
+                MkEnterTransition.slideInBottom togetherWith MkExitTransition.fadeOut
+            } + NavDisplay.predictivePopTransitionSpec {
+                MkEnterTransition.slideInBottom togetherWith MkExitTransition.fadeOut
+            },
+        ) {
             GraphListScreen()
         }
     }

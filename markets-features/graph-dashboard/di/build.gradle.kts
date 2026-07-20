@@ -8,6 +8,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.navigation3.ui)
     api(projects.marketsFeatures.graphDashboard.ui.api)
     api(projects.marketsFeatures.graphDashboard.ui.impl)
     api(projects.marketsFeatures.graphBottom.ui.api)

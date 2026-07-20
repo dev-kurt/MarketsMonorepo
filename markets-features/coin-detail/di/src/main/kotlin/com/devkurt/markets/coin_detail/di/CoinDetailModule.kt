@@ -1,5 +1,7 @@
 package com.devkurt.markets.coin_detail.di
 
+import androidx.compose.animation.togetherWith
+import androidx.navigation3.ui.NavDisplay
 import com.devkurt.markets.coin_detail.data.remote.api.CoinDetailRemoteApi
 import com.devkurt.markets.coin_detail.data.repository.CoinDetailRepositoryImpl
 import com.devkurt.markets.coin_detail.domain.api.repository.CoinDetailRepository
@@ -9,6 +11,8 @@ import com.devkurt.markets.coin_detail.ui.impl.CoinDetailWrapper
 import com.devkurt.markets.navigation.api.GraphMain
 import com.devkurt.markets.navigation.api.GraphMainRoutes
 import com.devkurt.markets.serialization.api.MkSerializersModule
+import com.devkurt.markets.ui.api.motion.MkEnterTransition
+import com.devkurt.markets.ui.api.motion.MkExitTransition
 import io.ktor.client.HttpClient
 import kotlinx.serialization.modules.polymorphic
 import org.koin.core.annotation.Configuration
@@ -23,7 +27,15 @@ class CoinDetailModule {
     @Single
     @Named("coinDetailRoutes")
     fun coinDetailRoutes(): GraphMainRoutes = GraphMainRoutes { scope ->
-        scope.entry<CoinDetailRoute> { route ->
+        scope.entry<CoinDetailRoute>(
+            metadata = NavDisplay.transitionSpec {
+                MkEnterTransition.slideInRight togetherWith MkExitTransition.slideOutLeft
+            } + NavDisplay.popTransitionSpec {
+                MkEnterTransition.slideInLeft togetherWith MkExitTransition.slideOutRight
+            } + NavDisplay.predictivePopTransitionSpec {
+                MkEnterTransition.slideInLeft togetherWith MkExitTransition.slideOutRight
+            },
+        ) { route ->
             CoinDetailWrapper(route = route)
         }
     }
