@@ -17,8 +17,8 @@ import com.devkurt.markets.ui.api.display.MkText
 import com.devkurt.markets.ui.api.feedback.MkCircularProgressIndicator
 import com.devkurt.markets.ui.api.feedback.MkFeedbackPlaceholder
 import com.devkurt.markets.ui.api.feedback.MkFeedbackType
-import com.devkurt.markets.ui.api.theme.MkTheme
 import com.devkurt.markets.ui.api.testing.mkTestTag
+import com.devkurt.markets.ui.api.theme.MkTheme
 import com.devkurt.markets.watchlist.ui.impl.section.WatchlistCoinRow
 
 @Composable

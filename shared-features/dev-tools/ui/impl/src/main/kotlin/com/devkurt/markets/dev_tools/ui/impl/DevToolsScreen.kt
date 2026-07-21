@@ -22,7 +22,10 @@ fun DevToolsScreen(
             .padding(MkTheme.padding.lg),
         verticalArrangement = Arrangement.spacedBy(MkTheme.padding.sm),
     ) {
-        MkText(text = stringResource(R.string.dev_tools_title), style = MkTheme.typography.titleMedium)
+        MkText(
+            text = stringResource(R.string.dev_tools_title),
+            style = MkTheme.typography.titleMedium
+        )
         MkText(
             text = stringResource(R.string.dev_tools_subtitle),
             color = MkTheme.colorScheme.onSurfaceVariant,

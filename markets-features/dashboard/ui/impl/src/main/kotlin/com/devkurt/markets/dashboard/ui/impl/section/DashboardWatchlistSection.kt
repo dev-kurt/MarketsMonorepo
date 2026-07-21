@@ -12,8 +12,8 @@ import androidx.compose.ui.res.stringResource
 import com.devkurt.markets.dashboard.ui.impl.R
 import com.devkurt.markets.ui.api.buttons.MkTextButton
 import com.devkurt.markets.ui.api.display.MkText
-import com.devkurt.markets.ui.api.theme.MkTheme
 import com.devkurt.markets.ui.api.testing.mkTestTag
+import com.devkurt.markets.ui.api.theme.MkTheme
 import com.devkurt.markets.watchlist.domain.api.model.WatchlistCoin
 import com.devkurt.markets.watchlist.ui.impl.section.WatchlistCoinRow
 

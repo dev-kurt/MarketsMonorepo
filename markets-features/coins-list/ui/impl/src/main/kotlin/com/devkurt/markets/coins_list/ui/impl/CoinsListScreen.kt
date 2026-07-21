@@ -24,12 +24,12 @@ import com.devkurt.markets.paging.api.refreshError
 import com.devkurt.markets.ui.api.buttons.MkTextButton
 import com.devkurt.markets.ui.api.display.MkText
 import com.devkurt.markets.ui.api.feedback.MkCircularProgressIndicator
-import com.devkurt.markets.ui.api.feedback.MkSkeletonRow
 import com.devkurt.markets.ui.api.feedback.MkFeedbackPlaceholder
 import com.devkurt.markets.ui.api.feedback.MkFeedbackType
+import com.devkurt.markets.ui.api.feedback.MkSkeletonRow
 import com.devkurt.markets.ui.api.frame.MkScreenScaffold
-import com.devkurt.markets.ui.api.theme.MkTheme
 import com.devkurt.markets.ui.api.testing.mkTestTag
+import com.devkurt.markets.ui.api.theme.MkTheme
 import com.devkurt.markets.ui.api.R as UiR
 
 private const val SKELETON_ROW_COUNT = 8

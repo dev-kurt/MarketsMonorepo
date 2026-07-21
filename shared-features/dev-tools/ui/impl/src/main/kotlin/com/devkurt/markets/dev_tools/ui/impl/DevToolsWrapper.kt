@@ -21,7 +21,11 @@ fun DevToolsWrapper(
         viewModel.effect.collect { effect ->
             when (effect) {
                 is DevToolsEffect.ShowMessage ->
-                    Toast.makeText(context, resources.getString(effect.messageRes), Toast.LENGTH_SHORT)
+                    Toast.makeText(
+                        context,
+                        resources.getString(effect.messageRes),
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
             }
         }

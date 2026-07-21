@@ -20,8 +20,8 @@ import com.devkurt.markets.ui.api.display.MkAsyncImage
 import com.devkurt.markets.ui.api.display.MkIcon
 import com.devkurt.markets.ui.api.display.MkText
 import com.devkurt.markets.ui.api.layout.MkCard
-import com.devkurt.markets.ui.api.theme.MkTheme
 import com.devkurt.markets.ui.api.testing.mkTestTag
+import com.devkurt.markets.ui.api.theme.MkTheme
 import com.devkurt.markets.watchlist.domain.api.model.WatchlistCoin
 import java.util.Locale
 
