@@ -11,7 +11,7 @@ data class CoinDetailDto(
     val description: DescriptionDto = DescriptionDto(),
     val image: ImageDto = ImageDto(),
     @SerialName("market_cap_rank")
-    val marketCapRank: Int? = null,
+    val marketCapRank: Int = 0,
     @SerialName("market_data")
     val marketData: MarketDataDto = MarketDataDto(),
 )
@@ -41,9 +41,9 @@ data class MarketDataDto(
     val ath: Map<String, Double> = emptyMap(),
     val atl: Map<String, Double> = emptyMap(),
     @SerialName("price_change_percentage_24h")
-    val priceChangePercentage24h: Double? = null,
+    val priceChangePercentage24h: Double = 0.0,
     @SerialName("circulating_supply")
-    val circulatingSupply: Double? = null,
+    val circulatingSupply: Double = 0.0,
     @SerialName("max_supply")
     val maxSupply: Double? = null,
 )

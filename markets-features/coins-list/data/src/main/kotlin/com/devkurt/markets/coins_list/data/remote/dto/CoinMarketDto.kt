@@ -10,9 +10,9 @@ data class CoinMarketDto(
     val name: String,
     val image: String = "",
     @SerialName("current_price")
-    val currentPrice: Double? = null,
+    val currentPrice: Double = 0.0,
     @SerialName("price_change_percentage_24h")
-    val priceChangePercentage24h: Double? = null,
+    val priceChangePercentage24h: Double = 0.0,
     @SerialName("market_cap_rank")
-    val marketCapRank: Int? = null,
+    val marketCapRank: Int = 0,
 )
