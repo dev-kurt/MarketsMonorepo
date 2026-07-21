@@ -366,8 +366,8 @@ abstract class CreateLayerTask @Inject constructor(
         content = content.replace(sourceFullProject, targetFullProject)
         content = content.replace(sourceProjectBase, targetProjectBase)
 
-        // \b alt çizgiyi kelime karakteri saydığı için snake_case/camelCase'de yanlış eşleşir;
-        // bu yüzden özel sınırlar kullanılıyor.
+        // \b counts underscore as a word character and mismatches in snake_case/camelCase;
+        // custom boundaries are used instead.
         val snakeRegex = { word: String -> Regex("(?<=^|[^a-zA-Z0-9])$word(?=[^a-zA-Z0-9]|\\$)") }
         val camelRegex =
             { word: String -> Regex("(?<=^|[^a-zA-Z0-9])$word(?=[A-Z]|[^a-zA-Z0-9]|\\$)") }

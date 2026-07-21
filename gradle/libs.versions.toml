@@ -6,7 +6,7 @@ koinCompilerPlugin = "1.0.2"
 detekt = "2.0.0-alpha.5"
 dependencyAnalysis = "3.17.0"
 
-# ─── Compose (BOM tüm compose sürümlerini hizalar) ───
+# ─── Compose (BOM aligns all Compose versions) ───
 composeBom = "2026.06.01"
 
 # ─── AndroidX ───
@@ -43,7 +43,7 @@ junit = "4.13.2"
 turbine = "1.2.1"
 
 [libraries]
-# ─── Compose (BOM ile versiyonsuz) ───
+# ─── Compose (versionless via BOM) ───
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
@@ -111,7 +111,7 @@ kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit"
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 
-# ─── Gradle Plugin'leri (build-logic classpath) ───
+# ─── Gradle plugins (build-logic classpath) ───
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 detekt-gradlePlugin = { group = "dev.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
 dependency-analysis-gradlePlugin = { group = "com.autonomousapps", name = "dependency-analysis-gradle-plugin", version.ref = "dependencyAnalysis" }
@@ -126,10 +126,10 @@ jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 jetbrainsKotlinPluginCompose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
-# ─── DI: Koin compiler (KSP) ───
+# ─── DI: Koin compiler plugin ───
 koinCompiler = { id = "io.insert-koin.compiler.plugin", version.ref = "koinCompilerPlugin" }
 
-# ─── Convention plugin'ler (bu projede tanımlı) ───
+# ─── Convention plugins (defined in this project) ───
 marketsAndroidApplication = { id = "markets.android.application" }
 marketsAndroidLibrary = { id = "markets.android.library" }
 marketsJvmLibrary = { id = "markets.jvm.library" }

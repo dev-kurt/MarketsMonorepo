@@ -1,24 +1,25 @@
 # Template Feature
 
-Yeni feature'ların üretildiği 6 modüllü şablon. İki işi var:
+The six-module template every new feature is generated from. It has two jobs:
 
-1. **Kaynak** — `./gradlew createLayer` bu modülleri kopyalayıp yeniden adlandırır.
-2. **Referans** — MVI ayrımı, Koin kablolaması, nav3 route sahipliği ve polimorfik
-   serialization sözleşmesinin tek doğru örneği burada durur.
+1. **Source** — `./gradlew createLayer` copies these modules and renames them.
+2. **Reference** — the single canonical example of the MVI split, Koin wiring, nav3
+   route ownership and the polymorphic serialization contract.
 
-`settings.gradle.kts`'de include edilmiş, yani `./gradlew build` ile birlikte derlenir —
-sözleşme bozulursa build kırılır. Şablonun çürümemesinin tek nedeni bu.
+It is included in `settings.gradle.kts`, so it compiles as part of `./gradlew build` —
+if the contract breaks, the build breaks. That is the only reason the template cannot
+rot silently.
 
-## Modül anatomisi
+## Module anatomy
 
-| Modül         | Gradle plugin                             | İçerik                                                      | Bağımlılığı                     |
+| Module        | Gradle plugin                             | Contents                                                    | Depends on                      |
 |---------------|-------------------------------------------|-------------------------------------------------------------|---------------------------------|
-| `domain/api`  | `marketsJvmLibrary`                       | Model + `Repository`/`UseCase` arayüzleri                   | — (yaprak)                      |
+| `domain/api`  | `marketsJvmLibrary`                       | Models + `Repository`/`UseCase` interfaces                  | — (leaf)                        |
 | `domain/impl` | `marketsJvmLibrary`                       | `UseCaseImpl`                                               | `domain/api`                    |
-| `data`        | `marketsAndroidLibrary`                   | Ktor `RemoteApi`, DTO, mapper, `RepositoryImpl`             | `domain/api`, `network/api`     |
+| `data`        | `marketsAndroidLibrary`                   | Ktor `RemoteApi`, DTOs, mapper, `RepositoryImpl`            | `domain/api`, `network/api`     |
 | `ui/api`      | `marketsAndroidLibrary`                   | `Route` (`@Serializable`, `NavKey`)                         | `navigation/api`                |
-| `ui/impl`     | `marketsAndroidFeatureUi`                 | `Screen`/`State`/`Event`/`ViewModel`/`Wrapper` + `section/` | `domain/api`, `ui/api` (shared) |
-| `di`          | `marketsAndroidFeatureUi` + `marketsKoin` | Koin modülü — hepsini birbirine bağlar                      | tümü                            |
+| `ui/impl`     | `marketsAndroidFeatureUi`                 | `Screen`/`State`/`Event`/`ViewModel`/`Wrapper` + `section/` | `domain/api`, shared `ui/api`   |
+| `di`          | `marketsAndroidFeatureUi` + `marketsKoin` | The Koin module — ties everything together                  | all of the above                |
 
 ```mermaid
 graph TD
@@ -31,16 +32,17 @@ graph TD
     uiImpl --> domainApi
 ```
 
-İki kural bu grafikte saklı:
+Two rules hide in this graph:
 
-- `domain/api` saf JVM ve hiçbir şeye bakmaz — iş kuralına Android ve Ktor bulaşmaz.
-- `ui/impl`, `ui/api`'ye bağımlı **değildir**. Route ile ekranı `di` birleştirir
-  (`scope.entry<Route> { Wrapper() }`). Başka feature'lar bu route'a navigasyon yapmak için
-  `ui/impl`'i sürüklemek zorunda kalmaz.
+- `domain/api` is pure JVM and looks at nothing — business rules never touch Android or
+  Ktor.
+- `ui/impl` does **not** depend on `ui/api`. The route and the screen are joined in `di`
+  (`scope.entry<Route> { Wrapper() }`), so other features can navigate to the route
+  without dragging in the screens.
 
-## Yeni feature üretmek
+## Generating a new feature
 
-Task **katman katman** çalışır; feature'ın tamamını tek komutta üretmez.
+The task works **layer by layer**; it does not generate a whole feature in one command.
 
 ```bash
 ./gradlew createLayer --layer=domain:api  --feature=:markets-features:coins-list
@@ -51,84 +53,89 @@ Task **katman katman** çalışır; feature'ın tamamını tek komutta üretmez.
 ./gradlew createLayer --layer=di          --feature=:markets-features:coins-list
 ```
 
-Her komut şunu yapar: kaynak katmanı kopyalar (`build/`, `.gradle/`, `.git/`, `docs/` hariç),
-dosya içeriği ve dosya adlarındaki token'ları çevirir, paket dizinlerini taşır,
-`settings.gradle.kts`'ye `include(...)` ekler, feature'ın `di/build.gradle.kts`'ine bağımlılık
-satırını ekler.
+Each command copies the source layer (excluding `build/`, `.gradle/`, `.git/`, `docs/`),
+translates the tokens in file contents and file names, relocates package directories,
+adds the `include(...)` to `settings.gradle.kts`, and appends the dependency line to the
+feature's `di/build.gradle.kts`.
 
-**`di`'yi en sona bırak.** Şablondan gelen `di/build.gradle.kts` zaten tüm katmanları `api(...)`
-ile referanslıyor. `di`'yi önce üretirsen sonraki her katman aynı bağımlılığı bir de
-`implementation(...)` olarak ekler — task iki satırı aynı saymadığı için mükerrer kayıt oluşur.
+**Generate `di` last.** The template's `di/build.gradle.kts` already references every
+layer with `api(...)`. If `di` is generated first, each later layer appends the same
+dependency again as `implementation(...)` — the task does not treat the two lines as
+duplicates, so you end up with double entries.
 
-### Seçenekler
+### Options
 
-| Seçenek          | Varsayılan                                 | Ne işe yarar                                                   |
+| Option           | Default                                    | Purpose                                                        |
 |------------------|--------------------------------------------|----------------------------------------------------------------|
-| `--layer`        | (zorunlu)                                  | `data`, `domain:api`, `domain:impl`, `ui:api`, `ui:impl`, `di` |
-| `--feature`      | (zorunlu)                                  | Hedef konum, örn. `:markets-features:coins-list`               |
-| `--source`       | `:template-feature`                        | Kopyalanacak kaynak feature                                    |
-| `--source-layer` | `--layer` ile aynı                         | Kaynak katman                                                  |
-| `--base-package` | `gradle.properties` → `projectBasePackage` | Paket kökü                                                     |
+| `--layer`        | (required)                                 | `data`, `domain:api`, `domain:impl`, `ui:api`, `ui:impl`, `di` |
+| `--feature`      | (required)                                 | Target location, e.g. `:markets-features:coins-list`           |
+| `--source`       | `:template-feature`                        | Source feature to copy from                                    |
+| `--source-layer` | same as `--layer`                          | Source layer                                                   |
+| `--base-package` | `gradle.properties` → `projectBasePackage` | Package root                                                   |
 
-`--source` ile şablon yerine **gerçek bir kardeş feature**'dan klonlayabilirsin. Şablon fazla
-genel kalıyorsa, yakın bir feature'ı kaynak almak geriye daha az düzeltme bırakır:
+With `--source` you can clone from a **real sibling feature** instead of the template.
+When the template is too generic, a close sibling leaves less to fix afterwards:
 
 ```bash
 ./gradlew createLayer --layer=ui:impl --feature=:markets-features:coin-detail \
                       --source=:markets-features:coins-list
 ```
 
-### Token dönüşümü
+### Token translation
 
-`--feature=:markets-features:coins-list` için:
+For `--feature=:markets-features:coins-list`:
 
-| Kaynak                                 | Hedef                                             | Nerede geçer                          |
-|----------------------------------------|---------------------------------------------------|---------------------------------------|
-| `TemplateFeature`                      | `CoinsList`                                       | Sınıf/fonksiyon adları, dosya adları  |
-| `templateFeature`                      | `coinsList`                                       | Değişkenler, `projects.` erişimcileri |
-| `template_feature`                     | `coins_list`                                      | Paket adı, `namespace`                |
-| `template-feature`                     | `coins-list`                                      | Gradle yol parçaları                  |
-| `com.devkurt.markets.template_feature` | `com.devkurt.markets.markets_features.coins_list` | Paket kökü                            |
+| Source                                 | Target                                            | Where it appears                       |
+|----------------------------------------|---------------------------------------------------|----------------------------------------|
+| `TemplateFeature`                      | `CoinsList`                                       | Class/function names, file names       |
+| `templateFeature`                      | `coinsList`                                       | Variables, `projects.` accessors       |
+| `template_feature`                     | `coins_list`                                      | Package name, `namespace`              |
+| `template-feature`                     | `coins-list`                                      | Gradle path segments                   |
+| `com.devkurt.markets.template_feature` | `com.devkurt.markets.markets_features.coins_list` | Package root                           |
 
-## Şablonun taşıdığı sözleşmeler
+## Contracts the template carries
 
-Şablona dokunmadan önce neyi örneklediğini bil:
+Know what it exemplifies before touching it:
 
-- **MVI ayrımı** — `Wrapper` yalnız VM'i bağlar (`koinViewModel` + `collectAsStateWithLifecycle`).
-  `Screen` saftır, sadece `state` + `onEvent` alır; layout `Screen`'in içindedir, alt parçalar
-  `section/` paketine çıkar.
-- **`LoadingCounter`** — `combine(_state, loading.isLoading)` deseni. Yükleme durumu state'e
-  VM'de birleşir, ekran sayaçtan habersizdir.
-- **Serializer kaydı** — `di`'deki `polymorphic { subclass(...) }` bloğu. Bu kayıt unutulursa
-  uygulama ilk ekran döndürmede `SerializationException` ile patlar ve compile-time'da hiçbir
-  uyarı çıkmaz. `TemplateFeatureSerializersTest` bu yüzden şablonun parçası: kopyalanan her
-  feature kendi kaydının testiyle birlikte doğar.
-- **Tek Koin modülü** — feature'ın tüm tanımları (`RemoteApi`, `Repository`, `UseCase`,
-  `ViewModel`, route entry, serializer) tek `@Module @Configuration` sınıfında toplanır.
-  `@Configuration` sayesinde modül `MarketsKoinApp`'a elle eklenmeden yüklenir.
+- **The MVI split** — `Wrapper` only wires the ViewModel (`koinViewModel` +
+  `collectAsStateWithLifecycle`). `Screen` is pure and takes only `state` + `onEvent`;
+  layout lives in `Screen`, sub-pieces go to the `section/` package.
+- **`LoadingCounter`** — the `combine(_state, loading.isLoading)` pattern. Loading state
+  is merged into state inside the ViewModel; the screen never sees the counter.
+- **Serializer registration** — the `polymorphic { subclass(...) }` block in `di`. If
+  this registration is forgotten there is no compile-time warning; the app crashes with
+  a `SerializationException` on the first navigation to the route, which the first
+  manual run or Maestro flow surfaces immediately.
+- **A single Koin module** — all of the feature's definitions (`RemoteApi`,
+  `Repository`, `UseCase`, `ViewModel`, route entry, serializer) live in one
+  `@Module @Configuration` class. Thanks to `@Configuration` the module is picked up
+  without being added to `MarketsKoinApp` by hand.
 
-## Üretim sonrası doldurulacaklar
+## What to fill in after generating
 
-1. `RemoteApi` → `ENDPOINT = "xx"` yerine gerçek uç. Şeması önce
-   [api-collections](../api-collections/README.md)'da doğrulanmış olmalı.
-2. `Response` DTO'su → gerçek yanıt şekli.
-3. Domain modeli + `toXxx()` mapper'ı.
-4. `Route`'un parent graph'ı — şablonda `GraphMain`. Alt sekmeye giriyorsa `GraphBottom`,
-   dashboard içindeyse `GraphDashboard`. `di`'deki `polymorphic(...)` parent'ını **ve** serializer
-   testini birlikte güncelle.
-5. `State` alanları + `TopBar`'daki `"TemplateFeature"` placeholder başlığı.
+1. `RemoteApi` → replace `ENDPOINT = "xx"` with the real endpoint, its schema first
+   verified in [api-collections](../api-collections/README.md).
+2. The `Response` DTO → the real response shape.
+3. The domain model + its `toXxx()` mapper.
+4. The `Route`'s parent graph — the template uses `GraphMain`. Use `GraphBottom` for a
+   bottom tab, `GraphDashboard` inside the dashboard, and update the
+   `polymorphic(...)` parent in `di` to match.
+5. `State` fields + the `"TemplateFeature"` placeholder title in the `TopBar`.
 
-## Bilinen boşluklar
+## Known gaps
 
-> **Paket adında konum segmenti.** `--feature=:markets-features:coins-list` paketi
-> `com.devkurt.markets.markets_features.coins_list` yapar; elle yazılmış mevcut modüller ise
-> `com.devkurt.markets.graph_dashboard` konvansiyonunu izler (konum segmenti yok). Konumsuz
-> çağrı (`--feature=:coins-list`) paketi düzeltir ama modülü `markets-features/` yerine repo
-> köküne üretir. Şu an ikisinden biri elle düzeltiliyor.
+> **Location segment in the package name.** `--feature=:markets-features:coins-list`
+> produces the package `com.devkurt.markets.markets_features.coins_list`, while the
+> hand-written modules follow `com.devkurt.markets.graph_dashboard` (no location
+> segment). A location-less invocation (`--feature=:coins-list`) fixes the package but
+> generates the module at the repo root instead of under `markets-features/`. One of the
+> two is currently corrected by hand.
 
-> **Şablon güncelliği.** Derlenmesi sözleşmenin *bozulmadığını* garanti eder, *güncel kaldığını*
-> etmez. Shared bir bileşen değişip şablonun da güncellenmesi gerektiğinde bunu yakalayan bir
-> otomasyon yok; CI da kurulmadı.
+> **Template freshness.** Compiling proves the contract is *intact*, not that it is
+> *current*. CI builds the template with everything else, but nothing detects the moment
+> a shared component changes in a way the template should mirror — that still relies on
+> discipline.
 
-> **Bu dosya kopyalanmaz.** `createLayer` katman dizinlerini kopyalar (`template-feature/ui/impl`
-> gibi), feature kökünü değil. README feature kökünde durduğu için üretilen feature'lara sızmaz.
+> **This file is not copied.** `createLayer` copies layer directories (such as
+> `template-feature/ui/impl`), not the feature root. Since this README sits at the
+> feature root, it never leaks into generated features.
