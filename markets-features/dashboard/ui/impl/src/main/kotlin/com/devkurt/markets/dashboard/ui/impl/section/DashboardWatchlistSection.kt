@@ -9,21 +9,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import com.devkurt.markets.coin_detail.ui.api.CoinDetailRoute
+import com.devkurt.markets.dashboard.ui.impl.DashboardState
 import com.devkurt.markets.dashboard.ui.impl.R
+import com.devkurt.markets.navigation.api.LocalGraphMain
 import com.devkurt.markets.ui.api.buttons.MkTextButton
 import com.devkurt.markets.ui.api.display.MkText
 import com.devkurt.markets.ui.api.testing.mkTestTag
 import com.devkurt.markets.ui.api.theme.MkTheme
-import com.devkurt.markets.watchlist.domain.api.model.WatchlistCoin
+import com.devkurt.markets.watchlist.ui.api.WatchlistRoute
 import com.devkurt.markets.watchlist.ui.impl.section.WatchlistCoinRow
 
 @Composable
 fun DashboardWatchlistSection(
-    coins: List<WatchlistCoin>,
-    onCoinClick: (String) -> Unit,
-    onSeeAllClick: () -> Unit,
+    state: DashboardState,
     modifier: Modifier = Modifier,
 ) {
+    val mainGraph = LocalGraphMain.currentOrNull
+
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(MkTheme.padding.sm),
@@ -38,24 +41,24 @@ fun DashboardWatchlistSection(
                 modifier = Modifier.weight(1f),
             )
             MkTextButton(
-                onClick = onSeeAllClick,
+                onClick = { mainGraph?.add(WatchlistRoute) },
                 modifier = Modifier.mkTestTag("watchlist_see_all"),
             ) {
                 MkText(stringResource(R.string.dashboard_watchlist_see_all))
             }
         }
 
-        if (coins.isEmpty()) {
+        if (state.watchlistCoins.isEmpty()) {
             MkText(
                 text = stringResource(R.string.dashboard_watchlist_empty),
                 color = MkTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(vertical = MkTheme.padding.md),
             )
         } else {
-            coins.forEach { coin ->
+            state.watchlistCoins.forEach { coin ->
                 WatchlistCoinRow(
                     coin = coin,
-                    onClick = { onCoinClick(coin.id) },
+                    onClick = { mainGraph?.add(CoinDetailRoute(coin.id)) },
                 )
             }
         }

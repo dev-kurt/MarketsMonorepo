@@ -1,5 +1,8 @@
 package com.devkurt.markets.coin_detail.domain.api.model
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class CoinDetail(
     val id: String,
     val symbol: String,

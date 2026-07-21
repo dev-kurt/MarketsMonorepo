@@ -1,5 +1,8 @@
 package com.devkurt.markets.watchlist.domain.api.model
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class WatchlistCoin(
     val id: String,
     val symbol: String,
