@@ -1,6 +1,6 @@
 # Markets
 
-[![CI](https://github.com/dev-kurt/Markets/actions/workflows/ci.yml/badge.svg)](https://github.com/dev-kurt/Markets/actions/workflows/ci.yml)
+[![CI](https://github.com/dev-kurt/MarketsMonorepo/actions/workflows/ci.yml/badge.svg)](https://github.com/dev-kurt/MarketsMonorepo/actions/workflows/ci.yml)
 
 Native Android crypto app built on the [CoinGecko](https://www.coingecko.com/en/api) demo
 API: a paginated coins list, coin detail, a locally persisted watchlist and a dashboard
