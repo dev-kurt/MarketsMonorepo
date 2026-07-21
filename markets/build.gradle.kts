@@ -12,4 +12,5 @@ android {
 
 dependencies {
     implementation(projects.marketsFeatures.graphMain.di)
+    implementation(projects.sharedFeatures.network.api)
 }
