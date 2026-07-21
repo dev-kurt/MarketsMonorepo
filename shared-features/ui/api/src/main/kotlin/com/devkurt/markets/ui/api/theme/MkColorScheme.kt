@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package com.devkurt.markets.ui.api.theme
 
 import androidx.compose.runtime.Immutable

@@ -14,6 +14,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 class AndroidApplicationConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
         pluginManager.apply("com.android.application")
+        pluginManager.apply("markets.detekt")
 
         extensions.configure<ApplicationExtension> {
             compileSdk = COMPILE_SDK

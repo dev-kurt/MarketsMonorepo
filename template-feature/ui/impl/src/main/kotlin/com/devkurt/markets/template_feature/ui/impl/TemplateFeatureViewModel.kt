@@ -41,7 +41,9 @@ class TemplateFeatureViewModel(
                 _state.update { state -> event.update(state) }
             }
 
-            TemplateFeatureEvent.Refresh -> load()
+            TemplateFeatureEvent.Refresh -> {
+                load()
+            }
         }
     }
 

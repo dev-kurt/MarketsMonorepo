@@ -1,0 +1,134 @@
+config:
+  validation: true
+  warningsAsErrors: true
+
+processors:
+  active: true
+  exclude:
+    - 'DetektProgressListener'
+
+console-reports:
+  active: true
+  exclude:
+    - 'ProjectStatisticsReport'
+    - 'ComplexityReport'
+    - 'NotificationReport'
+    - 'FileBasedFindingsReport'
+    - 'LiteFindingsReport'
+
+comments:
+  active: false
+
+potential-bugs:
+  active: true
+  ElseCaseInsteadOfExhaustiveWhen:
+    active: true
+  NullableToStringCall:
+    active: false
+  LateinitUsage:
+    active: false
+  ImplicitUnitReturnType:
+    active: true
+  Deprecation:
+    active: false
+  MissingUseCall:
+    active: false
+  ExitOutsideMain:
+    active: false
+  CastNullableToNonNullableType:
+    active: false
+
+exceptions:
+  active: false
+
+coroutines:
+  SuspendFunSwallowedCancellation:
+    active: false
+
+complexity:
+  CyclomaticComplexMethod:
+    allowedComplexity: 20
+    ignoreSingleWhenExpression: true
+    ignoreSimpleWhenEntries: true
+    ignoreNestingFunctions: true
+    ignoreAnnotated: [ 'Composable' ]
+  LongMethod:
+    allowedLines: 100
+    ignoreAnnotated: [ 'Composable' ]
+  LongParameterList:
+    active: false
+  NestedBlockDepth:
+    allowedDepth: 5
+  TooManyFunctions:
+    allowedFunctionsPerFile: 25
+    allowedFunctionsPerClass: 20
+    allowedFunctionsPerInterface: 20
+    allowedFunctionsPerObject: 20
+    allowedFunctionsPerEnum: 20
+  LabeledExpression:
+    active: false
+  ComplexInterface:
+    active: false
+  ReplaceSafeCallChainWithRun:
+    active: false
+  StringLiteralDuplication:
+    active: false
+  CognitiveComplexMethod:
+    ignoreAnnotated: [ 'Composable' ]
+
+naming:
+  EnumNaming:
+    enumEntryPattern: '_?[A-Za-z0-9][_a-zA-Z0-9]*'
+  FunctionNaming:
+    ignoreAnnotated: [ 'Composable' ]
+  FunctionNameMaxLength:
+    maximumFunctionNameLength: 50
+    ignoreAnnotated: [ 'Preview' ]
+  BooleanPropertyNaming:
+    active: false
+  ObjectPropertyNaming:
+    privatePropertyPattern: '_?[A-Za-z][_A-Za-z0-9]*'
+  PackageNaming:
+    packagePattern: '[a-z]+(\.[a-z_][A-Za-z0-9_]*)*'
+  TopLevelPropertyNaming:
+    privatePropertyPattern: '_?[A-Za-z][_A-Za-z0-9]*'
+  VariableNaming:
+    privateVariablePattern: '_?[a-z][A-Za-z0-9]*'
+
+style:
+  ReturnCount:
+    max: 5
+  MaxLineLength:
+    maxLineLength: 140
+    excludePackageStatements: true
+    excludeImportStatements: true
+    excludeCommentStatements: true
+  ForbiddenMethodCall:
+    active: true
+    methods:
+      - reason: 'Use the injected Logger abstraction instead'
+        value: 'kotlin.io.print'
+      - reason: 'Use the injected Logger abstraction instead'
+        value: 'kotlin.io.println'
+  UnusedImport:
+    active: true
+  UnusedPrivateFunction:
+    ignoreAnnotated: [ 'Preview' ]
+  UnusedPrivateProperty:
+    ignoreAnnotated: [ 'Preview' ]
+  StringShouldBeRawString:
+    ignoreAnnotated: [ 'Preview' ]
+  CascadingCallWrapping:
+    active: true
+  MaxChainedCallsOnSameLine:
+    active: true
+  MultilineLambdaItParameter:
+    active: true
+  BracesOnIfStatements:
+    active: false
+  ExpressionBodySyntax:
+    active: false
+  UseIfInsteadOfWhen:
+    active: false
+  DataClassContainsFunctions:
+    active: false

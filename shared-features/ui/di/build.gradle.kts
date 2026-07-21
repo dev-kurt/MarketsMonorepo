@@ -8,7 +8,7 @@ android {
 }
 
 dependencies {
-    implementation(libs.coil.core)
+    api(libs.coil.core)
     implementation(libs.coil.network.ktor3)
     implementation(libs.ktor.client.core)
 }

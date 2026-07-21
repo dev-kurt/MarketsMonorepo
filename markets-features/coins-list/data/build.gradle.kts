@@ -11,5 +11,4 @@ dependencies {
     api(projects.sharedFeatures.network.api)
     implementation(projects.sharedFeatures.paging.api)
     api(libs.ktor.client.core)
-    implementation(libs.kotlinx.serialization.json)
 }

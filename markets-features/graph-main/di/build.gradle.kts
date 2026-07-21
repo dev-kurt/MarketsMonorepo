@@ -33,6 +33,6 @@ dependencies {
 
     implementation(libs.koin.android)
     implementation(libs.koin.core.viewmodel)
-    implementation(libs.coil.core)
+    implementation(libs.coil)
     implementation(libs.androidx.activity.compose)
 }

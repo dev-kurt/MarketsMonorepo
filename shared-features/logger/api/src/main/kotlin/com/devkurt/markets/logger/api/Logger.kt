@@ -1,8 +1,8 @@
 package com.devkurt.markets.logger.api
 
 interface Logger {
-    fun d(tag: String, message: () -> String)
-    fun i(tag: String, message: () -> String)
-    fun w(tag: String, throwable: Throwable? = null, message: () -> String)
-    fun e(tag: String, throwable: Throwable? = null, message: () -> String)
+    fun debug(tag: String, message: () -> String)
+    fun info(tag: String, message: () -> String)
+    fun warn(tag: String, throwable: Throwable? = null, message: () -> String)
+    fun error(tag: String, throwable: Throwable? = null, message: () -> String)
 }

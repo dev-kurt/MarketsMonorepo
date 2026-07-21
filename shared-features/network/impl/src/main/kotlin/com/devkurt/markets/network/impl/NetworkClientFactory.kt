@@ -14,6 +14,9 @@ import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
+private const val REQUEST_TIMEOUT_MS = 30_000L
+private const val CONNECT_TIMEOUT_MS = 15_000L
+
 object NetworkClientFactory {
     fun create(json: Json, config: NetworkConfig): HttpClient = HttpClient(OkHttp) {
         expectSuccess = true
@@ -35,8 +38,8 @@ object NetworkClientFactory {
         }
 
         install(HttpTimeout) {
-            requestTimeoutMillis = 30_000
-            connectTimeoutMillis = 15_000
+            requestTimeoutMillis = REQUEST_TIMEOUT_MS
+            connectTimeoutMillis = CONNECT_TIMEOUT_MS
         }
     }
 }

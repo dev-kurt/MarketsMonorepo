@@ -12,6 +12,9 @@ dependencies {
     compileOnly(libs.android.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.koin.compiler.gradlePlugin)
+    implementation(libs.detekt.gradlePlugin)
+    implementation(libs.dependency.analysis.gradlePlugin)
+    implementation(libs.kotlin.metadata.jvm)
 }
 
 gradlePlugin {
@@ -38,6 +41,15 @@ gradlePlugin {
         register("koin") {
             id = "markets.koin"
             implementationClass = "com.devkurt.markets.convention.primitive.KoinConventionPlugin"
+        }
+        register("detekt") {
+            id = "markets.detekt"
+            implementationClass = "com.devkurt.markets.convention.primitive.DetektConventionPlugin"
+        }
+        register("dependencyAnalysis") {
+            id = "markets.dependency.analysis"
+            implementationClass =
+                "com.devkurt.markets.convention.primitive.DependencyAnalysisConventionPlugin"
         }
         register("createLayer") {
             id = "markets.create.layer"

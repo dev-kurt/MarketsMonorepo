@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.marketsCreateLayer)
+    alias(libs.plugins.marketsDependencyAnalysis)
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.androidLibrary) apply false
     alias(libs.plugins.jetbrainsKotlinJvm) apply false

@@ -16,7 +16,7 @@ class CoroutinesScopesModule {
     @Single
     fun exceptionHandler(logger: Logger): CoroutineExceptionHandler =
         CoroutineExceptionHandler { _, throwable ->
-            logger.e("IOScope", throwable) { "Uncaught coroutine error" }
+            logger.error("IOScope", throwable) { "Uncaught coroutine error" }
         }
 
     @Single

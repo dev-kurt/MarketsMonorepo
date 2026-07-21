@@ -69,7 +69,9 @@ fun BottomBarSection() {
                         dashboardNavGraph.clearExceptRoot()
                     }
 
-                    else -> bottomNavGraph.switchTo(tab.route)
+                    else -> {
+                        bottomNavGraph.switchTo(tab.route)
+                    }
                 }
             },
             icon = { MkIcon(imageVector = tab.icon) },

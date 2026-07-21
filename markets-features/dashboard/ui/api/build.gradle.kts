@@ -8,6 +8,5 @@ android {
 
 dependencies {
     api(projects.marketsFeatures.graphDashboard.ui.api)
-    api(projects.sharedFeatures.navigation.api)
     api(libs.kotlinx.serialization.core)
 }

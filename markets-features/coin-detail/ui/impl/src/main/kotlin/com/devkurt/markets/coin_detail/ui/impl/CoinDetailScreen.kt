@@ -35,12 +35,16 @@ fun CoinDetailScreen(
                 )
             }
 
-            coin == null -> MkLoading(modifier = Modifier.padding(paddingValues))
+            coin == null -> {
+                MkLoading(modifier = Modifier.padding(paddingValues))
+            }
 
-            else -> CoinDetailSection(
-                coin = coin,
-                modifier = Modifier.padding(paddingValues),
-            )
+            else -> {
+                CoinDetailSection(
+                    coin = coin,
+                    modifier = Modifier.padding(paddingValues),
+                )
+            }
         }
     }
 }
