@@ -15,5 +15,5 @@ data class SearchCoinDto(
     val symbol: String,
     @SerialName("market_cap_rank")
     val marketCapRank: Int? = null,
-    val large: String,
+    val large: String = "",
 )

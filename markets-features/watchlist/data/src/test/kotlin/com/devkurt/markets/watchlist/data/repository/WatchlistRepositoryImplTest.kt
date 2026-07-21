@@ -116,6 +116,19 @@ class WatchlistRepositoryImplTest {
     }
 
     @Test
+    fun `null price and missing image survive decoding`() = runTest {
+        val engine = MockEngine {
+            respond(
+                content = """[{"id":"stale","symbol":"stl","name":"Stale","current_price":null}]""",
+                headers = headersOf(HttpHeaders.ContentType, "application/json"),
+            )
+        }
+        val coin = repository(engine = engine).getWatchlistCoins(setOf("stale")).getOrThrow().single()
+        assertEquals(0.0, coin.price)
+        assertEquals("", coin.imageUrl)
+    }
+
+    @Test
     fun `getWatchlistCoins returns failure on a server error`() = runTest {
         val engine = MockEngine { respond("boom", HttpStatusCode.InternalServerError) }
         assertTrue(repository(engine = engine).getWatchlistCoins(setOf("bitcoin")).isFailure)

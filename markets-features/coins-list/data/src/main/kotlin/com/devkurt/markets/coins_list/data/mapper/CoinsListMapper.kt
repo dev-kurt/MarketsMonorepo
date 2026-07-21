@@ -8,7 +8,7 @@ fun CoinMarketDto.toCoin(): Coin = Coin(
     symbol = symbol.uppercase(),
     name = name,
     imageUrl = image,
-    price = currentPrice,
+    price = currentPrice ?: 0.0,
     changePercent24h = priceChangePercentage24h ?: 0.0,
     marketCapRank = marketCapRank ?: 0,
 )

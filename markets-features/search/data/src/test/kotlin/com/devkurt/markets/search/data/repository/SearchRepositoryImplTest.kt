@@ -72,6 +72,18 @@ class SearchRepositoryImplTest {
     }
 
     @Test
+    fun `missing image url survives decoding`() = runTest {
+        val engine = MockEngine {
+            respond(
+                content = """{"coins":[{"id":"tiny","name":"Tiny","symbol":"TNY"}]}""",
+                headers = headersOf(HttpHeaders.ContentType, "application/json"),
+            )
+        }
+        val coin = repository(engine = engine).search("tiny").getOrThrow().single()
+        assertEquals("", coin.imageUrl)
+    }
+
+    @Test
     fun `server error returns failure`() = runTest {
         val engine = MockEngine { respond("boom", HttpStatusCode.TooManyRequests) }
         assertTrue(repository(engine = engine).search("bitcoin").isFailure)
