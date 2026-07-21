@@ -8,6 +8,7 @@ android {
 }
 
 dependencies {
+    api(projects.sharedFeatures.serialization.api)
     implementation(projects.sharedFeatures.network.impl)
     api(projects.sharedFeatures.network.api)
     implementation(libs.ktor.client.core)

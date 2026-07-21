@@ -5,6 +5,7 @@ import app.cash.turbine.test
 import com.devkurt.markets.watchlist.data.local.WatchlistData
 import com.devkurt.markets.watchlist.data.remote.api.WatchlistRemoteApi
 import com.devkurt.markets.watchlist.domain.api.model.WatchlistCoin
+import com.devkurt.markets.serialization.api.MkJson
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
@@ -17,7 +18,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import kotlinx.serialization.json.Json
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -43,7 +43,7 @@ class WatchlistRepositoryImplTest {
         watchlistRemoteApi = WatchlistRemoteApi(
             HttpClient(engine) {
                 install(ContentNegotiation) {
-                    json(Json { ignoreUnknownKeys = true })
+                    json(MkJson.instance)
                 }
             },
         ),

@@ -9,6 +9,7 @@ android {
 dependencies {
     api(projects.marketsFeatures.watchlist.domain.api)
     api(projects.sharedFeatures.network.api)
+    implementation(projects.sharedFeatures.serialization.api)
     api(libs.androidx.datastore)
     api(libs.ktor.client.core)
     implementation(libs.kotlinx.serialization.json)

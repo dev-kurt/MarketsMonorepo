@@ -2,6 +2,7 @@ package com.devkurt.markets.search.data.repository
 
 import com.devkurt.markets.search.data.remote.api.SearchRemoteApi
 import com.devkurt.markets.search.domain.api.model.SearchCoin
+import com.devkurt.markets.serialization.api.MkJson
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
@@ -11,7 +12,6 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.test.runTest
-import kotlinx.serialization.json.Json
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -24,7 +24,7 @@ class SearchRepositoryImplTest {
         searchRemoteApi = SearchRemoteApi(
             HttpClient(engine) {
                 install(ContentNegotiation) {
-                    json(Json { ignoreUnknownKeys = true })
+                    json(MkJson.instance)
                 }
             },
         ),

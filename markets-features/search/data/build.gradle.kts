@@ -9,6 +9,7 @@ android {
 dependencies {
     api(projects.marketsFeatures.search.domain.api)
     api(projects.sharedFeatures.network.api)
+    implementation(projects.sharedFeatures.serialization.api)
     api(libs.ktor.client.core)
 
     testImplementation(libs.junit)
