@@ -20,3 +20,4 @@ captures/
 # ─── İmza / gizli (asla commit'lenmez) ───
 *.jks
 *.keystore
+.claude/
