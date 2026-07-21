@@ -3,17 +3,19 @@ plugins {
 }
 
 android {
-    namespace = "com.devkurt.markets.coins_list.ui.impl"
+    namespace = "com.devkurt.markets.search.ui.impl"
 }
 
 dependencies {
-    api(projects.marketsFeatures.coinsList.domain.api)
-    api(projects.marketsFeatures.watchlist.domain.api)
+    api(projects.marketsFeatures.search.domain.api)
     api(projects.sharedFeatures.ui.api)
-    implementation(projects.sharedFeatures.paging.api)
     implementation(projects.sharedFeatures.navigation.api)
     implementation(projects.marketsFeatures.coinDetail.ui.api)
-    implementation(projects.marketsFeatures.search.ui.api)
     implementation(libs.koin.androidx.compose)
     implementation(libs.androidx.compose.material.icons.core)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlin.test.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
 }
