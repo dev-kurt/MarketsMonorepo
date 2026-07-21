@@ -2,12 +2,15 @@ package com.devkurt.markets.ui.api.display
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import com.devkurt.markets.ui.api.theme.MkTheme
+
+val LocalMkTextMaxLines = staticCompositionLocalOf { Int.MAX_VALUE }
 
 @Composable
 fun MkText(
@@ -18,7 +21,7 @@ fun MkText(
     textAlign: TextAlign? = null,
     overflow: TextOverflow = TextOverflow.Ellipsis,
     softWrap: Boolean = true,
-    maxLines: Int = Int.MAX_VALUE,
+    maxLines: Int = LocalMkTextMaxLines.current,
     minLines: Int = 1,
 ) {
     Text(

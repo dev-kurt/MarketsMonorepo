@@ -1,0 +1,54 @@
+info:
+  name: Search Coins
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{base_url}}/search?query={{search_query}}"
+  headers:
+    - name: accept
+      value: application/json
+    - name: x-cg-demo-api-key
+      value: "{{cg_demo_api_key}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        test("Search succeeds", function () {
+            expect(res.getStatus()).to.equal(200);
+        });
+        test("Coins list is present", function () {
+            expect(res.getBody()).to.have.property("coins");
+        });
+        test("DTO fields are present", function () {
+            var c = res.getBody().coins[0];
+            ["id","name","symbol","market_cap_rank","large"]
+              .forEach(function (f) { expect(c).to.have.property(f); });
+        });
+
+settings:
+  encodeUrl: true
+
+docs: |-
+  Coin search — the source for the **search** feature.
+
+  - **Method:** `GET`
+  - **URL:** `{{base_url}}/search`
+
+  ## Fields we map (DTO contract)
+  Only the `coins` array is consumed; `exchanges`, `icos`, `categories` and `nfts`
+  are ignored.
+
+  | Field             | Type            | Notes                                       |
+  |-------------------|-----------------|---------------------------------------------|
+  | `id`              | String          | Route argument for coin-detail              |
+  | `name`            | String          |                                             |
+  | `symbol`          | String          | **Already uppercase** here — unlike `/coins/markets` where it is lowercase |
+  | `market_cap_rank` | Int **or null** | Null for small/unranked coins               |
+  | `large`           | String          | Image URL (`thumb` also exists, lower res)  |
+
+  ## Pitfalls
+  - Response caps at ~25 coins; there is no pagination.
+  - An empty `query` returns `400` — the app never calls with a blank query.

@@ -25,12 +25,13 @@ The collection contains **only the endpoints the app actually uses**. Each reque
 | 00. Health | `/ping`          | — (key check) |
 | 01. Coins  | `/coins/markets` | `coins-list`  |
 | 01. Coins  | `/coins/{id}`    | `coin-detail` |
+| 02. Search | `/search`        | `search`      |
 
 ### Out of scope (roadmap)
 
 These endpoints were deliberately removed and will be added back when their features
 are built: `/simple/price` (favorites), `/coins/{id}/market_chart` and `/ohlc`
-(charts), `/search` and `/search/trending` (search), `/global` (dashboard summary).
+(charts), `/search/trending` (trending), `/global` (dashboard summary).
 
 ## Convention: API change workflow (REQUIRED)
 

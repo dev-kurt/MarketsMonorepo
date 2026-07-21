@@ -1,0 +1,39 @@
+appId: ${APP_ID}
+---
+- clearState
+- launchApp
+
+- tapOn:
+    id: "tab_coins"
+
+- extendedWaitUntil:
+    visible:
+      id: "coins_list"
+    timeout: 20000
+
+- tapOn:
+    id: "search_open"
+
+- extendedWaitUntil:
+    visible:
+      id: "search_input"
+    timeout: 10000
+
+- tapOn:
+    id: "search_input"
+
+- inputText: "bitcoin"
+
+- extendedWaitUntil:
+    visible:
+      id: "search_coin_row"
+    timeout: 20000
+
+- tapOn:
+    id: "search_coin_row"
+    index: 0
+
+- extendedWaitUntil:
+    visible:
+      id: "coin_detail_back"
+    timeout: 10000

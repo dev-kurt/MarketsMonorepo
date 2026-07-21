@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_placeholder">Search coins</string>
+    <string name="search_no_results">No coins match your search</string>
+    <string name="search_rank">#%1$d</string>
+</resources>

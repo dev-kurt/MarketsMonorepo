@@ -9,3 +9,5 @@ variables:
     value: usd
   - name: coin_id
     value: bitcoin
+  - name: search_query
+    value: bitcoin

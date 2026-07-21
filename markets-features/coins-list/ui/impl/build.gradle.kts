@@ -13,6 +13,7 @@ dependencies {
     implementation(projects.sharedFeatures.paging.api)
     implementation(projects.sharedFeatures.navigation.api)
     implementation(projects.marketsFeatures.coinDetail.ui.api)
+    implementation(projects.marketsFeatures.search.ui.api)
     implementation(libs.koin.androidx.compose)
     implementation(libs.androidx.compose.material.icons.core)
 }
