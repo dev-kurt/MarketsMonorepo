@@ -7,7 +7,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -27,6 +32,7 @@ import com.devkurt.markets.ui.api.feedback.MkCircularProgressIndicator
 import com.devkurt.markets.ui.api.feedback.MkFeedbackPlaceholder
 import com.devkurt.markets.ui.api.feedback.MkFeedbackType
 import com.devkurt.markets.ui.api.feedback.MkSkeletonRow
+import com.devkurt.markets.ui.api.feedback.MkSnackbarHost
 import com.devkurt.markets.ui.api.frame.MkScreenScaffold
 import com.devkurt.markets.ui.api.testing.mkTestTag
 import com.devkurt.markets.ui.api.theme.MkTheme
@@ -43,13 +49,30 @@ fun CoinsListScreen(
 ) {
     val loadState = coins.loadState
     val mainGraph = LocalGraphMain.currentOrNull
+    val snackbarHostState = remember { SnackbarHostState() }
 
     MkScreenScaffold(
         topBar = { CoinsListTopBar() },
+        snackbarHost = { MkSnackbarHost(snackbarHostState) },
         isLoading = loadState.isRefreshing && coins.itemCount > 0,
         onRefresh = { coins.refresh() },
     ) { paddingValues ->
         val refreshError = loadState.refreshError
+        val genericErrorMessage = stringResource(UiR.string.mk_error_generic)
+        val retryLabel = stringResource(UiR.string.mk_retry)
+
+        LaunchedEffect(refreshError) {
+            if (refreshError != null && coins.itemCount > 0) {
+                val result = snackbarHostState.showSnackbar(
+                    message = refreshError.message ?: genericErrorMessage,
+                    actionLabel = retryLabel,
+                    duration = SnackbarDuration.Long,
+                )
+                if (result == SnackbarResult.ActionPerformed) {
+                    coins.retry()
+                }
+            }
+        }
 
         when {
             refreshError != null && coins.itemCount == 0 -> {
