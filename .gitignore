@@ -14,10 +14,10 @@ captures/
 # ─── Kotlin ───
 .kotlin/
 
-# ─── Loglar & geçici ───
+# ─── Logs & temp ───
 *.log
 
-# ─── İmza / gizli (asla commit'lenmez) ───
+# ─── Signing / secrets (never committed) ───
 *.jks
 *.keystore
 .claude/
