@@ -109,6 +109,7 @@ class WatchlistRepositoryImplTest {
                     imageUrl = "https://img/btc.png",
                     price = 65000.5,
                     changePercent24h = 0.0,
+                    isPriceUp = true,
                 ),
             ),
             coins,

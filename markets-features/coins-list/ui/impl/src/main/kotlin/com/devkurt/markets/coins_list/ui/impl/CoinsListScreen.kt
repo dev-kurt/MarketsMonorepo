@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.paging.compose.LazyPagingItems
 import com.devkurt.markets.coin_detail.ui.api.CoinDetailRoute
-import com.devkurt.markets.coins_list.domain.api.model.Coin
+import com.devkurt.markets.coins_list.ui.impl.model.CoinUi
 import com.devkurt.markets.coins_list.ui.impl.section.CoinsListCoinRow
 import com.devkurt.markets.coins_list.ui.impl.section.CoinsListTopBar
 import com.devkurt.markets.navigation.api.LocalGraphMain
@@ -44,7 +44,7 @@ private const val SKELETON_ROW_COUNT = 8
 @Composable
 fun CoinsListScreen(
     state: CoinsListState,
-    coins: LazyPagingItems<Coin>,
+    coins: LazyPagingItems<CoinUi>,
     onEvent: (CoinsListEvent) -> Unit,
 ) {
     val loadState = coins.loadState

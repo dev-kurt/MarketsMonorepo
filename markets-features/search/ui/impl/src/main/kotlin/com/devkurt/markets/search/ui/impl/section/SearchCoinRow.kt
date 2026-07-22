@@ -14,8 +14,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.devkurt.markets.search.domain.api.model.SearchCoin
 import com.devkurt.markets.search.ui.impl.R
+import com.devkurt.markets.search.ui.impl.model.SearchCoinUi
 import com.devkurt.markets.ui.api.display.MkAsyncImage
 import com.devkurt.markets.ui.api.display.MkText
 import com.devkurt.markets.ui.api.layout.MkCard
@@ -24,7 +24,7 @@ import com.devkurt.markets.ui.api.theme.MkTheme
 
 @Composable
 fun SearchCoinRow(
-    coin: SearchCoin,
+    coin: SearchCoinUi,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {

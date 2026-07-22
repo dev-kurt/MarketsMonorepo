@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devkurt.markets.ui.api.state.LoadingCounter
 import com.devkurt.markets.watchlist.domain.api.repository.WatchlistRepository
+import com.devkurt.markets.watchlist.ui.impl.mapper.toUi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -58,7 +59,9 @@ class WatchlistViewModel(
             loading.withLoading {
                 watchlistRepository.getWatchlistCoins(ids)
                     .onSuccess { coins ->
-                        _state.update { it.copy(coins = coins, error = null) }
+                        _state.update {
+                            it.copy(coins = coins.map { coin -> coin.toUi() }, error = null)
+                        }
                     }
                     .onFailure { throwable ->
                         _state.update { it.copy(error = throwable.message) }

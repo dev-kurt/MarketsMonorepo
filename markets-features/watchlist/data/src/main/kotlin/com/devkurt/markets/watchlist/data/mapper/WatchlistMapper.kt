@@ -10,4 +10,5 @@ fun WatchlistCoinDto.toWatchlistCoin(): WatchlistCoin = WatchlistCoin(
     imageUrl = image,
     price = currentPrice,
     changePercent24h = priceChangePercentage24h,
+    isPriceUp = priceChangePercentage24h >= 0,
 )

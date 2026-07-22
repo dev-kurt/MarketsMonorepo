@@ -14,6 +14,7 @@ fun CoinDetailDto.toCoinDetail(): CoinDetail = CoinDetail(
     marketCapRank = marketCapRank,
     price = marketData.currentPrice.inVsCurrency(),
     changePercent24h = marketData.priceChangePercentage24h,
+    isPriceUp = marketData.priceChangePercentage24h >= 0,
     marketCap = marketData.marketCap.inVsCurrency(),
     totalVolume = marketData.totalVolume.inVsCurrency(),
     high24h = marketData.high24h.inVsCurrency(),

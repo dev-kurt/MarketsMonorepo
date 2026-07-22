@@ -17,8 +17,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.devkurt.markets.coin_detail.domain.api.model.CoinDetail
 import com.devkurt.markets.coin_detail.ui.impl.R
+import com.devkurt.markets.coin_detail.ui.impl.model.CoinDetailUi
 import com.devkurt.markets.ui.api.display.MkAsyncImage
 import com.devkurt.markets.ui.api.display.MkText
 import com.devkurt.markets.ui.api.layout.MkCard
@@ -26,7 +26,7 @@ import com.devkurt.markets.ui.api.theme.MkTheme
 
 @Composable
 fun CoinDetailSection(
-    coin: CoinDetail,
+    coin: CoinDetailUi,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -58,9 +58,9 @@ fun CoinDetailSection(
                 )
             }
             Column(horizontalAlignment = Alignment.End) {
-                MkText(text = coin.price.asPrice(), style = MkTheme.typography.titleMedium)
+                MkText(text = coin.formattedPrice, style = MkTheme.typography.titleMedium)
                 MkText(
-                    text = coin.changePercent24h.asChangePercent(),
+                    text = coin.formattedChange,
                     color = if (coin.isPriceUp) {
                         MkTheme.colorScheme.success
                     } else {
@@ -78,35 +78,35 @@ fun CoinDetailSection(
             ) {
                 CoinDetailStatRow(
                     stringResource(R.string.coin_detail_market_cap),
-                    coin.marketCap.asCompactAmount()
+                    coin.formattedMarketCap
                 )
                 CoinDetailStatRow(
                     stringResource(R.string.coin_detail_volume_24h),
-                    coin.totalVolume.asCompactAmount()
+                    coin.formattedTotalVolume
                 )
                 CoinDetailStatRow(
                     stringResource(R.string.coin_detail_high_24h),
-                    coin.high24h.asPrice()
+                    coin.formattedHigh24h
                 )
                 CoinDetailStatRow(
                     stringResource(R.string.coin_detail_low_24h),
-                    coin.low24h.asPrice()
+                    coin.formattedLow24h
                 )
                 CoinDetailStatRow(
                     stringResource(R.string.coin_detail_all_time_high),
-                    coin.allTimeHigh.asPrice()
+                    coin.formattedAllTimeHigh
                 )
                 CoinDetailStatRow(
                     stringResource(R.string.coin_detail_all_time_low),
-                    coin.allTimeLow.asPrice()
+                    coin.formattedAllTimeLow
                 )
                 CoinDetailStatRow(
                     stringResource(R.string.coin_detail_circulating_supply),
-                    coin.circulatingSupply.asSupply()
+                    coin.formattedCirculatingSupply
                 )
                 CoinDetailStatRow(
                     label = stringResource(R.string.coin_detail_max_supply),
-                    value = coin.maxSupply?.asSupply()
+                    value = coin.formattedMaxSupply
                         ?: stringResource(R.string.coin_detail_max_supply_unlimited),
                 )
             }

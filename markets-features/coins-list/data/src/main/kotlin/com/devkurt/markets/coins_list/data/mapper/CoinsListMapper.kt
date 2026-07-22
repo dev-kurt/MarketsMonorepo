@@ -10,5 +10,6 @@ fun CoinMarketDto.toCoin(): Coin = Coin(
     imageUrl = image,
     price = currentPrice,
     changePercent24h = priceChangePercentage24h,
+    isPriceUp = priceChangePercentage24h >= 0,
     marketCapRank = marketCapRank,
 )

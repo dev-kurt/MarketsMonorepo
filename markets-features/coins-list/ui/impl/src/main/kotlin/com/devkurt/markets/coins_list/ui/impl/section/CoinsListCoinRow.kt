@@ -16,7 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.devkurt.markets.coins_list.domain.api.model.Coin
+import com.devkurt.markets.coins_list.ui.impl.model.CoinUi
 import com.devkurt.markets.ui.api.buttons.MkIconButton
 import com.devkurt.markets.ui.api.display.MkAsyncImage
 import com.devkurt.markets.ui.api.display.MkIcon
@@ -27,7 +27,7 @@ import com.devkurt.markets.ui.api.theme.MkTheme
 
 @Composable
 fun CoinsListCoinRow(
-    coin: Coin,
+    coin: CoinUi,
     isWatched: Boolean,
     onClick: () -> Unit,
     onWatchToggle: () -> Unit,
@@ -47,7 +47,7 @@ fun CoinsListCoinRow(
             horizontalArrangement = Arrangement.spacedBy(MkTheme.padding.md),
         ) {
             MkText(
-                text = coin.marketCapRank.toString(),
+                text = coin.marketCapRank,
                 color = MkTheme.colorScheme.onSurfaceVariant,
                 style = MkTheme.typography.label,
                 textAlign = TextAlign.End,
@@ -74,9 +74,9 @@ fun CoinsListCoinRow(
             }
 
             Column(horizontalAlignment = Alignment.End) {
-                MkText(text = coin.formattedPrice(), maxLines = 1)
+                MkText(text = coin.formattedPrice, maxLines = 1)
                 MkText(
-                    text = coin.formattedChange(),
+                    text = coin.formattedChange,
                     color = if (coin.isPriceUp) {
                         MkTheme.colorScheme.success
                     } else {

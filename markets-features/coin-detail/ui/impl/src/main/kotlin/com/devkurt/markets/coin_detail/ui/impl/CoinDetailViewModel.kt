@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devkurt.markets.coin_detail.domain.api.repository.CoinDetailRepository
 import com.devkurt.markets.coin_detail.ui.api.CoinDetailRoute
+import com.devkurt.markets.coin_detail.ui.impl.mapper.toUi
 import com.devkurt.markets.ui.api.state.LoadingCounter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -46,7 +47,7 @@ class CoinDetailViewModel(
             loading.withLoading {
                 coinDetailRepository.getCoinDetail(route.coinId)
                     .onSuccess { coin ->
-                        _state.update { it.copy(coin = coin, error = null) }
+                        _state.update { it.copy(coin = coin.toUi(), error = null) }
                     }
                     .onFailure { throwable ->
                         _state.update { it.copy(error = throwable.message) }

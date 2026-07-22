@@ -22,12 +22,11 @@ import com.devkurt.markets.ui.api.display.MkText
 import com.devkurt.markets.ui.api.layout.MkCard
 import com.devkurt.markets.ui.api.testing.mkTestTag
 import com.devkurt.markets.ui.api.theme.MkTheme
-import com.devkurt.markets.watchlist.domain.api.model.WatchlistCoin
-import java.util.Locale
+import com.devkurt.markets.watchlist.ui.impl.model.WatchlistCoinUi
 
 @Composable
 fun WatchlistCoinRow(
-    coin: WatchlistCoin,
+    coin: WatchlistCoinUi,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     onRemove: (() -> Unit)? = null,
@@ -65,9 +64,9 @@ fun WatchlistCoinRow(
             }
 
             Column(horizontalAlignment = Alignment.End) {
-                MkText(text = coin.formattedPrice(), maxLines = 1)
+                MkText(text = coin.formattedPrice, maxLines = 1)
                 MkText(
-                    text = coin.formattedChange(),
+                    text = coin.formattedChange,
                     color = if (coin.isPriceUp) {
                         MkTheme.colorScheme.success
                     } else {
@@ -89,11 +88,3 @@ fun WatchlistCoinRow(
         }
     }
 }
-
-fun WatchlistCoin.formattedPrice(): String {
-    val pattern = if (price >= 1.0) "$%,.2f" else "$%,.6f"
-    return String.format(Locale.US, pattern, price)
-}
-
-fun WatchlistCoin.formattedChange(): String =
-    String.format(Locale.US, "%+.2f%%", changePercent24h)

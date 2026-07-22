@@ -4,8 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.devkurt.markets.coins_list.domain.api.model.Coin
+import androidx.paging.map
 import com.devkurt.markets.coins_list.domain.api.repository.CoinsListRepository
+import com.devkurt.markets.coins_list.ui.impl.mapper.toUi
+import com.devkurt.markets.coins_list.ui.impl.model.CoinUi
 import com.devkurt.markets.watchlist.domain.api.repository.WatchlistRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -19,7 +21,9 @@ class CoinsListViewModel(
     private val watchlistRepository: WatchlistRepository,
 ) : ViewModel() {
 
-    val coins: Flow<PagingData<Coin>> = coinsListRepository.getCoins().cachedIn(viewModelScope)
+    val coins: Flow<PagingData<CoinUi>> = coinsListRepository.getCoins()
+        .map { pagingData -> pagingData.map { coin -> coin.toUi() } }
+        .cachedIn(viewModelScope)
 
     val state: StateFlow<CoinsListState> = watchlistRepository.flowWatchlistIds()
         .map { ids -> CoinsListState(watchlistIds = ids) }

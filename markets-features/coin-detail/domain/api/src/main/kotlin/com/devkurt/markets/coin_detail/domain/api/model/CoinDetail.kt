@@ -1,8 +1,5 @@
 package com.devkurt.markets.coin_detail.domain.api.model
 
-import androidx.compose.runtime.Immutable
-
-@Immutable
 data class CoinDetail(
     val id: String,
     val symbol: String,
@@ -12,6 +9,7 @@ data class CoinDetail(
     val marketCapRank: Int,
     val price: Double,
     val changePercent24h: Double,
+    val isPriceUp: Boolean,
     val marketCap: Double,
     val totalVolume: Double,
     val high24h: Double,
@@ -20,6 +18,4 @@ data class CoinDetail(
     val allTimeLow: Double,
     val circulatingSupply: Double,
     val maxSupply: Double?,
-) {
-    val isPriceUp: Boolean get() = changePercent24h >= 0
-}
+)

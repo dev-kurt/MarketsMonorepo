@@ -11,4 +11,7 @@ dependencies {
     api(projects.sharedFeatures.network.api)
     implementation(projects.sharedFeatures.paging.api)
     api(libs.ktor.client.core)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlin.test.junit)
 }

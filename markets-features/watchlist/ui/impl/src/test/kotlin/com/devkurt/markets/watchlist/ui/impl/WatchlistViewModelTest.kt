@@ -3,6 +3,7 @@ package com.devkurt.markets.watchlist.ui.impl
 import app.cash.turbine.test
 import com.devkurt.markets.watchlist.domain.api.model.WatchlistCoin
 import com.devkurt.markets.watchlist.domain.api.repository.WatchlistRepository
+import com.devkurt.markets.watchlist.ui.impl.model.WatchlistCoinUi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -59,6 +60,17 @@ class WatchlistViewModelTest {
         imageUrl = "https://img/bitcoin",
         price = 1.0,
         changePercent24h = 0.0,
+        isPriceUp = true,
+    )
+
+    private val bitcoinUi = WatchlistCoinUi(
+        id = "bitcoin",
+        symbol = "BTC",
+        name = "Bitcoin",
+        imageUrl = "https://img/bitcoin",
+        formattedPrice = "$1.00",
+        formattedChange = "+0.00%",
+        isPriceUp = true,
     )
 
     @Test
@@ -72,7 +84,7 @@ class WatchlistViewModelTest {
         viewModel.state.test {
             advanceUntilIdle()
             val state = expectMostRecentItem()
-            assertEquals(listOf(bitcoin), state.coins)
+            assertEquals(listOf(bitcoinUi), state.coins)
             assertNull(state.error)
         }
     }
@@ -119,7 +131,7 @@ class WatchlistViewModelTest {
             advanceUntilIdle()
 
             val recovered = expectMostRecentItem()
-            assertEquals(listOf(bitcoin), recovered.coins)
+            assertEquals(listOf(bitcoinUi), recovered.coins)
             assertNull(recovered.error)
         }
     }

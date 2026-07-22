@@ -3,6 +3,7 @@ package com.devkurt.markets.search.ui.impl
 import app.cash.turbine.test
 import com.devkurt.markets.search.domain.api.model.SearchCoin
 import com.devkurt.markets.search.domain.api.repository.SearchRepository
+import com.devkurt.markets.search.ui.impl.model.SearchCoinUi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -46,6 +47,14 @@ class SearchViewModelTest {
         imageUrl = "https://img/btc.png",
     )
 
+    private val bitcoinUi = SearchCoinUi(
+        id = "bitcoin",
+        name = "Bitcoin",
+        symbol = "BTC",
+        marketCapRank = 1,
+        imageUrl = "https://img/btc.png",
+    )
+
     @Test
     fun `typing is debounced into a single search`() = runTest(dispatcher) {
         val repository = FakeSearchRepository().apply {
@@ -62,7 +71,7 @@ class SearchViewModelTest {
             advanceUntilIdle()
 
             assertEquals(listOf("bitcoin"), repository.queries)
-            assertEquals(listOf(bitcoin), expectMostRecentItem().results)
+            assertEquals(listOf(bitcoinUi), expectMostRecentItem().results)
         }
     }
 
@@ -83,7 +92,7 @@ class SearchViewModelTest {
             advanceUntilIdle()
 
             val recovered = expectMostRecentItem()
-            assertEquals(listOf(bitcoin), recovered.results)
+            assertEquals(listOf(bitcoinUi), recovered.results)
             assertNull(recovered.error)
         }
     }
