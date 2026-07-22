@@ -132,3 +132,8 @@ other features, so reaching into an `impl` is a compile error.
   action (*Clear watchlist*, the fastest way to reach the dashboard's empty state); it
   is built as a growth point where any feature can contribute developer actions through
   DI.
+- **`CLAUDE.md` + `.claude/commands/`** — AI agents work under the same rules as
+  humans: the repo's architecture laws and quality bar are encoded for the agent, and
+  the recurring workflows are scripted as commands (`/new-feature` walks the scaffolding
+  contract end to end, `/pre-pr` runs the full quality gate). AI output goes through the
+  same detekt/test/review pipeline as any other commit.

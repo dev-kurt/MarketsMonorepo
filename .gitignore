@@ -20,4 +20,6 @@ captures/
 # ─── Signing / secrets (never committed) ───
 *.jks
 *.keystore
-.claude/
+
+# ─── AI agent workspace (shared guidance IS tracked: CLAUDE.md, .claude/commands/) ───
+.claude/settings.local.json
